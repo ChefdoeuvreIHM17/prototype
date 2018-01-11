@@ -4,6 +4,12 @@
     border-radius: 5px;
 }
 
+.phase {
+    height: 100%;
+    /*background: linear-gradient(90deg, rgb(128, 177, 133) 60%, rgb(158,200,216) 40%);*/
+}
+
+
 #drag-1 {
     width: 25%;
     height: 100%;

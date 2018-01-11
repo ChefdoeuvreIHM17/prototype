@@ -1,3 +1,8 @@
+
+const COLOR_SLOT = "rgb(255,255,255)";
+const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
+const COLOR_PHASE_ACTIVE = "rgb(128, 177, 133)";
+
 // target elements with the "draggable" class
 interact('.draggable')
     .draggable({
@@ -40,6 +45,41 @@ function dragMoveListener (event) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+}
+
+function getCssValuePrefix()
+{
+    var rtrnVal = '';//default to standard syntax
+    var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
+
+    // Create a temporary DOM object for testing
+    var dom = document.createElement('div');
+
+    for (var i = 0; i < prefixes.length; i++)
+    {
+        // Attempt to set the style
+        dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
+
+        // Detect if the style was successfully set
+        if (dom.style.background)
+        {
+            rtrnVal = prefixes[i];
+        }
+    }
+
+    dom = null;
+    delete dom;
+
+    return rtrnVal;
+}
+
+
+function percentageChange(percentage){
+    document.getElementById("drag-1").innerText = percentage;
+    document.getElementById("drag-1").style.backgroundColor = "red";
+    var gradientString = "linear-gradient(90deg, "+COLOR_PHASE_ACTIVE+"  "+percentage+"%, "+COLOR_PHASE_BACKGROUND+" 0%)";
+    console.log(gradientString);
+    document.getElementById("drag-1").style.background = gradientString;
 }
 
 // this is used later in the resizing and gesture demos
