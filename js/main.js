@@ -82,5 +82,12 @@ function percentageChange(percentage){
     document.getElementById("drag-1").style.background = gradientString;
 }
 
+function loadData(){
+    var rawData = require("js/data.json");
+
+    //load phases
+    //for()
+}
+
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;

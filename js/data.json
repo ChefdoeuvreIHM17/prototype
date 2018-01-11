@@ -1,0 +1,175 @@
+{
+  "machine": {
+    "NH5000B":{
+      "id": "NH5000B",
+      "type": ["CUH", "CUHTM", "NH5000B"],
+	  "emplacement_max":4, 
+      "emplacement": [[12023, 6], [12020, 7], [12019, 7], [14506, 8]], 
+	  "phase_en_cours":12023,
+	  "temps_passe":100,
+	  "piece_nuit": 1
+    },
+    "NH5000A":{
+      "id": "NH5000A",
+      "type": ["CUH", "CUHTM", "NH500C"],
+	  "emplacement_max":4, 
+      "emplacement": [[8701, 2], [9449, 7], [8706, 7], [8705, 7]], 
+	  "phase_en_cours":8701,
+	  "temps_passe":120,
+	  "piece_nuit": 0
+    },
+    "SH500C":{
+      "id": "SH500C",
+      "type": ["CUH", "CUHTM", "SH500C", "AKARI-2"],
+	  "emplacement_max":4, 
+      "emplacement": [[15570, 2], [6147, 7], [15570, 9], [14507, 15]], 
+	  "phase_en_cours":15570,
+	  "temps_passe":150,
+	  "piece_nuit": 1
+    }, 
+	"HM800":{
+      "id": "HM800",
+      "type": ["CUH", "CUHTM", "CUHGC", "CUHGCTM"],
+	  "emplacement_max":4, 
+      "emplacement": [[15688, 9], [15223, 15], [14153, 1]], 
+	  "phase_en_cours":15688,
+	  "temps_passe":90,
+	  "piece_nuit": 1
+    }, 
+	"SH50":{
+      "id": "SH50",
+      "type": ["CUH", "CUHTM"],
+	  "emplacement_max":4, 
+      "emplacement": [], 
+	  "phase_en_cours":0,
+	  "temps_passe":0,
+	  "piece_nuit": 0
+    },
+	"SH500A":{
+      "id": "SH500A",
+      "type": ["CUH", "CUHTM"],
+	  "emplacement_max":4, 
+      "emplacement": [[3262, 7], [3348, 9], [3292, 0], [14252, 2]], 
+	  "phase_en_cours":3262,
+	  "temps_passe":0,
+	  "piece_nuit": 2
+    },
+	"SH503":{
+      "id": "SH503",
+      "type": ["CUH", "CUHTM", "SH503"],
+	  "emplacement_max":4, 
+      "emplacement": [[12157, 0], [12137, 2], [6068, 8], [13878, 12]], 
+	  "phase_en_cours":12157,
+	  "temps_passe":10,
+	  "piece_nuit": 2
+    },
+	"Clock1":{
+      "id": "Clock1",
+      "type": ["CU5AXE", "Clock1300"],
+      "emplacement_max":8, 
+      "emplacement": [[15573, 0], [14000, 1], [15509, 2], [12211, 2], [14000, 5], [15509, 19], [15224, 40], [15224, 42]], 
+	  "phase_en_cours":15573,
+	  "temps_passe":200,
+	  "piece_nuit": 0
+    },
+	"Clock2":{
+      "id": "Clock2",
+      "type": ["CU5AXE", "Clock1300"],
+      "emplacement_max":8, 
+      "emplacement": [[14365, 2], [14368, 3], [13809, 14], [13809, 15]], 
+	  "phase_en_cours":14365,
+	  "temps_passe":25,
+	  "piece_nuit": 0
+    }
+  },
+  "OF":{
+  "85027":{
+	  "id": "85027",
+	  "priorite":0,
+	  "phases": [1, 10223, 3],
+	  "phase_en_attente":10223, 
+	  "jours_attente": 0,
+	  "numero": 20
+  },
+  "83309":{
+	  "id": "83309",
+	  "priorite":2,
+	  "phases": [1, 5616, 3, 4],
+	  "phase_en_attente":5616, 
+	  "jours_attente": 101,
+	  "numero": 40
+  }, 
+  "86557":{
+	  "id": "86557",
+	  "priorite":2,
+	  "phases": [1, 5977, 3],
+	  "phase_en_attente":5977, 
+	  "jours_attente": 14,
+	  "numero": 20
+  }
+  
+  },
+  "Phase":{
+	  "441":{
+		"id": "441",
+		"temps":300,
+		"machine":"CUGCTM"
+	  },
+	  "5977":{
+		"id": "5977",
+		"temps":600,
+		"machine":"CUGC"
+	  }, 
+	  "5616":{
+		"id": "5616",
+		"temps":240,
+		"machine":"CU5AXE"
+	  }, 
+	  "10223":{
+		"id": "10223",
+		"temps":540,
+		"machine":"CU5AXE"
+	  },
+	  "12023":{
+		"id": "12023",
+		"temps":700,
+		"machine":"NH5000B"
+	  },
+	  "8701":{
+		"id": "8701",
+		"temps":540,
+		"machine":"SH500C"
+	  },
+	  "15570":{
+		"id": "15570",
+		"temps":360,
+		"machine":"AKARI-2"
+	  },
+	  "15668":{
+		"id": "15668",
+		"temps":800,
+		"machine":"CUHGC"
+	  },
+	  "3262":{
+		"id": "3262",
+		"temps":200,
+		"machine":"CUHTM"
+	  },
+	  "12137":{
+		"id": "12137",
+		"temps":610,
+		"machine":"SH503"
+	  },
+	  "15573":{
+		"id": "15573",
+		"temps":550,
+		"machine":"CU5AXE"
+	  },
+	  "14365":{
+		"id": "14365",
+		"temps":540,
+		"machine":"CU5AXE"
+	  }
+
+  }
+}
