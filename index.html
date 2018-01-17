@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,13 +21,120 @@
 <body>
 
 <div class="container-fluid">
+<div class="row">
+    <input type="number" onchange="percentageChange('drag1',this.value)" min="0" max="100">
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h1>Appels machines</h1>
+    </div>
+    <div class="col-md-6 text-center">
+        <h1>Réserve de phases</h1>
+    </div>
 
+    <div class="col-md-1">
+        <div class="row no-gutters cell header">
+            <div class="text-center">Machine</div>
+        </div>
+        <div class="column" id="col_names"></div>
+    </div>
+    <div class="col-md-5" id="machine_calls">
+        <div class="row no-gutters cell header">
+            <div class="col-md-8 text-center">File d'attente</div>
+            <div class="col-md-4 text-center">Zone de préparation</div>
+        </div>
+        <div class="row no-gutters" id="machines">
+            <div class="col-md-8 column" id="col_slots"></div>
+            <div class="col-md-4 column" id="col_prep"></div>
+        </div>
+    </div>
 
+    <div class="col-md-offset-1 col-md-5">
+        <div class="row header">
+            <div class="col-md-2 text-center">CU H</div>
+            <div class="col-md-2 text-center">CU HTM</div>
+            <div class="col-md-2 text-center">CU GC</div>
+            <div class="col-md-2 text-center">CU GC TM</div>
+            <div class="col-md-2 text-center">CU 5X</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 slots_machine">
+                <div class="slot" id="CU_H_0"></div>
+                <div class="slot" id="CU_H_1"></div>
+                <div class="slot" id="CU_H_2"></div>
+                <div class="slot" id="CU_H_3"></div>
+                <div class="slot" id="CU_H_4"></div>
+                <div class="slot" id="CU_H_5"></div>
+                <div class="slot" id="CU_H_6"></div>
+                <div class="slot" id="CU_H_7"></div>
+                <div class="slot" id="CU_H_8"></div>
+                <div class="slot" id="CU_H_9"></div>
+            </div>
+            <div class="col-md-2 slots_machine">
+                <div class="slot" id="CU_HTM_0"></div>
+                <div class="slot" id="CU_HTM_1"></div>
+                <div class="slot" id="CU_HTM_2"></div>
+                <div class="slot" id="CU_HTM_3"></div>
+                <div class="slot" id="CU_HTM_4"></div>
+                <div class="slot" id="CU_HTM_5"></div>
+                <div class="slot" id="CU_HTM_6"></div>
+                <div class="slot" id="CU_HTM_7"></div>
+                <div class="slot" id="CU_HTM_8"></div>
+                <div class="slot" id="CU_HTM_9"></div>
+            </div>
+            <div class="col-md-2 slots_machine">
+                <div class="slot" id="CU_GC_0"></div>
+                <div class="slot" id="CU_GC_1"></div>
+                <div class="slot" id="CU_GC_2"></div>
+                <div class="slot" id="CU_GC_3"></div>
+                <div class="slot" id="CU_GC_4"></div>
+                <div class="slot" id="CU_GC_5"></div>
+                <div class="slot" id="CU_GC_6"></div>
+                <div class="slot" id="CU_GC_7"></div>
+                <div class="slot" id="CU_GC_8"></div>
+                <div class="slot" id="CU_GC_9"></div>
+            </div>
+            <div class="col-md-2 slots_machine">
+                <div class="slot" id="CU_GC_TM_0"></div>
+                <div class="slot" id="CU_GC_TM_1"></div>
+                <div class="slot" id="CU_GC_TM_2"></div>
+                <div class="slot" id="CU_GC_TM_3"></div>
+                <div class="slot" id="CU_GC_TM_4"></div>
+                <div class="slot" id="CU_GC_TM_5"></div>
+                <div class="slot" id="CU_GC_TM_6"></div>
+                <div class="slot" id="CU_GC_TM_7"></div>
+                <div class="slot" id="CU_GC_TM_8"></div>
+                <div class="slot" id="CU_GC_TM_9"></div>
+            </div>
+            <div class="col-md-2 slots_machine">
+                <div class="slot" id="CU_5X_0"></div>
+                <div class="slot" id="CU_5X_1"></div>
+                <div class="slot" id="CU_5X_2"></div>
+                <div class="slot" id="CU_5X_3"></div>
+                <div class="slot" id="CU_5X_4"></div>
+                <div class="slot" id="CU_5X_5"></div>
+                <div class="slot" id="CU_5X_6"></div>
+                <div class="slot" id="CU_5X_7"></div>
+                <div class="slot" id="CU_5X_8"></div>
+                <div class="slot" id="CU_5X_9"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<div id="drag-1" class="draggable phase">
+    <p> You can drag one element </p>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Interact -->
+<script src="js/interact.min.js"></script>
+
+<script src="js/main.js"></script>
 </body>
 </html>

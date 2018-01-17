@@ -1,0 +1,75 @@
+.cell{
+    height: 75px;
+}
+
+.slots_machine{
+    border : 1px solid black;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.slot{
+    height: 75px;
+    border : 1px solid lightblue;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.machine{
+    height: 75px;
+    line-height:75px;
+}
+
+.machine-large{
+    height: 150px;
+    line-height:150px;
+}
+
+.header div{
+    line-height:75px;
+}
+
+.name{
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.column{
+    padding: 0;
+}
+
+.phase {
+    height: 75px;
+    background-color: #29e;
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center
+}
+
+.OF {
+    height: 75px;
+    background-color: yellow;
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center;
+}
+
+.AOG {
+    background-color: red;
+    color: white;
+}
+
+#drag-1 {
+    height: 22px;
+    margin: 10%;
+
+    background-color: #29e;
+    color: white;
+
+    border-radius:5px;
+    padding: 4%;
+
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+}
