@@ -2,10 +2,18 @@
     height: 75px;
 }
 
-.slot{
+.slots_machine{
     height: 75px;
     border : 1px solid black;
     border-radius: 5px;
+}
+
+.slot{
+    height: 75px;
+    border : 1px solid lightblue;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
 }
 
 .machine{

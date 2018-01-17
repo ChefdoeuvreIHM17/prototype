@@ -131,30 +131,44 @@ function loadData(){
                 name.innerHTML = machine.id;
                 nameCell.appendChild(name);
 
-                var slot = document.createElement("div");
-                col_slots.appendChild(slot);
+                var slots_machine = document.createElement("div");
+                col_slots.appendChild(slots_machine);
                 if(machine.emplacement_max > 4){
-                    slot.setAttribute("class","slot machine-large");
+                    slots_machine.setAttribute("class","slots_machine machine-large");
                 }else{
-                    slot.setAttribute("class","slot");
+                    slots_machine.setAttribute("class","slots_machine");
+                }
+                for(var iSlot=0;iSlot<machine.emplacement_max;iSlot++){
+                    var slot = document.createElement("div");
+                    slot.setAttribute("class","slot col-md-3");
+                    slot.setAttribute("id",machine.id+"_"+iSlot);
+                    slots_machine.appendChild(slot);
                 }
 
                 var prep = document.createElement("div");
                 col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
-                    prep.setAttribute("class","slot machine-large");
+                    prep.setAttribute("class","slots_machine machine-large");
                 }else{
-                    prep.setAttribute("class","slot");
+                    prep.setAttribute("class","slots_machine");
+                }
+                for(var iPrepSlot=0;iPrepSlot<2 ;iPrepSlot++){
+                    var slotPrep = document.createElement("div");
+                    slotPrep.setAttribute("class","slot col-md-6");
+                    slotPrep.setAttribute("id",machine.id+"_prep_"+iPrepSlot);
+                    prep.appendChild(slotPrep);
                 }
 
                 //phases
                 for(var iPhase = 0; iPhase < machine.emplacement.length; iPhase++){
                     var phase = machine.emplacement[iPhase];
                     var phaseDiv = document.createElement("div");
-                    phaseDiv.setAttribute("class","col-md-3 phase draggable");
+                    phaseDiv.setAttribute("class","phase draggable");
                     phaseDiv.setAttribute("id",phase[0]);
                     phaseDiv.innerHTML = phase[0]+"<br>"+phase[1]+" jour(s)";
-                    slot.appendChild(phaseDiv);
+
+                    var mySlot = document.getElementById(machine.id+"_"+iPhase);
+                    mySlot.appendChild(phaseDiv);
 
                     if(machine.phase_en_cours === phase[0] && typeof rawData.Phase[phase[0]] !== 'undefined'){
                         var tempsTotal = rawData.Phase[phase[0]].temps;
