@@ -27,18 +27,31 @@
 <div class="row">
 
 
-    <div class="col-md-offset-1 col-md-5" id="machine_calls">
+    <div class="col-md-6">
         <h1>Appels machines</h1>
-        <div class="row cell header">
-            <div class="col-md-2 text-center">Machine</div>
-            <div class="col-md-6 text-center">File d'attente</div>
+    </div>
+    <div class="col-md-6 text-center">
+        <h1>Réserve de phases</h1>
+    </div>
+
+    <div class="col-md-1">
+        <div class="row no-gutters cell header">
+            <div class="text-center">Machine</div>
+        </div>
+        <div class="column" id="col_names"></div>
+    </div>
+    <div class="col-md-5" id="machine_calls">
+        <div class="row no-gutters cell header">
+            <div class="col-md-8 text-center">File d'attente</div>
             <div class="col-md-4 text-center">Zone de préparation</div>
         </div>
-        <div class="row no-gutters" id="machines"></div>
+        <div class="row no-gutters" id="machines">
+            <div class="col-md-8 column" id="col_slots"></div>
+            <div class="col-md-4 column" id="col_prep"></div>
+        </div>
     </div>
 
     <div class="col-md-offset-1 col-md-5">
-        <h1>Réserve de phases</h1>
         <div class="row header">
             <div class="col-md-2 text-center">CU H</div>
             <div class="col-md-2 text-center">CU HTM</div>
