@@ -82,12 +82,108 @@ function percentageChange(percentage){
     document.getElementById("drag-1").style.background = gradientString;
 }
 
-function loadData(){
-    var rawData = require("js/data.json");
+function loadJSON(callback) {
 
-    //load phases
-    //for()
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'js/data.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+function loadData(){
+    var rawData ={};
+    loadJSON(function (response) {
+        rawData = JSON.parse(response);
+
+        var machines = rawData.machine;
+
+        var col_names = document.createElement("div");
+        col_names.setAttribute("class","col-md-2 column");
+        var col_slots = document.createElement("div");
+        col_slots.setAttribute("class","col-md-6 column");
+        var col_prep = document.createElement("div");
+        col_prep.setAttribute("class","col-md-4 column");
+
+        //load phases
+        for(var machineID in machines) {
+            if (machines.hasOwnProperty(machineID)) {
+                var machine = machines[machineID];
+                console.log(machine);
+
+                /*var row = document.createElement("div");
+                row.setAttribute("class", "machine row");
+
+                var title = document.createElement("div");
+                title.setAttribute("class", "machine_title col-md-2");
+                title.innerHTML = machineID;
+
+                var slots = document.createElement("div");
+                slots.setAttribute("class","col-md-6t slot");
+                if(machine.emplacement_max > 4){
+                    var slotsBis = document.createElement("div");
+                    slotsBis.setAttribute("class","col-md-6 slot");
+                }
+
+                var preparation = document.createElement("div");
+                preparation.setAttribute("class","col-md-4 slot");
+
+
+                row.appendChild(title);
+                row.appendChild(slots);
+                if(machine.emplacement_max > 4){
+                    row.appendChild(slotsBis);
+                }
+                row.appendChild(preparation);
+
+                document.getElementById("machine_calls").appendChild(row);
+
+                */
+
+                var nameCell = document.createElement("div");
+                var name = document.createElement("span");
+                if(machine.emplacement_max > 4){
+                    nameCell.setAttribute("class","machine-large");
+                }else{
+                    nameCell.setAttribute("class","machine");
+                }
+                name.setAttribute("class","name");
+                name.innerHTML = machine.id;
+                nameCell.appendChild(name);
+
+                var slot = document.createElement("div");
+                if(machine.emplacement_max > 4){
+                    slot.setAttribute("class","slot machine-large");
+                }else{
+                    slot.setAttribute("class","slot");
+                }
+
+                var prep = document.createElement("div");
+                if(machine.emplacement_max > 4){
+                    prep.setAttribute("class","slot machine-large");
+                }else{
+                    prep.setAttribute("class","slot");
+                }
+
+
+                col_names.appendChild(nameCell);
+                col_slots.appendChild(slot);
+                col_prep.appendChild(prep);
+            }
+        }
+
+        var container = document.getElementById("machines");
+        container.appendChild(col_names);
+        container.appendChild(col_slots);
+        container.appendChild(col_prep);
+    });
 }
 
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
+loadData();

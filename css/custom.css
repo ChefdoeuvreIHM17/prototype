@@ -1,7 +1,34 @@
+.cell{
+    height: 75px;
+}
+
 .slot{
     height: 75px;
     border : 1px solid black;
     border-radius: 5px;
+}
+
+.machine{
+    height: 75px;
+    line-height:75px;
+}
+
+.machine-large{
+    height: 150px;
+    line-height:150px;
+}
+
+.header div{
+    line-height:75px;
+}
+
+.name{
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.column{
+    padding: 0;
 }
 
 .phase {
