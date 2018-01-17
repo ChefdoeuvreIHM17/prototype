@@ -103,12 +103,9 @@ function loadData(){
 
         var machines = rawData.machine;
 
-        var col_names = document.createElement("div");
-        col_names.setAttribute("class","col-md-2 column");
-        var col_slots = document.createElement("div");
-        col_slots.setAttribute("class","col-md-6 column");
-        var col_prep = document.createElement("div");
-        col_prep.setAttribute("class","col-md-4 column");
+        var col_names = document.getElementById("col_names");
+        var col_slots = document.getElementById("col_slots");
+        var col_prep = document.getElementById("col_prep");
 
         //load phases
         for(var machineID in machines) {
@@ -176,11 +173,6 @@ function loadData(){
                 col_prep.appendChild(prep);
             }
         }
-
-        var container = document.getElementById("machines");
-        container.appendChild(col_names);
-        container.appendChild(col_slots);
-        container.appendChild(col_prep);
     });
 }
 
