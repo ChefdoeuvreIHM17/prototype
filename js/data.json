@@ -86,7 +86,7 @@
   "85027":{
 	  "id": "85027",
 	  "priorite":0,
-	  "phases": [1, 10223, 3],
+	  "phases": [11203, 10223, 8701],
 	  "phase_en_attente":10223, 
 	  "jours_attente": 0,
 	  "numero": 20
@@ -94,14 +94,14 @@
   "83309":{
 	  "id": "83309",
 	  "priorite":2,
-	  "phases": [1, 5616, 3, 4],
+	  "phases": [11203, 5616, 10223, 8701, 10223],
 	  "phase_en_attente":5616, 
 	  "jours_attente": 101,
 	  "numero": 40
   }, 
   "86557":{
 	  "id": "86557",
-	  "priorite":2,
+	  "priorite":1,
 	  "phases": [1, 5977, 3],
 	  "phase_en_attente":5977, 
 	  "jours_attente": 14,
@@ -165,11 +165,110 @@
 		"temps":550,
 		"machine":"CU5AXE"
 	  },
-	  "14365":{
-		"id": "14365",
+	  "9449":{
+		"id": "9449",
 		"temps":540,
-		"machine":"CU5AXE"
+		"machine":"NH500C"
+	  },
+	  "8706":{
+		  "id": "8706",
+		  "temps":540,
+		  "machine":"NH500C"
+	  },
+	  "8705":{
+		  "id": "8705",
+		  "temps":540,
+		  "machine":"NH500C"
+	  },
+	  "6147":{
+		  "id": "6147",
+		  "temps":540,
+		  "machine":"AKARI-2"
+	  },
+	  "15570":{
+		  "id": "15570",
+		  "temps":540,
+		  "machine":"AKARI-2"
+	  },
+	  "14507":{
+		  "id": "14507",
+		  "temps":540,
+		  "machine":"AKARI-2"
+	  },
+	  "15223":{
+		  "id": "15223",
+		  "temps":540,
+		  "machine":"CUHGC"
+	  },
+	  "14153":{
+		  "id": "14153",
+		  "temps":540,
+		  "machine":"CUHGC"
+	  },
+	  "3348":{
+		  "id": "3348",
+		  "temps":540,
+		  "machine":"CUH"
+	  },
+	  "3292":{
+		  "id": "3292",
+		  "temps":540,
+		  "machine":"CUH"
+	  },
+	  "3348":{
+		  "id": "3348",
+		  "temps":540,
+		  "machine":"CUH"
+	  },
+	  "14252":{
+		  "id": "14252",
+		  "temps":540,
+		  "machine":"CUH"
+	  },
+	  "12137":{
+		  "id": "12137",
+		  "temps":540,
+		  "machine":"SH503"
+	  },
+	  "6068":{
+		  "id": "6068",
+		  "temps":540,
+		  "machine":"SH503"
+	  },
+	  "13878":{
+		  "id": "13878",
+		  "temps":540,
+		  "machine":"SH503"
+	  },
+	  "14000":{
+		  "id": "14000",
+		  "temps":540,
+		  "machine":"CU5AXE"
+	  },
+	  "15509":{
+		  "id": "15509",
+		  "temps":540,
+		  "machine":"CU5AXE"
+	  },
+	  "12211":{
+		  "id": "12211",
+		  "temps":540,
+		  "machine":"CU5AXE"
+	  },
+	  "15224":{
+		  "id": "15224",
+		  "temps":540,
+		  "machine":"CU5AXE"
+	  },
+	  "14368":{
+		  "id": "14368",
+		  "temps":540,
+		  "machine":"CU5AXE"
+	  },
+	  "13809":{
+		  "id": "13809",
+		  "temps":540,
+		  "machine":"CU5AXE"
 	  }
-
   }
 }
