@@ -3,9 +3,9 @@
 }
 
 .slots_machine{
-    height: 75px;
     border : 1px solid black;
     border-radius: 5px;
+    padding: 0;
 }
 
 .slot{
@@ -44,8 +44,21 @@
     background-color: #29e;
     border-radius: 5px;
     line-height: initial;
+    text-align: center
 }
 
+.OF {
+    height: 75px;
+    background-color: yellow;
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center;
+}
+
+.AOG {
+    background-color: red;
+    color: white;
+}
 
 #drag-1 {
     height: 22px;

@@ -59,7 +59,7 @@
       "type": ["CUH", "CUHTM", "SH503"],
 	  "emplacement_max":4, 
       "emplacement": [[12157, 0], [12137, 2], [6068, 8], [13878, 12]], 
-	  "phase_en_cours":12157,
+	  "phase_en_cours":12137,
 	  "temps_passe":10,
 	  "piece_nuit": 2
     },
