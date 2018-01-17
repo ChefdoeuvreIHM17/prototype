@@ -81,12 +81,9 @@ function getCssValuePrefix()
 }
 
 
-function percentageChange(percentage){
-    document.getElementById("drag-1").innerText = percentage;
-    document.getElementById("drag-1").style.backgroundColor = "red";
+function percentageChange(id, percentage){
     var gradientString = "linear-gradient(90deg, "+COLOR_PHASE_ACTIVE+"  "+percentage+"%, "+COLOR_PHASE_BACKGROUND+" 0%)";
-    console.log(gradientString);
-    document.getElementById("drag-1").style.background = gradientString;
+    document.getElementById(id).style.background = gradientString;
 }
 
 function loadJSON(callback) {
@@ -120,36 +117,10 @@ function loadData(){
                 var machine = machines[machineID];
                 console.log(machine);
 
-                /*var row = document.createElement("div");
-                row.setAttribute("class", "machine row");
-
-                var title = document.createElement("div");
-                title.setAttribute("class", "machine_title col-md-2");
-                title.innerHTML = machineID;
-
-                var slots = document.createElement("div");
-                slots.setAttribute("class","col-md-6t slot");
-                if(machine.emplacement_max > 4){
-                    var slotsBis = document.createElement("div");
-                    slotsBis.setAttribute("class","col-md-6 slot");
-                }
-
-                var preparation = document.createElement("div");
-                preparation.setAttribute("class","col-md-4 slot");
-
-
-                row.appendChild(title);
-                row.appendChild(slots);
-                if(machine.emplacement_max > 4){
-                    row.appendChild(slotsBis);
-                }
-                row.appendChild(preparation);
-
-                document.getElementById("machine_calls").appendChild(row);
-
-                */
+                //machine
 
                 var nameCell = document.createElement("div");
+                col_names.appendChild(nameCell);
                 var name = document.createElement("span");
                 if(machine.emplacement_max > 4){
                     nameCell.setAttribute("class","machine-large");
@@ -161,6 +132,7 @@ function loadData(){
                 nameCell.appendChild(name);
 
                 var slot = document.createElement("div");
+                col_slots.appendChild(slot);
                 if(machine.emplacement_max > 4){
                     slot.setAttribute("class","slot machine-large");
                 }else{
@@ -168,16 +140,30 @@ function loadData(){
                 }
 
                 var prep = document.createElement("div");
+                col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
                     prep.setAttribute("class","slot machine-large");
                 }else{
                     prep.setAttribute("class","slot");
                 }
 
+                //phases
+                for(var iPhase = 0; iPhase < machine.emplacement.length; iPhase++){
+                    var phase = machine.emplacement[iPhase];
+                    var phaseDiv = document.createElement("div");
+                    phaseDiv.setAttribute("class","col-md-3 phase draggable");
+                    phaseDiv.setAttribute("id",phase[0]);
+                    phaseDiv.innerHTML = phase[0]+"<br>"+phase[1]+" jour(s)";
+                    slot.appendChild(phaseDiv);
 
-                col_names.appendChild(nameCell);
-                col_slots.appendChild(slot);
-                col_prep.appendChild(prep);
+                    if(machine.phase_en_cours === phase[0] && typeof rawData.Phase[phase[0]] !== 'undefined'){
+                        var tempsTotal = rawData.Phase[phase[0]].temps;
+                        var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
+                        phaseDiv.innerHTML+="<br>"+percentage+"%";
+                        percentageChange(phase[0],percentage);
+                    }
+
+                }
             }
         }
     });
