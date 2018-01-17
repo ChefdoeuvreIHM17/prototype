@@ -4,7 +4,7 @@ const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 const COLOR_PHASE_ACTIVE = "rgb(128, 177, 133)";
 
 // target elements with the "draggable" class
-interact('.draggable')
+/*interact('.draggable')
     .draggable({
         // enable inertial throwing
         inertia: true,
@@ -36,7 +36,7 @@ interact('.draggable')
                 Math.pow(event.pageY - event.y0, 2) | 0))
                     .toFixed(2) + 'px');
         }
-    });
+    });*/
 
 function dragMoveListener (event) {
     var target = event.target,

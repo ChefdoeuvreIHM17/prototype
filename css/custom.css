@@ -44,7 +44,9 @@
     background-color: #29e;
     border-radius: 5px;
     line-height: initial;
-    text-align: center
+    text-align: center;
+    z-index: 4;
+
 }
 
 .OF {
@@ -62,14 +64,12 @@
 
 #drag-1 {
     height: 22px;
-    margin: 10%;
+    width: 180px;
+    margin: 2%;
 
     background-color: #29e;
     color: white;
 
     border-radius:5px;
-    padding: 4%;
 
-    -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px);
 }
