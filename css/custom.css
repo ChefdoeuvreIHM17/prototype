@@ -38,15 +38,13 @@
 
 
 #drag-1 {
-    width: 25%;
-    height: 100%;
-    min-height: 6.5em;
+    height: 22px;
     margin: 10%;
 
     background-color: #29e;
     color: white;
 
-    border-radius: 0.75em;
+    border-radius:5px;
     padding: 4%;
 
     -webkit-transform: translate(0px, 0px);
