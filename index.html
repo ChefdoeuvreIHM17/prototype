@@ -147,10 +147,21 @@
         });
         $('.slot').droppable({
 
-            accept: ".phase"
+            accept: ".phase",
             /*drop : function(){
                 alert('Action terminée !');
             }*/
+        });
+        $('.OF').draggable({
+            revert : 'invalid',
+            snap : true,
+            drag : function () {
+                $( "#SH50_prep_0" ).addClass( "prochaine");
+                $( "#SH50_prep_1" ).addClass( "prochaine");
+                $( "#SH500A_prep_0" ).addClass( "prochaine");
+                $( "#SH500A_prep_1" ).addClass( "prochaine");
+            }
+
         });
 
 

@@ -73,3 +73,12 @@
     border-radius:5px;
 
 }
+.slots_prepa {
+    border : 1px solid black;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.prochaine{
+    border : 5px solid green;
+}

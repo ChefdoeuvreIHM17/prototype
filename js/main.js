@@ -148,9 +148,9 @@ function loadData(){
                 var prep = document.createElement("div");
                 col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
-                    prep.setAttribute("class","col-md-12 slots_machine machine-large");
+                    prep.setAttribute("class","col-md-12 slots_prepa machine-large");
                 }else{
-                    prep.setAttribute("class","col-md-12 slots_machine");
+                    prep.setAttribute("class","col-md-12 slots_prepa");
                 }
                 for(var iPrepSlot=0;iPrepSlot<2 ;iPrepSlot++){
                     var slotPrep = document.createElement("div");
