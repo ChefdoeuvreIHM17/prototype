@@ -100,6 +100,15 @@ function loadJSON(callback) {
     xobj.send(null);
 }
 
+function pretifyTempsRestant(tempsTotal, temps_passe) {
+    var tempsRestant = tempsTotal - temps_passe;
+    var text = " heure restante";
+    if (tempsRestant > 1) {
+        text = " heures restantes";
+    }
+    return tempsRestant + text;
+}
+
 function loadData(){
     var rawData ={};
     loadJSON(function (response) {
@@ -173,7 +182,8 @@ function loadData(){
                     if(machine.phase_en_cours === phase[0] && typeof rawData.Phase[phase[0]] !== 'undefined'){
                         var tempsTotal = rawData.Phase[phase[0]].temps;
                         var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
-                        phaseDiv.innerHTML+="<br>"+percentage+"%";
+                        var tempsRestant = pretifyTempsRestant(tempsTotal, machine.temps_passe);
+                        phaseDiv.innerHTML += "<br>" + tempsRestant;
                         percentageChange(phase[0],percentage);
                     }
 
