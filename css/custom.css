@@ -2,10 +2,24 @@
     height: 75px;
 }
 
+.cell-large {
+    height: 152px;
+}
+
 .slots_machine{
     border : 1px solid black;
     border-radius: 5px;
     padding: 0;
+}
+
+.closed_machine {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: grey;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
 }
 
 .slot{
@@ -16,14 +30,22 @@
     padding: 0;
 }
 
-.machine{
+.nameWrap {
+    display: flex;
+    justify-content: center;
     height: 75px;
-    line-height:75px;
 }
 
-.machine-large{
+.nameWrap-large {
+    display: flex;
+    justify-content: center;
     height: 150px;
-    line-height:150px;
+}
+
+.machine {
+    align-self: center;
+    text-align: center;
+    /*line-height:75px;*/
 }
 
 .header div{
@@ -41,8 +63,9 @@
 
 .phase {
     height: 75px;
-    background-color: #29e;
+    background-color: rgb(158, 200, 216);
     border-radius: 5px;
+    border-width: 2px;
     line-height: initial;
     text-align: center;
     z-index: 4;
@@ -51,28 +74,11 @@
 
 .OF {
     height: 75px;
-    background-color: yellow;
     border-radius: 5px;
     line-height: initial;
     text-align: center;
 }
 
-.AOG {
-    background-color: red;
-    color: white;
-}
-
-#drag-1 {
-    height: 22px;
-    width: 180px;
-    margin: 2%;
-
-    background-color: #29e;
-    color: white;
-
-    border-radius:5px;
-
-}
 .slots_prepa {
     border : 1px solid black;
     border-radius: 5px;
@@ -86,3 +92,40 @@
 .prochaineRouge{
     border : 5px solid red;
 }
+
+.OF[priority="3"] {
+    background-color: #cddc39;
+}
+
+.OF[priority="2"] {
+    background-color: #ffeb3b;
+}
+
+.OF[priority="1"] {
+    background-color: #ff9800;
+}
+
+.OF[priority="0"] {
+    background-color: #f44336;
+}
+
+.phase[priority="0"] {
+    border-color: #cddc39;
+}
+
+.phase[priority="1"] {
+    border-color: #ffeb3b;
+}
+
+.phase[priority="2"] {
+    border-color: #ff9800;
+}
+
+.phase[priority="3"] {
+    border-color: #f44336;
+}
+
+.toggle {
+    width: 100%;
+}
+
