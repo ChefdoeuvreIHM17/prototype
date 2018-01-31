@@ -1,6 +1,6 @@
 function Test() {
     $(function () {
-        $(".phase").draggable({
+        $(".OF").draggable({
             revert: 'invalid',
             snap: true
         });

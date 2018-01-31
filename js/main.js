@@ -207,23 +207,23 @@ function loadData(){
                     prep.appendChild(slotPrep);
                 }
 
-                //phases
-                for (var iPhase = 0; iPhase < machine.emplacement.length; iPhase++) {
-                    var phase = machine.emplacement[iPhase];
-                    var phaseDiv = document.createElement("div");
-                    phaseDiv.setAttribute("class", "phase draggable");
-                    phaseDiv.setAttribute("id", phase[0]);
-                    phaseDiv.innerHTML = phase[0] + "<br>" + phase[1] + " jour(s)";
+                //OFs
+                for (var iOF = 0; iOF < machine.emplacement.length; iOF++) {
+                    var OF = machine.emplacement[iOF];
+                    var OFDiv = document.createElement("div");
+                    OFDiv.setAttribute("class", "OF draggable");
+                    OFDiv.setAttribute("id", OF[0]);
+                    OFDiv.innerHTML = OF[0] + "<br>" + OF[1] + " jour(s)";
 
-                    var mySlot = document.getElementById(machine.id + "_" + iPhase);
-                    mySlot.appendChild(phaseDiv);
+                    var mySlot = document.getElementById(machine.id + "_" + iOF);
+                    mySlot.appendChild(OFDiv);
 
-                    if (machine.phase_en_cours === phase[0] && typeof rawData.Phase[phase[0]] !== 'undefined') {
-                        var tempsTotal = rawData.Phase[phase[0]].temps;
+                    if (machine.OF_en_cours === OF[0] && typeof rawData.OF[OF[0]] !== 'undefined') {
+                        var tempsTotal = rawData.OF[OF[0]].temps;
                         var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
                         var tempsRestant = pretifyTempsRestant(tempsTotal, machine.temps_passe);
-                        phaseDiv.innerHTML += "<br>" + tempsRestant;
-                        percentageChange(phase[0],percentage);
+                        OFDiv.innerHTML += "<br>" + tempsRestant;
+                        percentageChange(OF[0], percentage);
                     }
 
                 }
