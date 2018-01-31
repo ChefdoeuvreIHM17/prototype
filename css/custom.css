@@ -2,10 +2,18 @@
     height: 75px;
 }
 
-.slot{
-    height: 75px;
+.slots_machine{
     border : 1px solid black;
     border-radius: 5px;
+    padding: 0;
+}
+
+.slot{
+    height: 75px;
+    border : 1px solid lightblue;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
 }
 
 .machine{
@@ -32,21 +40,49 @@
 }
 
 .phase {
-    height: 100%;
-    /*background: linear-gradient(90deg, rgb(128, 177, 133) 60%, rgb(158,200,216) 40%);*/
+    height: 75px;
+    background-color: #29e;
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center;
+    z-index: 4;
+
 }
 
+.OF {
+    height: 75px;
+    background-color: yellow;
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center;
+}
+
+.AOG {
+    background-color: red;
+    color: white;
+}
 
 #drag-1 {
     height: 22px;
-    margin: 10%;
+    width: 180px;
+    margin: 2%;
 
     background-color: #29e;
     color: white;
 
     border-radius:5px;
-    padding: 4%;
 
-    -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px);
+}
+.slots_prepa {
+    border : 1px solid black;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.prochaine{
+    border : 5px solid green;
+}
+
+.prochaineRouge{
+    border : 5px solid red;
 }

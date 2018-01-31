@@ -4,7 +4,7 @@ const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 const COLOR_PHASE_ACTIVE = "rgb(128, 177, 133)";
 
 // target elements with the "draggable" class
-interact('.draggable')
+/*interact('.draggable')
     .draggable({
         // enable inertial throwing
         inertia: true,
@@ -36,7 +36,7 @@ interact('.draggable')
                 Math.pow(event.pageY - event.y0, 2) | 0))
                     .toFixed(2) + 'px');
         }
-    });
+    });*/
 
 function dragMoveListener (event) {
     var target = event.target,
@@ -81,12 +81,9 @@ function getCssValuePrefix()
 }
 
 
-function percentageChange(percentage){
-    document.getElementById("drag-1").innerText = percentage;
-    document.getElementById("drag-1").style.backgroundColor = "red";
+function percentageChange(id, percentage){
     var gradientString = "linear-gradient(90deg, "+COLOR_PHASE_ACTIVE+"  "+percentage+"%, "+COLOR_PHASE_BACKGROUND+" 0%)";
-    console.log(gradientString);
-    document.getElementById("drag-1").style.background = gradientString;
+    document.getElementById(id).style.background = gradientString;
 }
 
 function loadJSON(callback) {
@@ -114,70 +111,94 @@ function loadData(){
         var col_slots = document.getElementById("col_slots");
         var col_prep = document.getElementById("col_prep");
 
-        //load phases
+        //load machines
         for(var machineID in machines) {
             if (machines.hasOwnProperty(machineID)) {
                 var machine = machines[machineID];
                 console.log(machine);
 
-                /*var row = document.createElement("div");
-                row.setAttribute("class", "machine row");
+                //machine
 
-                var title = document.createElement("div");
-                title.setAttribute("class", "machine_title col-md-2");
-                title.innerHTML = machineID;
-
-                var slots = document.createElement("div");
-                slots.setAttribute("class","col-md-6t slot");
-                if(machine.emplacement_max > 4){
-                    var slotsBis = document.createElement("div");
-                    slotsBis.setAttribute("class","col-md-6 slot");
-                }
-
-                var preparation = document.createElement("div");
-                preparation.setAttribute("class","col-md-4 slot");
-
-
-                row.appendChild(title);
-                row.appendChild(slots);
-                if(machine.emplacement_max > 4){
-                    row.appendChild(slotsBis);
-                }
-                row.appendChild(preparation);
-
-                document.getElementById("machine_calls").appendChild(row);
-
-                */
-
-                var nameCell = document.createElement("div");
+                var nameDiv = document.createElement("div");
+                col_names.appendChild(nameDiv);
                 var name = document.createElement("span");
                 if(machine.emplacement_max > 4){
-                    nameCell.setAttribute("class","machine-large");
+                    nameDiv.setAttribute("class","machine-large");
                 }else{
-                    nameCell.setAttribute("class","machine");
+                    nameDiv.setAttribute("class","machine");
                 }
                 name.setAttribute("class","name");
                 name.innerHTML = machine.id;
-                nameCell.appendChild(name);
+                nameDiv.appendChild(name);
 
-                var slot = document.createElement("div");
+                var slots_machine = document.createElement("div");
+                col_slots.appendChild(slots_machine);
                 if(machine.emplacement_max > 4){
-                    slot.setAttribute("class","slot machine-large");
+                    slots_machine.setAttribute("class","col-md-12 slots_machine machine-large");
                 }else{
-                    slot.setAttribute("class","slot");
+                    slots_machine.setAttribute("class","col-md-12 slots_machine");
+                }
+                for(var iSlot=0;iSlot<machine.emplacement_max;iSlot++){
+                    var slot = document.createElement("div");
+                    slot.setAttribute("class","slot col-md-3");
+                    slot.setAttribute("id",machine.id+"_"+iSlot);
+                    slots_machine.appendChild(slot);
                 }
 
                 var prep = document.createElement("div");
+                col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
-                    prep.setAttribute("class","slot machine-large");
+                    prep.setAttribute("class","col-md-12 slots_prepa machine-large");
                 }else{
-                    prep.setAttribute("class","slot");
+                    prep.setAttribute("class","col-md-12 slots_prepa");
+                }
+                for(var iPrepSlot=0;iPrepSlot<2 ;iPrepSlot++){
+                    var slotPrep = document.createElement("div");
+                    slotPrep.setAttribute("class","slot col-md-6");
+                    slotPrep.setAttribute("id",machine.id+"_prep_"+iPrepSlot);
+                    prep.appendChild(slotPrep);
                 }
 
+                //phases
+                for(var iPhase = 0; iPhase < machine.emplacement.length; iPhase++){
+                    var phase = machine.emplacement[iPhase];
+                    var phaseDiv = document.createElement("div");
+                    phaseDiv.setAttribute("class","phase draggable");
+                    phaseDiv.setAttribute("id",phase[0]);
+                    phaseDiv.innerHTML = phase[0]+"<br>"+phase[1]+" jour(s)";
 
-                col_names.appendChild(nameCell);
-                col_slots.appendChild(slot);
-                col_prep.appendChild(prep);
+                    var mySlot = document.getElementById(machine.id+"_"+iPhase);
+                    mySlot.appendChild(phaseDiv);
+
+                    if(machine.phase_en_cours === phase[0] && typeof rawData.Phase[phase[0]] !== 'undefined'){
+                        var tempsTotal = rawData.Phase[phase[0]].temps;
+                        var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
+                        phaseDiv.innerHTML+="<br>"+percentage+"%";
+                        percentageChange(phase[0],percentage);
+                    }
+
+                }
+            }
+        }
+
+
+        var OFs = rawData.OF;
+        //load OFs
+        var i = 0;
+        for(var OFID in OFs) {
+            if (OFs.hasOwnProperty(OFID)) {
+                var OF = OFs[OFID];
+                var OFDiv = document.createElement("div");
+                OFDiv.innerHTML = OF.id+" "+OF.phase_en_attente+"  "+OF.numero+"<br>"+OF.jours_attente+" jours";
+                if(OF.priorite === 2){
+                    OFDiv.setAttribute("class","OF AOG");
+                }else{
+                    OFDiv.setAttribute("class","OF");
+                }
+
+                var slotDiv = document.getElementById("CU_H_"+i); //fixme c'est un hack dégueulasse
+                i++;
+                slotDiv.appendChild(OFDiv);
             }
         }
     });
