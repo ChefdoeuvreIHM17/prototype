@@ -100,6 +100,22 @@ function loadJSON(callback) {
     xobj.send(null);
 }
 
+function toggleMachine(toggleID) {
+    var toggle = document.getElementById(toggleID);
+    var machineID = toggleID.replace("toggle", "");
+    if (toggle !== null) {
+        console.log("toggle" + machineID, toggle.checked);
+        console.log("#" + machineID + ".closed_machine");
+        if (toggle.checked === true) {
+            console.log("JE CACHE");
+            document.querySelector("#" + machineID + ".closed_machine").style.visibility = "hidden";
+        } else {
+            console.log("JE MONTRE");
+            document.querySelector("#" + machineID + ".closed_machine").style.visibility = "visible";
+        }
+    }
+}
+
 function loadData(){
     var rawData ={};
     loadJSON(function (response) {
@@ -119,19 +135,37 @@ function loadData(){
 
                 //machine
 
+                var nameWrap = document.createElement("div");
                 var nameDiv = document.createElement("div");
-                col_names.appendChild(nameDiv);
+                nameWrap.appendChild(nameDiv);
+                col_names.appendChild(nameWrap);
                 var name = document.createElement("span");
                 if(machine.emplacement_max > 4){
-                    nameDiv.setAttribute("class","machine-large");
+                    nameDiv.setAttribute("class", "machine");
+                    nameWrap.setAttribute("class", "nameWrap-large");
                 }else{
                     nameDiv.setAttribute("class","machine");
+                    nameWrap.setAttribute("class", "nameWrap");
                 }
                 name.setAttribute("class","name");
                 name.innerHTML = machine.id;
                 nameDiv.appendChild(name);
+                var closeMachineToggle = document.createElement("input");
+                nameDiv.innerHTML += "<br>";
+                closeMachineToggle.setAttribute("checked", "");
+                closeMachineToggle.setAttribute("data-toggle", "toggle");
+                closeMachineToggle.setAttribute("type", "checkbox");
+                closeMachineToggle.setAttribute("data-on", "Activée");
+                closeMachineToggle.setAttribute("data-off", "Désactivée");
+                closeMachineToggle.setAttribute("data-onstyle", "success");
+                closeMachineToggle.onchange = function () {
+                    toggleMachine(this.id);
+                };
+                closeMachineToggle.setAttribute("id", "toggle" + machineID);
+                nameDiv.appendChild(closeMachineToggle);
 
                 var slots_machine = document.createElement("div");
+                slots_machine.setAttribute("id", "slots_machine" + machineID);
                 col_slots.appendChild(slots_machine);
                 if(machine.emplacement_max > 4){
                     slots_machine.setAttribute("class","col-md-12 slots_machine machine-large");
@@ -144,11 +178,16 @@ function loadData(){
                     slot.setAttribute("id",machine.id+"_"+iSlot);
                     slots_machine.appendChild(slot);
                 }
+                var closed_machine = document.createElement("div");
+                closed_machine.setAttribute("class", "closed_machine");
+                closed_machine.setAttribute("id", machineID);
+                closed_machine.style.visibility = "hidden";
+                slots_machine.appendChild(closed_machine);
 
                 var prep = document.createElement("div");
                 col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
-                    prep.setAttribute("class","col-md-12 slots_prepa machine-large");
+                    prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
                 }else{
                     prep.setAttribute("class","col-md-12 slots_prepa");
                 }
@@ -190,11 +229,8 @@ function loadData(){
                 var OF = OFs[OFID];
                 var OFDiv = document.createElement("div");
                 OFDiv.innerHTML = OF.id+" "+OF.phase_en_attente+"  "+OF.numero+"<br>"+OF.jours_attente+" jours";
-                if(OF.priorite === 2){
-                    OFDiv.setAttribute("class","OF AOG");
-                }else{
-                    OFDiv.setAttribute("class","OF");
-                }
+                OFDiv.setAttribute("class", "OF");
+                OFDiv.setAttribute("priority", OF.priorite);
 
                 var slotDiv = document.getElementById("CU_H_"+i); //fixme c'est un hack dégueulasse
                 i++;
