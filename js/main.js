@@ -103,7 +103,10 @@ function loadJSON(callback) {
 function pretifyTempsRestant(tempsTotal, temps_passe) {
     var tempsRestant = tempsTotal - temps_passe;
     var text = " heure restante";
-    if (tempsRestant > 1) {
+    if (tempsRestant > 48) {
+        tempsRestant = (tempsRestant / 24).toFixed(1);
+        text = " jours restants"
+    } else if (tempsRestant > 1) {
         text = " heures restantes";
     }
     return tempsRestant + text;
@@ -140,10 +143,8 @@ function loadData(){
         for(var machineID in machines) {
             if (machines.hasOwnProperty(machineID)) {
                 var machine = machines[machineID];
-                console.log(machine);
 
                 //machine
-
                 var nameWrap = document.createElement("div");
                 var nameDiv = document.createElement("div");
                 nameWrap.appendChild(nameDiv);
@@ -219,7 +220,8 @@ function loadData(){
                     mySlot.appendChild(OFDiv);
 
                     if (machine.OF_en_cours === OF[0] && typeof rawData.OF[OF[0]] !== 'undefined') {
-                        var tempsTotal = rawData.OF[OF[0]].temps;
+                        var article = rawData.OF[OF[0]].article;
+                        var tempsTotal = rawData.Article[article].temps;
                         var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
                         var tempsRestant = pretifyTempsRestant(tempsTotal, machine.temps_passe);
                         OFDiv.innerHTML += "<br>" + tempsRestant;
@@ -238,7 +240,7 @@ function loadData(){
             if (OFs.hasOwnProperty(OFID)) {
                 var OF = OFs[OFID];
                 var OFDiv = document.createElement("div");
-                OFDiv.innerHTML = OF.id + " " + OF.phase_en_attente + "  " + OF.numero + "<br>" + OF.jours_attente + " jours";
+                OFDiv.innerHTML = OF.id + " " + OF.phase_en_attente + "  " + OF.phase_en_cours + "<br>" + OF.jours_attente + " jours";
                 OFDiv.setAttribute("class", "OF");
                 OFDiv.setAttribute("priority", OF.priorite);
 
