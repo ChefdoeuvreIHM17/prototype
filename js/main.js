@@ -240,15 +240,18 @@ function loadData(){
         for (var OFID in OFs) {
             if (OFs.hasOwnProperty(OFID)) {
                 var OF = OFs[OFID];
-                var OFDiv = document.createElement("div");
-                OFDiv.innerHTML = OF.id + " " + OF.phase_en_attente + "  " + OF.phase_en_cours + "<br>" + OF.jours_attente + " jours";
-                OFDiv.setAttribute("class", "OF");
-                OFDiv.setAttribute("priority", OF.priorite);
+                if (OF.sur_machine === 0) {
+                    var OFDiv = document.createElement("div");
+                    OFDiv.innerHTML = OF.id + " " + OF.article + "  " + OF.phase_en_cours + "<br>" + OF.jours_attente + " jours";
+                    OFDiv.setAttribute("class", "OF");
+                    OFDiv.setAttribute("priority", OF.priorite);
 
-                var slotDiv = document.getElementById("CU_H_" + i); //fixme c'est un hack dégueulasse
-                i++;
-                slotDiv.appendChild(OFDiv);
+                    var slotDiv = document.getElementById("CU_H_" + i); //fixme c'est un hack dégueulasse
+                    i++;
+                    slotDiv.appendChild(OFDiv);
+                }
             }
+
         }
     });
 }
