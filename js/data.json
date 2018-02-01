@@ -88,263 +88,301 @@
 	  "priorite":0,
 	  "article":10223,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":0
   },
   "85028":{
 	  "id": "85028",
 	  "priorite":0,
 	  "article":12023,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85029":{
 	  "id": "85029",
 	  "priorite":0,
 	  "article":8701,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85030":{
 	  "id": "85030",
 	  "priorite":0,
 	  "article":15570,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85031":{
 	  "id": "85031",
 	  "priorite":0,
 	  "article":15688,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85032":{
 	  "id": "85032",
 	  "priorite":0,
 	  "article":3262,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85033":{
 	  "id": "85033",
 	  "priorite":0,
 	  "article":12157,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85034":{
 	  "id": "85034",
 	  "priorite":0,
 	  "article":15573,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85035":{
 	  "id": "85035",
 	  "priorite":0,
 	  "article":14365,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "83309":{
 	  "id": "83309",
 	  "priorite":2,
 	  "article":5616,
 	  "jours_attente": 101,
-	  "phase_en_cours": 40
+	  "phase_en_cours": 40,
+	  "sur_machine":0
   }, 
   "86557":{
 	  "id": "86557",
 	  "priorite":1,
 	  "article":5977,
 	  "jours_attente": 14,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":0
   },
   "85036":{
 	  "id": "85036",
 	  "priorite":0,
 	  "article":12020,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85037":{
 	  "id": "85037",
 	  "priorite":0,
 	  "article":12019,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85038":{
 	  "id": "85038",
 	  "priorite":0,
 	  "article":14506,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85039":{
 	  "id": "85039",
 	  "priorite":0,
 	  "article":9449,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85040":{
 	  "id": "85040",
 	  "priorite":0,
 	  "article":8706,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85041":{
 	  "id": "85041",
 	  "priorite":0,
 	  "article":8705,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85042":{
 	  "id": "85042",
 	  "priorite":0,
 	  "article":6147,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },"85043":{
 	  "id": "85043",
 	  "priorite":0,
 	  "article":15570,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85044":{
 	  "id": "85044",
 	  "priorite":0,
 	  "article":14507,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85045":{
 	  "id": "85045",
 	  "priorite":0,
 	  "article":15223,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85046":{
 	  "id": "85046",
 	  "priorite":0,
 	  "article":14153,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85047":{
 	  "id": "85047",
 	  "priorite":0,
 	  "article":3348,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85048":{
 	  "id": "85048",
 	  "priorite":0,
 	  "article":3292,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85049":{
 	  "id": "85049",
 	  "priorite":0,
 	  "article":14252,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },"85050":{
 	  "id": "85050",
 	  "priorite":0,
 	  "article":12137,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85051":{
 	  "id": "85051",
 	  "priorite":0,
 	  "article":6068,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85052":{
 	  "id": "85052",
 	  "priorite":0,
 	  "article":13878,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85053":{
 	  "id": "85053",
 	  "priorite":0,
 	  "article":14000,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85054":{
 	  "id": "85054",
 	  "priorite":0,
 	  "article":15509,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85055":{
 	  "id": "85055",
 	  "priorite":0,
 	  "article":12211,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85056":{
 	  "id": "85056",
 	  "priorite":0,
 	  "article":14000,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },"85057":{
 	  "id": "85057",
 	  "priorite":0,
 	  "article":15509,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+		  "sur_machine":1
   },
   "85058":{
 	  "id": "85058",
 	  "priorite":0,
 	  "article":15224,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "85059":{
 	  "id": "85059",
 	  "priorite":0,
 	  "article":15224,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85060":{
 	  "id": "85060",
 	  "priorite":0,
 	  "article":14368,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85061":{
 	  "id": "85061",
 	  "priorite":0,
 	  "article":13809,
 	  "jours_attente": 0,
-	  "phase_en_cours": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":1
   },
   "85062":{
 	  "id": "85062",
 	  "priorite":0,
 	  "article":13809,
 	  "jours_attente": 0,
-	  "phase_en_cours": 10
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   }
   
   },
