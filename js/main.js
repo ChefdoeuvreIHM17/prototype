@@ -189,9 +189,10 @@ function loadData(){
                     slots_machine.appendChild(slot);
                 }
                 var closed_machine = document.createElement("div");
-                closed_machine.setAttribute("class", "closed_machine");
+                closed_machine.setAttribute("class", "closed_machine text-center");
                 closed_machine.setAttribute("id", machineID);
                 closed_machine.style.visibility = "hidden";
+                closed_machine.innerHTML = "<h1>Fermée</h1>";
                 slots_machine.appendChild(closed_machine);
 
                 var prep = document.createElement("div");

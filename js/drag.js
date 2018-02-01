@@ -1,3 +1,7 @@
+window.onload = function (e) {
+    Test();
+};
+
 function Test() {
     $(function () {
         $(".OF").draggable({
