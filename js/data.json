@@ -4,8 +4,8 @@
       "id": "NH5000B",
       "type": ["CUH", "CUHTM", "NH5000B"],
 	  "emplacement_max":4, 
-      "emplacement": [[12023, 6], [12020, 7], [12019, 7], [14506, 8]], 
-	  "phase_en_cours":12023,
+      "emplacement": [[85028, 6], [85036, 7], [85037, 7], [85038, 8]],
+	  "OF_en_cours":85028,
 	  "temps_passe":100,
 	  "piece_nuit": 1
     },
@@ -13,8 +13,8 @@
       "id": "NH5000A",
       "type": ["CUH", "CUHTM", "NH500C"],
 	  "emplacement_max":4, 
-      "emplacement": [[8701, 2], [9449, 7], [8706, 7], [8705, 7]], 
-	  "phase_en_cours":8701,
+      "emplacement": [[85029, 2], [85039, 7], [85040, 7], [85041, 7]],
+	  "OF_en_cours":85029,
 	  "temps_passe":120,
 	  "piece_nuit": 0
     },
@@ -22,8 +22,8 @@
       "id": "SH500C",
       "type": ["CUH", "CUHTM", "SH500C", "AKARI-2"],
 	  "emplacement_max":4, 
-      "emplacement": [[15570, 2], [6147, 7], [15570, 9], [14507, 15]], 
-	  "phase_en_cours":15570,
+      "emplacement": [[85030, 2], [85042, 7], [85043, 9], [85044, 15]],
+	  "OF_en_cours":85030,
 	  "temps_passe":150,
 	  "piece_nuit": 1
     }, 
@@ -31,8 +31,8 @@
       "id": "HM800",
       "type": ["CUH", "CUHTM", "CUHGC", "CUHGCTM"],
 	  "emplacement_max":4, 
-      "emplacement": [[15688, 9], [15223, 15], [14153, 1]], 
-	  "phase_en_cours":15688,
+      "emplacement": [[85031, 9], [85045, 15], [85046, 1]],
+	  "OF_en_cours":85031,
 	  "temps_passe":90,
 	  "piece_nuit": 1
     }, 
@@ -41,7 +41,7 @@
       "type": ["CUH", "CUHTM"],
 	  "emplacement_max":4, 
       "emplacement": [], 
-	  "phase_en_cours":0,
+	  "OF_en_cours":0,
 	  "temps_passe":0,
 	  "piece_nuit": 0
     },
@@ -49,8 +49,8 @@
       "id": "SH500A",
       "type": ["CUH", "CUHTM"],
 	  "emplacement_max":4, 
-      "emplacement": [[3262, 7], [3348, 9], [3292, 0], [14252, 2]], 
-	  "phase_en_cours":3262,
+      "emplacement": [[85032, 7], [85047, 9], [85048, 0], [85049, 2]],
+	  "OF_en_cours":85032,
 	  "temps_passe":0,
 	  "piece_nuit": 2
     },
@@ -58,8 +58,8 @@
       "id": "SH503",
       "type": ["CUH", "CUHTM", "SH503"],
 	  "emplacement_max":4, 
-      "emplacement": [[12157, 0], [12137, 2], [6068, 8], [13878, 12]], 
-	  "phase_en_cours":12137,
+      "emplacement": [[85033, 0], [85050, 2], [85051, 8], [85052, 12]],
+	  "OF_en_cours":85033,
 	  "temps_passe":10,
 	  "piece_nuit": 2
     },
@@ -67,8 +67,8 @@
       "id": "Clock1",
       "type": ["CU5AXE", "Clock1300"],
       "emplacement_max":8, 
-      "emplacement": [[15573, 0], [14000, 1], [15509, 2], [12211, 2], [14000, 5], [15509, 19], [15224, 40], [15224, 42]], 
-	  "phase_en_cours":15573,
+      "emplacement": [[85034, 0], [85053, 1], [85054, 2], [85055, 2], [85056, 5], [85057, 19], [85058, 40], [85059, 42]],
+	  "OF_en_cours":85034,
 	  "temps_passe":200,
 	  "piece_nuit": 0
     },
@@ -76,8 +76,8 @@
       "id": "Clock2",
       "type": ["CU5AXE", "Clock1300"],
       "emplacement_max":8, 
-      "emplacement": [[14365, 2], [14368, 3], [13809, 14], [13809, 15]], 
-	  "phase_en_cours":14365,
+      "emplacement": [[85035, 2], [85060, 3], [85061, 14], [85062, 15]],
+	  "OF_en_cours":85035,
 	  "temps_passe":25,
 	  "piece_nuit": 0
     }
@@ -86,187 +86,611 @@
   "85027":{
 	  "id": "85027",
 	  "priorite":0,
-	  "phases": [11203, 10223, 8701],
-	  "phase_en_attente":10223, 
+	  "article":10223,
 	  "jours_attente": 0,
-	  "numero": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":0
+  },
+  "85028":{
+	  "id": "85028",
+	  "priorite":0,
+	  "article":12023,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85029":{
+	  "id": "85029",
+	  "priorite":0,
+	  "article":8701,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85030":{
+	  "id": "85030",
+	  "priorite":0,
+	  "article":15570,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85031":{
+	  "id": "85031",
+	  "priorite":0,
+	  "article":15688,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85032":{
+	  "id": "85032",
+	  "priorite":0,
+	  "article":3262,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85033":{
+	  "id": "85033",
+	  "priorite":0,
+	  "article":12157,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85034":{
+	  "id": "85034",
+	  "priorite":0,
+	  "article":15573,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85035":{
+	  "id": "85035",
+	  "priorite":0,
+	  "article":14365,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   },
   "83309":{
 	  "id": "83309",
 	  "priorite":2,
-	  "phases": [11203, 5616, 10223, 8701, 10223],
-	  "phase_en_attente":5616, 
+	  "article":5616,
 	  "jours_attente": 101,
-	  "numero": 40
+	  "phase_en_cours": 40,
+	  "sur_machine":0
   }, 
   "86557":{
 	  "id": "86557",
 	  "priorite":1,
-	  "phases": [1, 5977, 3],
-	  "phase_en_attente":5977, 
+	  "article":5977,
 	  "jours_attente": 14,
-	  "numero": 20
+	  "phase_en_cours": 20,
+	  "sur_machine":0
+  },
+  "85036":{
+	  "id": "85036",
+	  "priorite":0,
+	  "article":12020,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85037":{
+	  "id": "85037",
+	  "priorite":0,
+	  "article":12019,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85038":{
+	  "id": "85038",
+	  "priorite":0,
+	  "article":14506,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85039":{
+	  "id": "85039",
+	  "priorite":0,
+	  "article":9449,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85040":{
+	  "id": "85040",
+	  "priorite":0,
+	  "article":8706,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85041":{
+	  "id": "85041",
+	  "priorite":0,
+	  "article":8705,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85042":{
+	  "id": "85042",
+	  "priorite":0,
+	  "article":6147,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },"85043":{
+	  "id": "85043",
+	  "priorite":0,
+	  "article":15570,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85044":{
+	  "id": "85044",
+	  "priorite":0,
+	  "article":14507,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85045":{
+	  "id": "85045",
+	  "priorite":0,
+	  "article":15223,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85046":{
+	  "id": "85046",
+	  "priorite":0,
+	  "article":14153,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85047":{
+	  "id": "85047",
+	  "priorite":0,
+	  "article":3348,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85048":{
+	  "id": "85048",
+	  "priorite":0,
+	  "article":3292,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85049":{
+	  "id": "85049",
+	  "priorite":0,
+	  "article":14252,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },"85050":{
+	  "id": "85050",
+	  "priorite":0,
+	  "article":12137,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85051":{
+	  "id": "85051",
+	  "priorite":0,
+	  "article":6068,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85052":{
+	  "id": "85052",
+	  "priorite":0,
+	  "article":13878,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85053":{
+	  "id": "85053",
+	  "priorite":0,
+	  "article":14000,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85054":{
+	  "id": "85054",
+	  "priorite":0,
+	  "article":15509,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85055":{
+	  "id": "85055",
+	  "priorite":0,
+	  "article":12211,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85056":{
+	  "id": "85056",
+	  "priorite":0,
+	  "article":14000,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },"85057":{
+	  "id": "85057",
+	  "priorite":0,
+	  "article":15509,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+		  "sur_machine":1
+  },
+  "85058":{
+	  "id": "85058",
+	  "priorite":0,
+	  "article":15224,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
+  },
+  "85059":{
+	  "id": "85059",
+	  "priorite":0,
+	  "article":15224,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85060":{
+	  "id": "85060",
+	  "priorite":0,
+	  "article":14368,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85061":{
+	  "id": "85061",
+	  "priorite":0,
+	  "article":13809,
+	  "jours_attente": 0,
+	  "phase_en_cours": 20,
+	  "sur_machine":1
+  },
+  "85062":{
+	  "id": "85062",
+	  "priorite":0,
+	  "article":13809,
+	  "jours_attente": 0,
+	  "phase_en_cours": 10,
+	  "sur_machine":1
   }
   
   },
-  "Phase":{
+  "Article":{
 	  "441":{
 		"id": "441",
-		"temps":300,
+	  	"phases": [[10, 400], [20, 300], [30, 120], [40, 150], [50, 350]],
 		"machine":"CUGCTM"
 	  },
 	  "5977":{
 		"id": "5977",
+		  "phases": [
+			  [
+				  10,
+				  120
+			  ],
+			  [
+				  20,
+				  320
+			  ]
+		  ],
 		"temps":600,
 		"machine":"CUGC"
 	  }, 
 	  "5616":{
 		"id": "5616",
+		  "phases": [
+			  [
+				  10,
+				  100
+			  ],
+			  [
+				  20,
+				  50
+			  ],
+			  [
+				  30,
+				  300
+			  ],
+			  [
+				  40,
+				  150
+			  ]
+		  ],
 		"temps":240,
 		"machine":"CU5AXE"
 	  }, 
 	  "10223":{
 		"id": "10223",
+		  "phases": [
+			  [
+				  10,
+				  240
+			  ],
+			  [
+				  20,
+				  340
+			  ]
+		  ],
 		"temps":540,
 		"machine":"CU5AXE"
 	  },
 	  "12023":{
 		"id": "12023",
+		  "phases": [
+			  [
+				  10,
+				  520
+			  ],
+			  [
+				  20,
+				  310
+			  ],
+			  [
+				  30,
+				  50
+			  ]
+		  ],
 		"temps":700,
 		"machine":"NH5000B"
 	  },
 	  "8701":{
 		"id": "8701",
+		  "phases": [
+			  [
+				  10,
+				  600
+			  ],
+			  [
+				  20,
+				  300
+			  ],
+			  [
+				  30,
+				  120
+			  ],
+			  [
+				  40,
+				  210
+			  ]
+		  ],
 		"temps":540,
 		"machine":"SH500C"
 	  },
 	  "15570":{
 		"id": "15570",
+		  "phases": [
+			  [
+				  10,
+				  340
+			  ],
+			  [
+				  20,
+				  240
+			  ],
+			  [
+				  30,
+				  200
+			  ]
+		  ],
 		"temps":360,
 		"machine":"AKARI-2"
 	  },
-	  "15688":{
-		"id": "15688",
+	  "15688": {
+		  "id": "15688",
+		  "phases": [
+			  [
+				  10,
+				  410
+			  ],
+			  [
+				  20,
+				  350
+			  ],
+			  [
+				  30,
+				  170
+			  ],
+			  [
+				  40,
+				  260
+			  ]
+		  ],
+		  "temps": 540,
+		  "machine": "AKARI-2"
+	  },
+	  "15668":{
+		"id": "15668",
+		  "phases": [[10, 150], [20, 340]],
 		"temps":800,
 		"machine":"CUHGC"
 	  },
 	  "3262":{
 		"id": "3262",
+		  "phases": [[10, 450], [20, 300]],
 		"temps":200,
 		"machine":"CUHTM"
 	  },
 	  "12137":{
 		"id": "12137",
+		  "phases": [[10, 210], [20, 450], [30, 200]],
 		"temps":610,
 		"machine":"SH503"
 	  },
+	  "12157": {
+		  "id": "12157",
+		  "phases": [
+			  [
+				  10,
+				  210
+			  ],
+			  [
+				  20,
+				  190
+			  ],
+			  [
+				  30,
+				  450
+			  ]
+		  ],
+		  "temps": 540,
+		  "machine": "SH503"
+	  },
 	  "15573":{
 		"id": "15573",
+		  "phases": [[10, 150], [20, 190], [30, 460]],
 		"temps":550,
 		"machine":"CU5AXE"
 	  },
 	  "9449":{
 		"id": "9449",
+		  "phases": [[10, 240], [20, 360], [30, 300], [40, 140]],
 		"temps":540,
 		"machine":"NH500C"
 	  },
 	  "8706":{
 		  "id": "8706",
+		  "phases": [[10, 260], [20, 250], [30, 100]],
 		  "temps":540,
 		  "machine":"NH500C"
 	  },
 	  "8705":{
 		  "id": "8705",
+		  "phases": [[10, 410], [20, 350], [30, 140], [40, 250]],
 		  "temps":540,
 		  "machine":"NH500C"
 	  },
 	  "6147":{
 		  "id": "6147",
-		  "temps":540,
-		  "machine":"AKARI-2"
-	  },
-	  "15570":{
-		  "id": "15570",
+		  "phases": [[10, 120], [20, 360]],
 		  "temps":540,
 		  "machine":"AKARI-2"
 	  },
 	  "14507":{
 		  "id": "14507",
+		  "phases": [[10, 180], [20, 320], [30, 800], [40, 350]],
 		  "temps":540,
 		  "machine":"AKARI-2"
 	  },
 	  "15223":{
 		  "id": "15223",
+		  "phases": [[10, 520], [20, 230], [30, 140]],
 		  "temps":540,
 		  "machine":"CUHGC"
 	  },
 	  "14153":{
 		  "id": "14153",
+		  "phases": [[10, 410], [20, 150], [30, 600], [40, 420]],
 		  "temps":540,
 		  "machine":"CUHGC"
 	  },
 	  "3348":{
 		  "id": "3348",
+		  "phases": [[10, 320], [20, 240]],
 		  "temps":540,
 		  "machine":"CUH"
+	  },
+	  "14365": {
+		  "id": "14365",
+		  "phases": [
+			  [
+				  10,
+				  300
+			  ],
+			  [
+				  20,
+				  120
+			  ]
+		  ],
+		  "temps": 540,
+		  "machine": "CUH"
 	  },
 	  "3292":{
 		  "id": "3292",
-		  "temps":540,
-		  "machine":"CUH"
-	  },
-	  "3348":{
-		  "id": "3348",
+		  "phases": [[10, 450], [20, 310], [30, 230], [40, 90]],
 		  "temps":540,
 		  "machine":"CUH"
 	  },
 	  "14252":{
 		  "id": "14252",
+		  "phases": [[10, 360], [20, 240], [30, 300], [40, 170]],
 		  "temps":540,
 		  "machine":"CUH"
 	  },
-	  "12137":{
-		  "id": "12137",
-		  "temps":540,
-		  "machine":"SH503"
-	  },
 	  "6068":{
 		  "id": "6068",
+		  "phases": [[10, 150], [20, 300], [30, 230], [40, 400]],
 		  "temps":540,
 		  "machine":"SH503"
 	  },
 	  "13878":{
 		  "id": "13878",
-		  "temps":540,
+		  "phases": [[10, 270], [20, 320], [30, 240], [40, 90], [50, 300]],
 		  "machine":"SH503"
 	  },
 	  "14000":{
 		  "id": "14000",
+		  "phases": [[10, 450], [20, 600], [30, 320], [40, 190]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  },
 	  "15509":{
 		  "id": "15509",
+		  "phases": [[10, 150], [20, 360], [30, 320], [40, 430], [50, 340]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  },
 	  "12211":{
 		  "id": "12211",
+		  "phases": [[10, 320], [20, 310]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  },
 	  "15224":{
 		  "id": "15224",
+		  "phases": [[10, 100], [20, 350], [30, 420], [40, 130], [50, 310]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  },
 	  "14368":{
 		  "id": "14368",
+		  "phases": [[10, 150], [20, 450], [30, 70], [40, 420], [50, 560]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  },
 	  "13809":{
 		  "id": "13809",
+		  "phases": [[10, 520], [20, 320], [30, 180]],
 		  "temps":540,
 		  "machine":"CU5AXE"
 	  }
