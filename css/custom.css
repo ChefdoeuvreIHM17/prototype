@@ -1,9 +1,9 @@
 .cell{
-    height: 75px;
+    height: 79px;
 }
 
 .cell-large {
-    height: 152px;
+    height: 156px;
 }
 
 .slots_machine {
@@ -22,7 +22,7 @@
 }
 
 .slot{
-    height: 75px;
+    height: 77px;
     border: 1px solid lightblue;
     border-radius: 5px;
     margin: 0;
@@ -108,19 +108,19 @@
     background-color: #f44336;
 }
 
-.OF[priority="3"] {
+.phase[priority="3"] {
     border-color: #cddc39;
 }
 
-.OF[priority="2"] {
+.phase[priority="2"] {
     border-color: #ffeb3b;
 }
 
-.OF[priority="1"] {
+.phase[priority="1"] {
     border-color: #ff9800;
 }
 
-.OF[priority="0"] {
+.phase[priority="0"] {
     border-color: #f44336;
 }
 
