@@ -4,10 +4,6 @@ window.onload = function (e) {
 
 function Test() {
     $(function () {
-        $(".OF").draggable({
-            revert: 'invalid',
-            snap: true
-        });
         $('.slot').droppable({
 
             accept: ".phase, .OF",

@@ -1,7 +1,8 @@
 
 const COLOR_SLOT = "rgb(255,255,255)";
-const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
-const COLOR_PHASE_ACTIVE = "rgb(128, 177, 133)";
+//const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
+const COLOR_PHASE_BACKGROUND = "#e6ee9c";
+const COLOR_PHASE_ACTIVE = "#c0ca33";
 
 // target elements with the "draggable" class
 /*interact('.draggable')
@@ -212,10 +213,11 @@ function loadData(){
                 //OFs
                 for (var iOF = 0; iOF < machine.emplacement.length; iOF++) {
                     var OF = machine.emplacement[iOF];
+                    var realOF = rawData.OF[OF[0]];
                     var OFDiv = document.createElement("div");
                     OFDiv.setAttribute("class", "OF draggable");
                     OFDiv.setAttribute("id", OF[0]);
-                    OFDiv.innerHTML = OF[0] + "<br>" + OF[1] + " jour(s)";
+                    OFDiv.innerHTML = OF[0] + " " + realOF.article + "  " + realOF.phase_en_cours + "<br>" + OF[1] + " jour(s)";
 
                     var mySlot = document.getElementById(machine.id + "_" + iOF);
                     mySlot.appendChild(OFDiv);
