@@ -64,18 +64,11 @@
     height: 75px;
     background-color: rgb(158, 200, 216);
     border-radius: 5px;
-    border-width: 2px;
+    border-width: thick;
     line-height: initial;
     text-align: center;
     z-index: 4;
 
-}
-
-.OF {
-    height: 75px;
-    border-radius: 5px;
-    line-height: initial;
-    text-align: center;
 }
 
 .slots_prepa {
@@ -92,36 +85,36 @@
     border: 5px solid red;
 }
 
-.OF[priority="3"] {
-    background-color: #cddc39;
+.OF {
+    height: 75px;
+    background-color: rgb(158, 200, 216);
+    border-radius: 5px;
+    line-height: initial;
+    text-align: center;
+    z-index: 4;
+
 }
 
-.OF[priority="2"] {
+div[priority="3"] {
+    /*background-color: #cddc39;*/
+    background-color: #ffeb3b;
+    border: thick solid;
+    border-color: #f44336;
+}
+
+div[priority="2"] {
     background-color: #ffeb3b;
 }
 
-.OF[priority="1"] {
-    background-color: #ff9800;
-}
-
-.OF[priority="0"] {
+div[priority="1"] {
+    /*background-color: #ff9800;*/
     background-color: #f44336;
-}
-
-.phase[priority="3"] {
-    border-color: #cddc39;
-}
-
-.phase[priority="2"] {
+    border: thick solid;
     border-color: #ffeb3b;
 }
 
-.phase[priority="1"] {
-    border-color: #ff9800;
-}
-
-.phase[priority="0"] {
-    border-color: #f44336;
+div[priority="0"] {
+    background-color: #f44336;
 }
 
 .toggle {

@@ -1,5 +1,4 @@
-
-const COLOR_SLOT = "rgb(255,255,255)";
+// const COLOR_SLOT = "rgb(255,255,255)";
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
@@ -103,12 +102,16 @@ function loadJSON(callback) {
 
 function pretifyTempsRestant(tempsTotal, temps_passe) {
     var tempsRestant = tempsTotal - temps_passe;
-    var text = " heure restante";
-    if (tempsRestant > 48) {
+    var text = " minute restante";
+    if (tempsRestant > 120) {
         tempsRestant = (tempsRestant / 24).toFixed(1);
-        text = " jours restants"
+        if (tempsRestant > 1) {
+            text = " heures restantes";
+        } else {
+            text = " heure restante";
+        }
     } else if (tempsRestant > 1) {
-        text = " heures restantes";
+        text = " minutes restantes";
     }
     return tempsRestant + text;
 }
@@ -217,6 +220,7 @@ function loadData(){
                     var OFDiv = document.createElement("div");
                     OFDiv.setAttribute("class", "OF draggable");
                     OFDiv.setAttribute("id", OF[0]);
+                    OFDiv.setAttribute("priority", realOF.priorite);
                     OFDiv.innerHTML = OF[0] + " " + realOF.article + "  " + realOF.phase_en_cours + "<br>" + OF[1] + " jour(s)";
 
                     var mySlot = document.getElementById(machine.id + "_" + iOF);
