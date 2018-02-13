@@ -1,3 +1,7 @@
+.body {
+    background: #cdcdcd;
+}
+
 .cell{
     height: 79px;
 }
@@ -7,7 +11,7 @@
 }
 
 .slots_machine {
-    border: 1px solid black;
+    border: 1px solid #202020;
     border-radius: 5px;
     padding: 0;
 }
@@ -72,7 +76,7 @@
 }
 
 .slots_prepa {
-    border: 1px solid black;
+    border: 1px solid #202020;
     border-radius: 5px;
     padding: 0;
 }
@@ -95,26 +99,47 @@
 
 }
 
-div[priority="3"] {
+div[priority="3"]:not(.current) {
     /*background-color: #cddc39;*/
-    background-color: #ffeb3b;
-    border: thick solid;
-    border-color: #f44336;
+    background-color: white;
+    color: #202020;
+    /*border: thick solid;*/
+    /*border-color: #f44336;*/
 }
 
-div[priority="2"] {
+div[priority="2"]:not(.current) {
     background-color: #ffeb3b;
+    color: #202020;
 }
 
-div[priority="1"] {
+div[priority="1"]:not(.current) {
     /*background-color: #ff9800;*/
+    background-color: #f44336;
+}
+
+div[priority="0"]:not(.current) {
     background-color: #f44336;
     border: thick solid;
     border-color: #ffeb3b;
 }
 
-div[priority="0"] {
-    background-color: #f44336;
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 -10px #f44336;
+    }
+    40% {
+        box-shadow: 0 0 20px #f44336;
+    }
+    60% {
+        box-shadow: 0 0 20px #f44336;
+    }
+    100% {
+        box-shadow: 0 0 -10px #f44336;
+    }
+}
+
+.glow {
+    animation: glowing 2000ms infinite;
 }
 
 .toggle {
