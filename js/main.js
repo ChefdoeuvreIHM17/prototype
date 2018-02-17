@@ -1,5 +1,4 @@
-
-const COLOR_SLOT = "rgb(255,255,255)";
+// const COLOR_SLOT = "rgb(255,255,255)";
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
@@ -103,12 +102,16 @@ function loadJSON(callback) {
 
 function pretifyTempsRestant(tempsTotal, temps_passe) {
     var tempsRestant = tempsTotal - temps_passe;
-    var text = " heure restante";
-    if (tempsRestant > 48) {
+    var text = " minute restante";
+    if (tempsRestant > 120) {
         tempsRestant = (tempsRestant / 24).toFixed(1);
-        text = " jours restants"
+        if (tempsRestant > 1) {
+            text = " heures restantes";
+        } else {
+            text = " heure restante";
+        }
     } else if (tempsRestant > 1) {
-        text = " heures restantes";
+        text = " minutes restantes";
     }
     return tempsRestant + text;
 }
@@ -140,17 +143,26 @@ function loadData(){
         var col_slots = document.getElementById("col_slots");
         var col_prep = document.getElementById("col_prep");
 
+        var machineID, machine;
+        var nameWrap, nameDiv, name;
+        var closeMachineToggle, closed_machine;
+        var slots_machine, iSlot, slot;
+        var prep, iPrepSlot, slotPrep;
+        var iOF, OF, realOF, OFDiv, mySlot;
+        var phases, phaseID, phase, phaseDiv, slotDiv;
+        var i;
+
         //load machines
-        for(var machineID in machines) {
+        for (machineID in machines) {
             if (machines.hasOwnProperty(machineID)) {
-                var machine = machines[machineID];
+                machine = machines[machineID];
 
                 //machine
-                var nameWrap = document.createElement("div");
-                var nameDiv = document.createElement("div");
+                nameWrap = document.createElement("div");
+                nameDiv = document.createElement("div");
                 nameWrap.appendChild(nameDiv);
                 col_names.appendChild(nameWrap);
-                var name = document.createElement("span");
+                name = document.createElement("span");
                 if(machine.emplacement_max > 4){
                     nameDiv.setAttribute("class", "machine");
                     nameWrap.setAttribute("class", "nameWrap-large");
@@ -161,7 +173,7 @@ function loadData(){
                 name.setAttribute("class","name");
                 name.innerHTML = machine.id;
                 nameDiv.appendChild(name);
-                var closeMachineToggle = document.createElement("input");
+                closeMachineToggle = document.createElement("input");
                 nameDiv.innerHTML += "<br>";
                 closeMachineToggle.setAttribute("checked", "");
                 closeMachineToggle.setAttribute("data-toggle", "toggle");
@@ -175,7 +187,7 @@ function loadData(){
                 closeMachineToggle.setAttribute("id", "toggle" + machineID);
                 nameDiv.appendChild(closeMachineToggle);
 
-                var slots_machine = document.createElement("div");
+                slots_machine = document.createElement("div");
                 slots_machine.setAttribute("id", "slots_machine" + machineID);
                 col_slots.appendChild(slots_machine);
                 if(machine.emplacement_max > 4){
@@ -183,43 +195,44 @@ function loadData(){
                 }else{
                     slots_machine.setAttribute("class", "col-md-12 slots_machine");
                 }
-                for (var iSlot = 0; iSlot < machine.emplacement_max; iSlot++) {
-                    var slot = document.createElement("div");
+                for (iSlot = 0; iSlot < machine.emplacement_max; iSlot++) {
+                    slot = document.createElement("div");
                     slot.setAttribute("class", "slot col-md-3");
                     slot.setAttribute("id", machine.id + "_" + iSlot);
                     slots_machine.appendChild(slot);
                 }
-                var closed_machine = document.createElement("div");
+                closed_machine = document.createElement("div");
                 closed_machine.setAttribute("class", "closed_machine text-center");
                 closed_machine.setAttribute("id", machineID);
                 closed_machine.style.visibility = "hidden";
                 closed_machine.innerHTML = "<h1>Fermée</h1>";
                 slots_machine.appendChild(closed_machine);
 
-                var prep = document.createElement("div");
+                prep = document.createElement("div");
                 col_prep.appendChild(prep);
                 if(machine.emplacement_max > 4){
                     prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
                 }else{
                     prep.setAttribute("class", "col-md-12 slots_prepa");
                 }
-                for (var iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
-                    var slotPrep = document.createElement("div");
+                for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
+                    slotPrep = document.createElement("div");
                     slotPrep.setAttribute("class", "slot col-md-6");
                     slotPrep.setAttribute("id", machine.id + "_prep_" + iPrepSlot);
                     prep.appendChild(slotPrep);
                 }
 
                 //OFs
-                for (var iOF = 0; iOF < machine.emplacement.length; iOF++) {
-                    var OF = machine.emplacement[iOF];
-                    var realOF = rawData.OF[OF[0]];
-                    var OFDiv = document.createElement("div");
+                for (iOF = 0; iOF < machine.emplacement.length; iOF++) {
+                    OF = machine.emplacement[iOF];
+                    realOF = rawData.OF[OF[0]];
+                    OFDiv = document.createElement("div");
                     OFDiv.setAttribute("class", "OF draggable");
                     OFDiv.setAttribute("id", OF[0]);
+                    OFDiv.setAttribute("priority", realOF.priorite);
                     OFDiv.innerHTML = OF[0] + " " + realOF.article + "  " + realOF.phase_en_cours + "<br>" + OF[1] + " jour(s)";
 
-                    var mySlot = document.getElementById(machine.id + "_" + iOF);
+                    mySlot = document.getElementById(machine.id + "_" + iOF);
                     mySlot.appendChild(OFDiv);
 
                     if (machine.OF_en_cours === OF[0] && typeof rawData.OF[OF[0]] !== 'undefined') {
@@ -228,6 +241,7 @@ function loadData(){
                         var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
                         var tempsRestant = pretifyTempsRestant(tempsTotal, machine.temps_passe);
                         OFDiv.innerHTML += "<br>" + tempsRestant;
+                        OFDiv.classList.add('current');
                         percentageChange(OF[0], percentage);
                     }
 
@@ -236,21 +250,21 @@ function loadData(){
         }
 
 
-        var OFs = rawData.OF;
+        phases = rawData.OF;
         //load OFs
-        var i = 0;
-        for (var OFID in OFs) {
-            if (OFs.hasOwnProperty(OFID)) {
-                var OF = OFs[OFID];
-                if (OF.sur_machine === 0) {
-                    var OFDiv = document.createElement("div");
-                    OFDiv.innerHTML = OF.id + " " + OF.article + "  " + OF.phase_en_cours + "<br>" + OF.jours_attente + " jours";
-                    OFDiv.setAttribute("class", "OF");
-                    OFDiv.setAttribute("priority", OF.priorite);
+        i = 0;
+        for (phaseID in phases) {
+            if (phases.hasOwnProperty(phaseID)) {
+                phase = phases[phaseID];
+                if (phase.sur_machine === 0) {
+                    phaseDiv = document.createElement("div");
+                    phaseDiv.innerHTML = phase.id + " " + phase.article + "  " + phase.phase_en_cours + "<br>" + phase.jours_attente + " jours";
+                    phaseDiv.setAttribute("class", "OF");
+                    phaseDiv.setAttribute("priority", phase.priorite);
 
-                    var slotDiv = document.getElementById("CU_H_" + i); //fixme c'est un hack dégueulasse
+                    slotDiv = document.getElementById("CU_H_" + i); //fixme c'est un hack dégueulasse
                     i++;
-                    slotDiv.appendChild(OFDiv);
+                    slotDiv.appendChild(phaseDiv);
                 }
             }
 

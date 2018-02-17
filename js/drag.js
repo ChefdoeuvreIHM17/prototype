@@ -1,6 +1,6 @@
-window.onload = function (e) {
+window.addEventListener("load", function (e) {
     Test();
-};
+});
 
 function Test() {
     $(function () {
