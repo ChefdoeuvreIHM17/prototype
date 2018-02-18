@@ -3,6 +3,12 @@
 const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
 
+
+var heatmap = h337.create({
+    container: document.body
+});
+heatmap.setDataMin(0);
+
 // target elements with the "draggable" class
 /*interact('.draggable')
     .draggable({
@@ -79,7 +85,6 @@ function getCssValuePrefix()
 
     return rtrnVal;
 }
-
 
 function percentageChange(id, percentage) {
     var gradientString = "linear-gradient(90deg, "+COLOR_PHASE_ACTIVE+"  "+percentage+"%, "+COLOR_PHASE_BACKGROUND+" 0%)";
@@ -272,6 +277,92 @@ function loadData(){
     });
 }
 
+function trackClick(x, y) {
+    var clicks, currentValue;
+    if (getTrackingData("clicks")) {
+        clicks = getTrackingData("clicks");
+        if (clicks[x]) {
+            if (clicks[x][y]) {
+                currentValue = clicks[x][y];
+                clicks[x][y] = currentValue + 1;
+            } else {
+                clicks[x][y] = 1;
+            }
+        } else {
+            clicks[x] = {};
+            clicks[x][y] = 1;
+        }
+    } else {
+        clicks = {};
+        clicks[x] = {};
+        clicks[x][y] = 1;
+    }
+    trackGeneric("clicks", clicks);
+}
+
+function refreshHeatmap() {
+    var clicks, x, y, dataPoint;
+    if (getTrackingData("clicks")) {
+        clicks = getTrackingData("clicks");
+        console.log("clicks : " + JSON.stringify(clicks));
+        for (x in clicks) {
+            if (clicks.hasOwnProperty(x)) {
+                for (y in clicks[x]) {
+                    if (clicks[x].hasOwnProperty(y)) {
+                        dataPoint = {
+                            x: x, // x coordinate of the datapoint, a number
+                            y: y, // y coordinate of the datapoint, a number
+                            value: 1 // the value at datapoint(x, y)
+                        };
+                        heatmap.addData(dataPoint);
+                    }
+                }
+            }
+        }
+    }
+    heatmap.repaint();
+}
+
+function convertDate(date) {
+    return date.getFullYear() + "/" + Number(date.getMonth() + 1) + "/" + date.getDate();
+}
+
+function trackGeneric(key, value) {
+    var retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined") {
+        if (!localStorage[dKey]) {
+            retrievedObject = {};
+        } else {
+            retrievedObject = JSON.parse(localStorage[dKey]);
+        }
+        retrievedObject[key] = value;
+        localStorage.setItem(dKey, JSON.stringify(retrievedObject));
+    } else {
+        // Sorry! No Web Storage support..
+    }
+}
+
+function getTrackingData(key) {
+    var returnValue, retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined" && localStorage[dKey]) {
+        retrievedObject = JSON.parse(localStorage[dKey]);
+        if (retrievedObject[key]) {
+            returnValue = retrievedObject[key];
+        }
+    }
+    return returnValue;
+}
+
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
+
+function clickEvent(e) {
+    trackClick(e.pageX, e.pageY);
+}
+
+document.addEventListener('click', clickEvent, true);
 loadData();
