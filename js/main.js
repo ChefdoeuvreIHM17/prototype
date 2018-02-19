@@ -90,7 +90,20 @@ function loadJSON(callback) {
 
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'js/data.json', true); // Replace 'my_data' with the path to your file
+    xobj.open('GET', 'data/data.json', true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+function loadJSON_PHP(callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'data/data.php', true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
@@ -130,6 +143,15 @@ function toggleMachine(toggleID) {
             document.querySelector("#" + machineID + ".closed_machine").style.visibility = "visible";
         }
     }
+}
+
+function loadDataPhp(){
+    var rawData = {};
+    loadJSON_PHP(function (response) {
+        console.log(response);
+        rawData = JSON.parse(response);
+        console.log(JSON.stringify(rawData,null,2));
+    });
 }
 
 function loadData(){
@@ -274,4 +296,4 @@ function loadData(){
 
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
-loadData();
+loadDataPhp();
