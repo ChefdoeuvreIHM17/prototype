@@ -1,0 +1,102 @@
+{
+  "CU 5 AXES": {
+    "CLOCK900": {
+      "ID": "CLOCK900",
+      "jetons": 8,
+      "priorite": 1
+    },
+    "CLOCK902": {
+      "ID": "CLOCK902",
+      "jetons": 8,
+      "priorite": 1
+    }
+  },
+  "CU HORIZONTAL GC": {
+    "HM800": {
+      "ID": "HM800",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "NHM8000": {
+      "ID": "HM8000",
+      "jetons": 2,
+      "priorite": 1
+    }
+  },
+  "CU HORIZONTAL GC TM": {
+    "HM800": {
+      "ID": "HM800",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "NHM8000": {
+      "ID": "HM800",
+      "jetons": 2,
+      "priorite": 2
+    }
+  },
+  "CU HORIZONTAL TM": {
+    "NH5000A": {
+      "ID": "NH5000A",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "NH5000B": {
+      "ID": "NH5000B",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "SH50": {
+      "ID": "SH50",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "SH500A": {
+      "ID": "SH500A",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "SH500C": {
+      "ID": "SH500C",
+      "jetons": 2,
+      "priorite": 1
+    },
+    "SH503": {
+      "ID": "SH503",
+      "jetons": 2,
+      "priorite": 1
+    }
+  },
+  "CU HORIZONTAL": {
+    "NH5000B": {
+      "ID": "NH5000B",
+      "jetons": 2,
+      "priorite": 2
+    },
+    "SH500A": {
+      "ID": "SH500A",
+      "jetons": 2,
+      "priorite": 2
+    },
+    "SH500C": {
+      "ID": "SH500C",
+      "jetons": 2,
+      "priorite": 2
+    },
+    "SH503": {
+      "ID": "SH503",
+      "jetons": 2,
+      "priorite": 2
+    },
+    "NH5000A": {
+      "ID": "NH5000A",
+      "jetons": 2,
+      "priorite": 2
+    },
+    "SH50": {
+      "ID": "SH50",
+      "jetons": 2,
+      "priorite": 2
+    }
+  }
+}
