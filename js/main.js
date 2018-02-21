@@ -2,6 +2,7 @@
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
+const CONST_CDC_SLOTS = 10;
 
 // target elements with the "draggable" class
 /*interact('.draggable')
@@ -86,24 +87,11 @@ function percentageChange(id, percentage) {
     document.getElementById(id).style.background = gradientString;
 }
 
-function loadJSON(callback) {
+function loadJSON(file, callback) {
 
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'data/data.json', true);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
-}
-
-function loadJSON_PHP(callback) {
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'data/data.php', true);
+    xobj.open('GET', 'data/' + file, true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
@@ -131,32 +119,168 @@ function pretifyTempsRestant(tempsTotal, temps_passe) {
 
 function toggleMachine(toggleID) {
     var toggle = document.getElementById(toggleID);
-    var machineID = toggleID.replace("toggle", "");
+    var machineID = toggleID.replace("toggle_", "");
     if (toggle !== null) {
         console.log("toggle" + machineID, toggle.checked);
         console.log("#" + machineID + ".closed_machine");
         if (toggle.checked === true) {
             console.log("JE CACHE");
-            document.querySelector("#" + machineID + ".closed_machine").style.visibility = "hidden";
+            document.getElementById("closed_" + machineID).style.visibility = "hidden";
         } else {
             console.log("JE MONTRE");
-            document.querySelector("#" + machineID + ".closed_machine").style.visibility = "visible";
+            document.getElementById("closed_" + machineID).style.visibility = "visible";
         }
     }
 }
 
 function loadDataPhp(){
     var rawData = {};
-    loadJSON_PHP(function (response) {
+    loadJSON("data.php", function (response) {
         console.log(response);
         rawData = JSON.parse(response);
         console.log(JSON.stringify(rawData,null,2));
     });
 }
 
+function loadMachines() {
+    var CDCs = {};
+
+    var reserveDiv = document.getElementById("reserve");
+    var col_names = document.getElementById("col_names");
+    var col_slots = document.getElementById("col_slots");
+    var col_prep = document.getElementById("col_prep");
+
+    var CDC, CDCID, CDCDiv, CDCHeaderDiv, CDCSlotID, CDCSlotDiv;
+    var machine, machineID, machine, machineDiv;
+    var nameWrapDiv, nameDiv, nameSpan;
+    var closeMachineToggle, closed_machine;
+    var slots_machine, iSlot, slot;
+    var prep, iPrepSlot, slotPrep;
+
+    loadJSON("machines.json", function (response) {
+        CDCs = JSON.parse(response);
+
+        for (CDCID in CDCs) {
+            if (CDCs.hasOwnProperty(CDCID)) {
+
+                //////////////// Centre de charge //////////////////
+
+                CDC = CDCs[CDCID];
+
+                CDCHeaderDiv = document.createElement("div");
+                CDCHeaderDiv.classList.add("col-md-2");
+                CDCHeaderDiv.classList.add("text-center");
+                CDCHeaderDiv.id = "header_" + CDCID;
+                CDCHeaderDiv.innerHTML = CDCID;
+
+                CDCDiv = document.createElement("div");
+                CDCDiv.classList.add("col-md-2");
+                CDCDiv.classList.add("slots_machine");
+                CDCDiv.id = CDCID;
+
+                for (CDCSlotID = 0; CDCSlotID < CONST_CDC_SLOTS; CDCSlotID++) {
+                    CDCSlotDiv = document.createElement("div");
+                    CDCSlotDiv.id = CDCID + "_" + CDCSlotID;
+                    CDCSlotDiv.classList.add("slot");
+                    CDCSlotDiv.classList.add("ui-dropppable");
+                    CDCDiv.appendChild(CDCSlotDiv);
+                }
+
+                reserveDiv.firstElementChild.appendChild(CDCHeaderDiv);
+                reserveDiv.lastElementChild.appendChild(CDCDiv);
+
+
+                //////////////// Machines //////////////////
+                for (machineID in CDC) {
+                    if (CDC.hasOwnProperty(machineID)) {
+                        machine = CDC[machineID];
+
+                        slots_machine = document.getElementById("slots_machine_" + machineID);
+                        if (slots_machine) {
+                            // compléter machine si on l'a déjà créée
+                            for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
+                                slot = document.createElement("div");
+                                slot.setAttribute("class", "slot col-md-3");
+                                slot.setAttribute("id", machine.id + "_" + iSlot);
+                                slots_machine.appendChild(slot);
+                            }
+                        } else {
+                            // créer la machine sinon
+                            nameWrapDiv = document.createElement("div");
+                            nameDiv = document.createElement("div");
+                            nameWrapDiv.appendChild(nameDiv);
+                            col_names.appendChild(nameWrapDiv);
+                            nameSpan = document.createElement("span");
+                            if (machine.jetons > 4) {
+                                nameDiv.setAttribute("class", "machine");
+                                nameWrapDiv.setAttribute("class", "nameWrap-large");
+                            } else {
+                                nameDiv.setAttribute("class", "machine");
+                                nameWrapDiv.setAttribute("class", "nameWrap");
+                            }
+                            nameSpan.setAttribute("class", "name");
+                            nameSpan.innerHTML = machineID;
+                            nameDiv.appendChild(nameSpan);
+                            closeMachineToggle = document.createElement("input");
+                            nameDiv.innerHTML += "<br>";
+                            closeMachineToggle.setAttribute("checked", "");
+                            closeMachineToggle.setAttribute("data-toggle", "toggle");
+                            closeMachineToggle.setAttribute("type", "checkbox");
+                            closeMachineToggle.setAttribute("data-on", "Activée");
+                            closeMachineToggle.setAttribute("data-off", "Désactivée");
+                            closeMachineToggle.setAttribute("data-onstyle", "success");
+                            closeMachineToggle.onchange = function () {
+                                toggleMachine(this.id);
+                            };
+                            closeMachineToggle.setAttribute("id", "toggle_" + machineID);
+                            nameDiv.appendChild(closeMachineToggle);
+
+                            slots_machine = document.createElement("div");
+                            slots_machine.setAttribute("id", "slots_machine_" + machineID);
+                            col_slots.appendChild(slots_machine);
+                            if (machine.jetons > 4) {
+                                slots_machine.setAttribute("class", "col-md-12 slots_machine machine-large");
+                            } else {
+                                slots_machine.setAttribute("class", "col-md-12 slots_machine");
+                            }
+                            for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
+                                slot = document.createElement("div");
+                                slot.setAttribute("class", "slot col-md-3");
+                                slot.setAttribute("id", machine.id + "_" + iSlot);
+                                slots_machine.appendChild(slot);
+                            }
+                            closed_machine = document.createElement("div");
+                            closed_machine.setAttribute("class", "closed_machine text-center");
+                            closed_machine.setAttribute("id", "closed_" + machineID);
+                            closed_machine.style.visibility = "hidden";
+                            closed_machine.innerHTML = "<h1>Fermée</h1>";
+                            slots_machine.appendChild(closed_machine);
+
+                            prep = document.createElement("div");
+                            col_prep.appendChild(prep);
+                            if (machine.jetons > 4) {
+                                prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
+                            } else {
+                                prep.setAttribute("class", "col-md-12 slots_prepa");
+                            }
+                            for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
+                                slotPrep = document.createElement("div");
+                                slotPrep.setAttribute("class", "slot col-md-6");
+                                slotPrep.setAttribute("id", machineID + "_prep_" + iPrepSlot);
+                                prep.appendChild(slotPrep);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    })
+}
+
 function loadData(){
     var rawData ={};
-    loadJSON(function (response) {
+    loadJSON("data.json", function (response) {
         rawData = JSON.parse(response);
 
         var machines = rawData.machine;
@@ -296,4 +420,5 @@ function loadData(){
 
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
+loadMachines();
 loadDataPhp();
