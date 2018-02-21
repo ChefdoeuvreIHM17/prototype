@@ -151,10 +151,10 @@ function loadMachines() {
     var col_prep = document.getElementById("col_prep");
 
     var CDC, CDCID, CDCDiv, CDCHeaderDiv, CDCSlotID, CDCSlotDiv;
-    var machine, machineID, machine, machineDiv;
+    var machine, machineID;
     var nameWrapDiv, nameDiv, nameSpan;
     var closeMachineToggle, closed_machine;
-    var slots_machine, iSlot, slot;
+    var slots_machine, iSlot, slot, slotID;
     var prep, iPrepSlot, slotPrep;
 
     loadJSON("machines.json", function (response) {
@@ -164,12 +164,12 @@ function loadMachines() {
             if (CDCs.hasOwnProperty(CDCID)) {
 
                 //////////////// Centre de charge //////////////////
-
                 CDC = CDCs[CDCID];
 
                 CDCHeaderDiv = document.createElement("div");
                 CDCHeaderDiv.classList.add("col-md-2");
                 CDCHeaderDiv.classList.add("text-center");
+                CDCHeaderDiv.classList.add("align-text-center");
                 CDCHeaderDiv.id = "header_" + CDCID;
                 CDCHeaderDiv.innerHTML = CDCID;
 
@@ -201,7 +201,16 @@ function loadMachines() {
                             for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
                                 slot = document.createElement("div");
                                 slot.setAttribute("class", "slot col-md-3");
-                                slot.setAttribute("id", machine.id + "_" + iSlot);
+                                if (CDCID.endsWith("TM")) {
+                                    slot.innerHTML = "🌙️";
+                                    slotID = machineID + "_" + iSlot + "_TM";
+                                    slot.classList.add("slot_TM");
+                                } else {
+                                    slot.innerHTML = "☀️️";
+                                    slotID = machineID + "_" + iSlot;
+                                    slot.classList.add("slot_standard");
+                                }
+                                slot.id = slotID;
                                 slots_machine.appendChild(slot);
                             }
                         } else {
@@ -246,7 +255,16 @@ function loadMachines() {
                             for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
                                 slot = document.createElement("div");
                                 slot.setAttribute("class", "slot col-md-3");
-                                slot.setAttribute("id", machine.id + "_" + iSlot);
+                                if (CDCID.endsWith("TM")) {
+                                    slot.innerHTML = "🌙️";
+                                    slotID = machineID + "_" + iSlot + "_TM";
+                                    slot.classList.add("slot_TM");
+                                } else {
+                                    slot.innerHTML = "☀️️";
+                                    slotID = machineID + "_" + iSlot;
+                                    slot.classList.add("slot_standard");
+                                }
+                                slot.id = slotID;
                                 slots_machine.appendChild(slot);
                             }
                             closed_machine = document.createElement("div");

@@ -1,57 +1,52 @@
 {
-  "CU 5 AXES": {
-    "CLOCK900": {
-      "ID": "CLOCK900",
-      "jetons": 8,
-      "priorite": 1,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-
-    },
-    "CLOCK902": {
-      "ID": "CLOCK902",
-      "jetons": 8,
-      "priorite": 1,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-    }
-  },
-  "CU HORIZONTAL GC": {
-    "HM800": {
-      "ID": "HM800",
+  "CU HORIZONTAL": {
+    "NH5000B": {
+      "ID": "NH5000B",
       "jetons": 2,
-      "priorite": 1,
+      "priorite": 2,
       "en-cours": 0,
       "a servir cdc": 0,
       "a servir global": 0,
       "reste a servir": 0
     },
-    "NHM8000": {
-      "ID": "HM8000",
+    "NH5000A": {
+      "ID": "NH5000A",
       "jetons": 2,
-      "priorite": 1,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-    }
-  },
-  "CU HORIZONTAL GC TM": {
-    "HM800": {
-      "ID": "HM800",
-      "jetons": 2,
-      "priorite": 1,
+      "priorite": 2,
       "en-cours": 0,
       "a servir cdc": 0,
       "a servir global": 0,
       "reste a servir": 0
     },
-    "NHM8000": {
-      "ID": "HM800",
+    "SH500C": {
+      "ID": "SH500C",
+      "jetons": 2,
+      "priorite": 2,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    },
+    "SH50": {
+      "ID": "SH50",
+      "jetons": 2,
+      "priorite": 2,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    },
+    "SH500A": {
+      "ID": "SH500A",
+      "jetons": 2,
+      "priorite": 2,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    },
+    "SH503": {
+      "ID": "SH503",
       "jetons": 2,
       "priorite": 2,
       "en-cours": 0,
@@ -116,56 +111,61 @@
       "reste a servir": 0
     }
   },
-  "CU HORIZONTAL": {
-    "NH5000B": {
-      "ID": "NH5000B",
+  "CU HORIZONTAL GC": {
+    "HM800": {
+      "ID": "HM800",
+      "jetons": 2,
+      "priorite": 1,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    },
+    "NHM8000": {
+      "ID": "HM8000",
+      "jetons": 2,
+      "priorite": 1,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    }
+  },
+  "CU HORIZONTAL GC TM": {
+    "HM800": {
+      "ID": "HM800",
+      "jetons": 2,
+      "priorite": 1,
+      "en-cours": 0,
+      "a servir cdc": 0,
+      "a servir global": 0,
+      "reste a servir": 0
+    },
+    "NHM8000": {
+      "ID": "HM800",
       "jetons": 2,
       "priorite": 2,
       "en-cours": 0,
       "a servir cdc": 0,
       "a servir global": 0,
       "reste a servir": 0
-    },
-    "SH500A": {
-      "ID": "SH500A",
-      "jetons": 2,
-      "priorite": 2,
+    }
+  },
+  "CU 5 AXES": {
+    "CLOCK900": {
+      "ID": "CLOCK900",
+      "jetons": 8,
+      "priorite": 1,
       "en-cours": 0,
       "a servir cdc": 0,
       "a servir global": 0,
       "reste a servir": 0
+
     },
-    "SH500C": {
-      "ID": "SH500C",
-      "jetons": 2,
-      "priorite": 2,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-    },
-    "SH503": {
-      "ID": "SH503",
-      "jetons": 2,
-      "priorite": 2,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-    },
-    "NH5000A": {
-      "ID": "NH5000A",
-      "jetons": 2,
-      "priorite": 2,
-      "en-cours": 0,
-      "a servir cdc": 0,
-      "a servir global": 0,
-      "reste a servir": 0
-    },
-    "SH50": {
-      "ID": "SH50",
-      "jetons": 2,
-      "priorite": 2,
+    "CLOCK902": {
+      "ID": "CLOCK902",
+      "jetons": 8,
+      "priorite": 1,
       "en-cours": 0,
       "a servir cdc": 0,
       "a servir global": 0,

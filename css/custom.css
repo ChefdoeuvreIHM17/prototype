@@ -31,18 +31,19 @@
     border-radius: 5px;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 .nameWrap {
     display: flex;
     justify-content: center;
-    height: 75px;
+    height: 79px;
 }
 
 .nameWrap-large {
     display: flex;
     justify-content: center;
-    height: 150px;
+    height: 156px;
 }
 
 .machine {
@@ -51,8 +52,9 @@
     /*line-height:75px;*/
 }
 
-.header div{
+.header {
     /*line-height:75px;*/
+    height: 75px;
 }
 
 .name{
