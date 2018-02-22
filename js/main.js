@@ -4,10 +4,7 @@ const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
 
 
-var heatmap = h337.create({
-    container: document.body
-});
-heatmap.setDataMin(0);
+var heatmap;
 
 // target elements with the "draggable" class
 /*interact('.draggable')
@@ -279,6 +276,7 @@ function loadData(){
 }
 
 function trackClick(x, y) {
+    console.log("click !!")
     var clicks, currentValue;
     if (getTrackingData("clicks")) {
         clicks = getTrackingData("clicks");
@@ -301,7 +299,23 @@ function trackClick(x, y) {
     trackGeneric("clicks", clicks);
 }
 
+function removeHeatmap() {
+    //find corresponding canvas element
+    var canvas = heatmap._renderer.canvas;
+    //remove the canvas from DOM
+    $(canvas).remove();
+    //then unset the variable
+    heatmap = undefined;
+}
+
 function refreshHeatmap() {
+    if (!heatmap) {
+        heatmap = h337.create({
+            container: document.body
+        });
+        heatmap.setDataMin(0);
+    }
+
     var clicks, x, y, dataPoint;
     if (getTrackingData("clicks")) {
         clicks = getTrackingData("clicks");
@@ -313,7 +327,7 @@ function refreshHeatmap() {
                         dataPoint = {
                             x: x, // x coordinate of the datapoint, a number
                             y: y, // y coordinate of the datapoint, a number
-                            value: 1 // the value at datapoint(x, y)
+                            value: clicks[x][y] // the value at datapoint(x, y)
                         };
                         heatmap.addData(dataPoint);
                     }
