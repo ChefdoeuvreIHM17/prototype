@@ -169,6 +169,11 @@ function loadDataPhp(){
 
 function creation_slot_phase(nom,ite) {
 
+    var zone_phase = document.getElementById(nom+"_"+ite);
+    var slot_creation = document.createElement('div');
+    slot_creation.classList.add("slot");
+    slot_creation.classList.add("ui-dropppable");
+
     
 
 
