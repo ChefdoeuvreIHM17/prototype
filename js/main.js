@@ -4,6 +4,12 @@ const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
 const CONST_CDC_SLOTS = 10;
 
+var refreshDelayMinutes = 5;
+
+var rawEnCoursMachine = [];
+var rawEnCoursPrepa = [];
+var CDCs = {};
+
 // target elements with the "draggable" class
 /*interact('.draggable')
     .draggable({
@@ -55,8 +61,7 @@ function dragMoveListener (event) {
     target.setAttribute('data-y', y);
 }
 
-function getCssValuePrefix()
-{
+function getCssValuePrefix() {
     var rtrnVal = '';//default to standard syntax
     var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
 
@@ -225,8 +230,6 @@ function creation_slot_phase(nom,ite) {
 }
 
 function loadMachines() {
-    var CDCs = {};
-
     var reserveDiv = document.getElementById("reserve");
     var col_names = document.getElementById("col_names");
     var col_slots = document.getElementById("col_slots");
@@ -378,6 +381,20 @@ function loadMachines() {
     })
 }
 
+function refreshEnCoursMachine() {
+    for (CDCID in CDCs) {
+        if (CDCs.hasOwnProperty(CDCID)) {
+            CDC = CDCs[CDCID];
+            for (machineID in CDC) {
+                if (CDC.hasOwnProperty(machineID)) {
+                    machine = CDC[machineID];
+                    //todo en gros refaire ce qu'il fait en vba
+                }
+            }
+        }
+    }
+}
+
 function loadData(){
     var rawData ={};
     loadJSON("data.json", function (response) {
@@ -518,7 +535,23 @@ function loadData(){
     });
 }
 
+function refreshData(callback) {
+    loadJSON("data/data.php", function (response) {
+        rawEnCoursMachine = JSON.parse(response);
+        loadJSON("data/data2.php", function (response2) {
+            rawEnCoursPrepa = JSON.parse(response2);
+            callback();
+        });
+    });
+}
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
 loadMachines();
+
+setInterval(function () {
+    refreshData(function () {
+        refreshEnCoursMachine();
+        refreshEnCoursPrepa();
+    });
+}, refreshDelayMinutes * 60 * 1000);
 loadDataPhp();
