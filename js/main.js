@@ -136,6 +136,24 @@ function toggleMachine(toggleID) {
 function loadDataPhp(){
     var rawData = [];
     var rowID, row;
+
+    var index_CU_H = 0;
+    var index_CU_H_TM = 0;
+    var index_CU_H_GC = 0;
+    var index_CU_H_GC_TM = 0;
+    var index_5AXES = 0;
+
+
+    var rawData2 = [];
+    var rowID2, row2;
+
+    loadJSON("data2.php", function (response) {
+        rawData2 = JSON.parse(response);
+
+    });
+
+
+
     loadJSON("data.php", function (response) {
        // console.log(response);
         rawData = JSON.parse(response);
@@ -148,18 +166,37 @@ function loadDataPhp(){
 
                 case "CU HORIZONTAL":
                     console.log("CU HORIZONTAL");
+                    creation_slot_phase(row,index_CU_H);
+                    index_CU_H++;
+
+                    for (rowID2 in rawData2) {
+                        row2 = rawData2[rowID2];
+                        if(row2["ID_OFS"]===row["ID_OFS"]) {
+
+                        }
+                    }
+
                     break;
                 case "CU HORIZONTAL TM":
                     console.log("CU HORIZONTAL TM");
+                    creation_slot_phase(row,index_CU_H_TM);
+                    index_CU_H_TM++;
                     break;
                 case "CU HORIZONTAL GC":
                     console.log("CU HORIZONTAL GC");
+                    creation_slot_phase(row,index_CU_H_GC);
+                    index_CU_H_GC++;
                     break;
                 case "CU HORIZONTAL GC TM":
                     console.log("CU HORIZONTAL GC TM");
+                    creation_slot_phase(row,index_CU_H_GC_TM);
+                    index_CU_H_GC_TM++;
+
                     break;
                 case "CU 5 AXES":
                     console.log("CU 5 AXES");
+                    creation_slot_phase(row,index_5AXES);
+                    index_5AXES++;
                     break;
 
             }
@@ -169,10 +206,18 @@ function loadDataPhp(){
 
 function creation_slot_phase(nom,ite) {
 
-    var zone_phase = document.getElementById(nom+"_"+ite);
-    var slot_creation = document.createElement('div');
-    slot_creation.classList.add("slot");
-    slot_creation.classList.add("ui-dropppable");
+    if(ite < 10) {
+        var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
+        var slot_creation = document.createElement('div');
+        slot_creation.classList.add("OF");
+        slot_creation.classList.add("ui-draggable");
+        slot_creation.classList.add("ui-draggable-handle");
+        slot_creation.innerHTML = nom["ID_ARTICLE"]+' '+nom["ID_OFS"];
+        zone_phase.appendChild(slot_creation);
+    }
+
+
+
 
     
 
