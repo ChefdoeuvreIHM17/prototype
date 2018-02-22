@@ -147,7 +147,7 @@ function loadData(){
         var nameWrap, nameDiv, name;
         var closeMachineToggle, closed_machine;
         var slots_machine, iSlot, slot;
-        var prep, iPrepSlot, slotPrep;
+        var prepDiv, iPrepSlot, slotPrep;
         var iOF, OF, realOF, OFDiv, mySlot;
         var phases, phaseID, phase, phaseDiv, slotDiv;
         var i;
@@ -208,18 +208,19 @@ function loadData(){
                 closed_machine.innerHTML = "<h1>Fermée</h1>";
                 slots_machine.appendChild(closed_machine);
 
-                prep = document.createElement("div");
-                col_prep.appendChild(prep);
+                prepDiv = document.createElement("div");
+                col_prep.appendChild(prepDiv);
+                prepDiv.id = machineID + "_prep";
                 if(machine.emplacement_max > 4){
-                    prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
+                    prepDiv.setAttribute("class", "col-md-12 slots_prepa cell-large");
                 }else{
-                    prep.setAttribute("class", "col-md-12 slots_prepa");
+                    prepDiv.setAttribute("class", "col-md-12 slots_prepa");
                 }
                 for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
                     slotPrep = document.createElement("div");
                     slotPrep.setAttribute("class", "slot col-md-6");
                     slotPrep.setAttribute("id", machine.id + "_prep_" + iPrepSlot);
-                    prep.appendChild(slotPrep);
+                    prepDiv.appendChild(slotPrep);
                 }
 
                 //OFs
