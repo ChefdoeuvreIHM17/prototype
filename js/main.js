@@ -167,6 +167,13 @@ function loadDataPhp(){
     });
 }
 
+function creation_slot_phase(nom,ite) {
+
+    
+
+
+}
+
 function loadMachines() {
     var CDCs = {};
 
