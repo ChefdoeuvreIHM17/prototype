@@ -82,11 +82,13 @@
 }
 
 .prochaine {
-    border: 5px solid green;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px green inset; /* emulate the border */
 }
 
 .prochaineRouge {
-    border: 5px solid red;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px red inset; /* emulate the border */
 }
 
 .OF {
