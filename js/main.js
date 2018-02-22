@@ -134,14 +134,15 @@ function toggleMachine(toggleID) {
 }
 
 function loadDataPhp(){
-    var rawData = {};
-    var parcours;
+    var rawData = [];
+    var rowID, row;
     loadJSON("data.php", function (response) {
-        console.log(response);
+       // console.log(response);
         rawData = JSON.parse(response);
-       // console.log(JSON.stringify(rawData,null,2));
-        for (parcours in rawData){
-            console.log("coucou");
+        //console.log(JSON.stringify(rawData,null,2));
+        for (rowID in rawData) {
+            row = rawData[rowID];
+            console.log(row["LIBELLE"]);
         }
     });
 }
