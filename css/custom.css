@@ -91,11 +91,13 @@ root {
 }
 
 .prochaine {
-    border: 5px solid green;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px green inset; /* emulate the border */
 }
 
 .prochaineRouge {
-    border: 5px solid red;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px red inset; /* emulate the border */
 }
 
 .OF {
@@ -153,5 +155,18 @@ div[priority="0"]:not(.current) {
 
 .toggle {
     width: 100%;
+}
+
+.inPrep {
+    opacity: 0.5;
+}
+
+.inPrep::after {
+    content: "EN PRÉPA";
+    /*SUR " attr(prep-machine,'');*/
+    display: block;
+    opacity: 1;
+    color: black;
+    font-weight: bold;
 }
 
