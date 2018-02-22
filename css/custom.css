@@ -1,13 +1,13 @@
-root {
-    --background-color: #cdcdcd;
-    --slot-default-background-color: lightblue;
-    --slot-night-background-color: lightgreen;
-    --background-current-OF: lightpink;
-    --progress-bar-current-OF: deeppink;
+body {
+    --background-color: #dddddd;
+    --slot-default-background-color: #daedf2;
+    --slot-night-background-color: #daf2da;
+    --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
+    --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
 }
 
-.body {
-    background: var(--background-color);
+body {
+    background: var(--background-color) !important;
 }
 
 .cell{
