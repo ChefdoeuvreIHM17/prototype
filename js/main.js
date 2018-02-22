@@ -137,11 +137,11 @@ function loadDataPhp(){
     var rawData = {};
     var parcours;
     loadJSON("data.php", function (response) {
-       // console.log(response);
+        console.log(response);
         rawData = JSON.parse(response);
        // console.log(JSON.stringify(rawData,null,2));
         for (parcours in rawData){
-            console.log(JSON.stringify(rawData.LIBELLE));
+            console.log("coucou");
         }
     });
 }
