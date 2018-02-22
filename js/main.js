@@ -142,7 +142,27 @@ function loadDataPhp(){
         //console.log(JSON.stringify(rawData,null,2));
         for (rowID in rawData) {
             row = rawData[rowID];
-            console.log(row["LIBELLE"]);
+           // console.log(row["LIBELLE"]);
+
+            switch (row["LIBELLE"]){
+
+                case "CU HORIZONTAL":
+                    console.log("CU HORIZONTAL");
+                    break;
+                case "CU HORIZONTAL TM":
+                    console.log("CU HORIZONTAL TM");
+                    break;
+                case "CU HORIZONTAL GC":
+                    console.log("CU HORIZONTAL GC");
+                    break;
+                case "CU HORIZONTAL GC TM":
+                    console.log("CU HORIZONTAL GC TM");
+                    break;
+                case "CU 5 AXES":
+                    console.log("CU 5 AXES");
+                    break;
+
+            }
         }
     });
 }
