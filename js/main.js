@@ -1,7 +1,9 @@
 // const COLOR_SLOT = "rgb(255,255,255)";
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
-const COLOR_PHASE_BACKGROUND = "#e6ee9c";
-const COLOR_PHASE_ACTIVE = "#c0ca33";
+// const COLOR_PHASE_BACKGROUND = "#e6ee9c";
+// const COLOR_PHASE_ACTIVE = "#c0ca33";
+const COLOR_PHASE_BACKGROUND = "lightpink";
+const COLOR_PHASE_ACTIVE = "deeppink";
 
 // target elements with the "draggable" class
 /*interact('.draggable')

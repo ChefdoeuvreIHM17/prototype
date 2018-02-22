@@ -1,5 +1,13 @@
+root {
+    --background-color: #cdcdcd;
+    --slot-default-background-color: lightblue;
+    --slot-night-background-color: lightgreen;
+    --background-current-OF: lightpink;
+    --progress-bar-current-OF: deeppink;
+}
+
 .body {
-    background: #cdcdcd;
+    background: var(--background-color);
 }
 
 .cell{
@@ -28,6 +36,7 @@
 .slot{
     height: 77px;
     border: 1px solid lightblue;
+    background-color: var(--slot-default-background-color);
     border-radius: 5px;
     margin: 0;
     padding: 0;
