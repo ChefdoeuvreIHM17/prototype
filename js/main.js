@@ -150,6 +150,12 @@ function loadDataPhp(){
     loadJSON("data2.php", function (response) {
         rawData2 = JSON.parse(response);
 
+        //console.log(rawData2);
+        for (rowID2 in rawData2) {
+            row2 = rawData2[rowID2];
+
+        }
+
     });
 
 
@@ -157,7 +163,7 @@ function loadDataPhp(){
     loadJSON("data.php", function (response) {
        // console.log(response);
         rawData = JSON.parse(response);
-        //console.log(JSON.stringify(rawData,null,2));
+        //console.log(JSON.stringify(rawData2,null,2));
         for (rowID in rawData) {
             row = rawData[rowID];
            // console.log(row["LIBELLE"]);
@@ -165,36 +171,28 @@ function loadDataPhp(){
             switch (row["LIBELLE"]){
 
                 case "CU HORIZONTAL":
-                    console.log("CU HORIZONTAL");
+                    //console.log("CU HORIZONTAL");
                     creation_slot_phase(row,index_CU_H);
                     index_CU_H++;
-
-                    for (rowID2 in rawData2) {
-                        row2 = rawData2[rowID2];
-                        if(row2["ID_OFS"]===row["ID_OFS"]) {
-
-                        }
-                    }
-
                     break;
                 case "CU HORIZONTAL TM":
-                    console.log("CU HORIZONTAL TM");
+                    //console.log("CU HORIZONTAL TM");
                     creation_slot_phase(row,index_CU_H_TM);
                     index_CU_H_TM++;
                     break;
                 case "CU HORIZONTAL GC":
-                    console.log("CU HORIZONTAL GC");
+                    //console.log("CU HORIZONTAL GC");
                     creation_slot_phase(row,index_CU_H_GC);
                     index_CU_H_GC++;
                     break;
                 case "CU HORIZONTAL GC TM":
-                    console.log("CU HORIZONTAL GC TM");
+                    //console.log("CU HORIZONTAL GC TM");
                     creation_slot_phase(row,index_CU_H_GC_TM);
                     index_CU_H_GC_TM++;
 
                     break;
                 case "CU 5 AXES":
-                    console.log("CU 5 AXES");
+                    //console.log("CU 5 AXES");
                     creation_slot_phase(row,index_5AXES);
                     index_5AXES++;
                     break;
