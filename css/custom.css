@@ -148,3 +148,16 @@ div[priority="0"]:not(.current) {
     width: 100%;
 }
 
+.inPrep {
+    opacity: 0.5;
+}
+
+.inPrep::after {
+    content: "EN PRÉPA";
+    /*SUR " attr(prep-machine,'');*/
+    display: block;
+    opacity: 1;
+    color: black;
+    font-weight: bold;
+}
+
