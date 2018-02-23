@@ -4,46 +4,13 @@ const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
 const CONST_CDC_SLOTS = 10;
 
-var refreshDelayMinutes = 5;
 
-var rawEnCoursMachine = [];
-var rawEnCoursPrepa = [];
-var CDCs = {};
-
-// target elements with the "draggable" class
-/*interact('.draggable')
-    .draggable({
-        // enable inertial throwing
-        inertia: true,
-        // keep the element within the area of it's parent
-        restrict: {
-            restriction: "parent",
-            endOnly: true,
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
-        snap: {
-            targets: [
-                interact.createSnapGrid({ x: 30, y: 30 })
-            ],
-            range: Infinity,
-            relativePoints: [ { x: 0, y: 0 } ]
-        },
-        // enable autoScroll
-        autoScroll: true,
-
-        // call this function on every dragmove event
-        onmove: dragMoveListener,
-        // call this function on every dragend event
-        onend: function (event) {
-            var textEl = event.target.querySelector('p');
-
-            textEl && (textEl.textContent =
-                'moved a distance of '
-                + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                Math.pow(event.pageY - event.y0, 2) | 0))
-                    .toFixed(2) + 'px');
-        }
- });*/
+var planning = {
+    "refreshDelayMinutes": 5,
+    "rawEnCoursMachine": [],
+    "rawEnCoursPrepa": [],
+    "CDCs": {}
+};
 
 function dragMoveListener (event) {
     var target = event.target,
@@ -138,9 +105,9 @@ function toggleMachine(toggleID) {
     }
 }
 
-function loadDataPhp(){
-    var rawData = [];
+planning.refreshEnCoursPrepa = function () {
     var rowID, row;
+    var rowID2, row2;
 
     var index_CU_H = 0;
     var index_CU_H_TM = 0;
@@ -148,69 +115,44 @@ function loadDataPhp(){
     var index_CU_H_GC_TM = 0;
     var index_5AXES = 0;
 
+    for (rowID in planning.rawEnCoursMachine) {
+        if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
+            row = planning.rawEnCoursMachine[rowID];
+            // console.log(row["LIBELLE"]);
 
-    var rawData2 = [];
-    var rowID2, row2;
-
-    loadJSON("data2.php", function (response) {
-        rawData2 = JSON.parse(response);
-
-    });
-
-
-
-    loadJSON("data.php", function (response) {
-       // console.log(response);
-        rawData = JSON.parse(response);
-        //console.log(JSON.stringify(rawData,null,2));
-        for (rowID in rawData) {
-            row = rawData[rowID];
-           // console.log(row["LIBELLE"]);
-
-            switch (row["LIBELLE"]){
-
+            switch (row["LIBELLE"]) {
                 case "CU HORIZONTAL":
                     console.log("CU HORIZONTAL");
-                    creation_slot_phase(row,index_CU_H);
+                    creation_slot_phase(row, index_CU_H);
                     index_CU_H++;
-
-                    for (rowID2 in rawData2) {
-                        row2 = rawData2[rowID2];
-                        if(row2["ID_OFS"]===row["ID_OFS"]) {
-
-                        }
-                    }
-
                     break;
                 case "CU HORIZONTAL TM":
                     console.log("CU HORIZONTAL TM");
-                    creation_slot_phase(row,index_CU_H_TM);
+                    creation_slot_phase(row, index_CU_H_TM);
                     index_CU_H_TM++;
                     break;
                 case "CU HORIZONTAL GC":
                     console.log("CU HORIZONTAL GC");
-                    creation_slot_phase(row,index_CU_H_GC);
+                    creation_slot_phase(row, index_CU_H_GC);
                     index_CU_H_GC++;
                     break;
                 case "CU HORIZONTAL GC TM":
                     console.log("CU HORIZONTAL GC TM");
-                    creation_slot_phase(row,index_CU_H_GC_TM);
+                    creation_slot_phase(row, index_CU_H_GC_TM);
                     index_CU_H_GC_TM++;
 
                     break;
                 case "CU 5 AXES":
                     console.log("CU 5 AXES");
-                    creation_slot_phase(row,index_5AXES);
+                    creation_slot_phase(row, index_5AXES);
                     index_5AXES++;
                     break;
-
             }
         }
-    });
+    }
 }
 
 function creation_slot_phase(nom,ite) {
-
     if(ite < 10) {
         var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
         var slot_creation = document.createElement('div');
@@ -220,16 +162,9 @@ function creation_slot_phase(nom,ite) {
         slot_creation.innerHTML = nom["ID_ARTICLE"]+' '+nom["ID_OFS"];
         zone_phase.appendChild(slot_creation);
     }
-
-
-
-
-    
-
-
 }
 
-function loadMachines() {
+planning.loadMachines = function () {
     var reserveDiv = document.getElementById("reserve");
     var col_names = document.getElementById("col_names");
     var col_slots = document.getElementById("col_slots");
@@ -379,12 +314,14 @@ function loadMachines() {
             }
         }
     })
-}
+};
 
-function refreshEnCoursMachine() {
-    for (CDCID in CDCs) {
-        if (CDCs.hasOwnProperty(CDCID)) {
-            CDC = CDCs[CDCID];
+planning.refreshEnCoursMachine = function () {
+    var CDCID, CDC;
+    var machine, machineID;
+    for (CDCID in planning.CDCs) {
+        if (planning.CDCs.hasOwnProperty(CDCID)) {
+            CDC = planning.CDCs[CDCID];
             for (machineID in CDC) {
                 if (CDC.hasOwnProperty(machineID)) {
                     machine = CDC[machineID];
@@ -393,7 +330,7 @@ function refreshEnCoursMachine() {
             }
         }
     }
-}
+};
 
 function loadData(){
     var rawData ={};
@@ -535,23 +472,26 @@ function loadData(){
     });
 }
 
-function refreshData(callback) {
-    loadJSON("data/data.php", function (response) {
-        rawEnCoursMachine = JSON.parse(response);
-        loadJSON("data/data2.php", function (response2) {
-            rawEnCoursPrepa = JSON.parse(response2);
+planning.refreshData = function (callback) {
+    loadJSON("dataEnCoursMachine.php", function (response) {
+        planning.rawEnCoursMachine = JSON.parse(response);
+        loadJSON("dataEnCoursPrepa.php", function (response2) {
+            planning.rawEnCoursPrepa = JSON.parse(response2);
             callback();
         });
     });
-}
+};
+
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
-loadMachines();
+planning.loadMachines();
 
-setInterval(function () {
-    refreshData(function () {
-        refreshEnCoursMachine();
-        refreshEnCoursPrepa();
+planning.refresh = function () {
+    planning.refreshData(function () {
+        console.log(JSON.stringify(planning, null, 2));
+        planning.refreshEnCoursMachine();
+        planning.refreshEnCoursPrepa();
     });
-}, refreshDelayMinutes * 60 * 1000);
-loadDataPhp();
+};
+
+window.setInterval(planning.refresh(), planning.refreshDelayMinutes * 60 * 1000);
