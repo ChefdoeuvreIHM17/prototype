@@ -4,48 +4,15 @@ const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 const COLOR_PHASE_ACTIVE = "#c0ca33";
 const CONST_CDC_SLOTS = 10;
 
-var refreshDelayMinutes = 5;
 
-var rawEnCoursMachine = [];
-var rawEnCoursPrepa = [];
-var CDCs = {};
+var planning = {
+    "refreshDelayMinutes": 5,
+    "rawEnCoursMachine": [],
+    "rawEnCoursPrepa": [],
+    "CDCs": {}
+};
 
-// target elements with the "draggable" class
-/*interact('.draggable')
-    .draggable({
-        // enable inertial throwing
-        inertia: true,
-        // keep the element within the area of it's parent
-        restrict: {
-            restriction: "parent",
-            endOnly: true,
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
-        snap: {
-            targets: [
-                interact.createSnapGrid({ x: 30, y: 30 })
-            ],
-            range: Infinity,
-            relativePoints: [ { x: 0, y: 0 } ]
-        },
-        // enable autoScroll
-        autoScroll: true,
-
-        // call this function on every dragmove event
-        onmove: dragMoveListener,
-        // call this function on every dragend event
-        onend: function (event) {
-            var textEl = event.target.querySelector('p');
-
-            textEl && (textEl.textContent =
-                'moved a distance of '
-                + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                Math.pow(event.pageY - event.y0, 2) | 0))
-                    .toFixed(2) + 'px');
-        }
- });*/
-
-function dragMoveListener(event) {
+function dragMoveListener (event) {
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
@@ -68,12 +35,14 @@ function getCssValuePrefix() {
     // Create a temporary DOM object for testing
     var dom = document.createElement('div');
 
-    for (var i = 0; i < prefixes.length; i++) {
+    for (var i = 0; i < prefixes.length; i++)
+    {
         // Attempt to set the style
         dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
 
         // Detect if the style was successfully set
-        if (dom.style.background) {
+        if (dom.style.background)
+        {
             rtrnVal = prefixes[i];
         }
     }
@@ -86,7 +55,7 @@ function getCssValuePrefix() {
 
 
 function percentageChange(id, percentage) {
-    var gradientString = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
+    var gradientString = "linear-gradient(90deg, "+COLOR_PHASE_ACTIVE+"  "+percentage+"%, "+COLOR_PHASE_BACKGROUND+" 0%)";
     document.getElementById(id).style.background = gradientString;
 }
 
@@ -136,9 +105,9 @@ function toggleMachine(toggleID) {
     }
 }
 
-function loadDataPhp() {
-    var rawData = [];
+planning.refreshEnCoursPrepa = function () {
     var rowID, row;
+    var rowID2, row2;
 
     var index_CU_H = 0;
     var index_CU_H_TM = 0;
@@ -146,95 +115,56 @@ function loadDataPhp() {
     var index_CU_H_GC_TM = 0;
     var index_5AXES = 0;
 
-
-    var rawData2 = [];
-    var rowID2, row2;
-
-    loadJSON("data2.php", function (response) {
-        rawData2 = JSON.parse(response);
-
-        //console.log(rawData2);
-        for (rowID2 in rawData2) {
-            row2 = rawData2[rowID2];
-
-        }
-
-    });
-
-
-    loadJSON("data.php", function (response) {
-        // console.log(response);
-        rawData = JSON.parse(response);
-        //console.log(JSON.stringify(rawData2,null,2));
-        for (rowID in rawData) {
-
-            var boucle = false;
-            row = rawData[rowID];
-
+    for (rowID in planning.rawEnCoursMachine) {
+        if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
+            row = planning.rawEnCoursMachine[rowID];
+            // console.log(row["LIBELLE"]);
 
             switch (row["LIBELLE"]) {
-
                 case "CU HORIZONTAL":
-                    //creation_slot_phase(row,index_CU_H);
-                    creation_slot_phase(row, index_CU_H, 0);
+                    console.log("CU HORIZONTAL");
+                    creation_slot_phase(row, index_CU_H);
                     index_CU_H++;
                     break;
                 case "CU HORIZONTAL TM":
-                    //console.log("CU HORIZONTAL TM");
+                    console.log("CU HORIZONTAL TM");
                     creation_slot_phase(row, index_CU_H_TM);
                     index_CU_H_TM++;
                     break;
                 case "CU HORIZONTAL GC":
-                    //console.log("CU HORIZONTAL GC");
+                    console.log("CU HORIZONTAL GC");
                     creation_slot_phase(row, index_CU_H_GC);
                     index_CU_H_GC++;
                     break;
                 case "CU HORIZONTAL GC TM":
-                    //console.log("CU HORIZONTAL GC TM");
+                    console.log("CU HORIZONTAL GC TM");
                     creation_slot_phase(row, index_CU_H_GC_TM);
                     index_CU_H_GC_TM++;
 
                     break;
                 case "CU 5 AXES":
-                    //console.log("CU 5 AXES");
+                    console.log("CU 5 AXES");
                     creation_slot_phase(row, index_5AXES);
                     index_5AXES++;
                     break;
-
             }
         }
-    });
+    }
 }
 
-function creation_slot_phase(nom, ite, priority) {
-
-    if (ite < 10) {
+function creation_slot_phase(nom,ite) {
+    if(ite < 10) {
         var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
         var slot_creation = document.createElement('div');
         slot_creation.classList.add("OF");
         slot_creation.classList.add("ui-draggable");
         slot_creation.classList.add("ui-draggable-handle");
-        slot_creation.innerHTML = nom["ID_ARTICLE"] + ' ' + nom["ID_OFS"];
-
-        switch (priority) {
-            case 0:
-                slot_creation.setAttribute("priority", "0");
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default :
-                break;
-        }
-
+        slot_creation.innerHTML = nom["ID_ARTICLE"]+' '+nom["ID_OFS"];
         zone_phase.appendChild(slot_creation);
     }
-
-
 }
 
-function loadMachines() {
+planning.loadMachines = function () {
     var reserveDiv = document.getElementById("reserve");
     var col_names = document.getElementById("col_names");
     var col_slots = document.getElementById("col_slots");
@@ -384,12 +314,14 @@ function loadMachines() {
             }
         }
     })
-}
+};
 
-function refreshEnCoursMachine() {
-    for (CDCID in CDCs) {
-        if (CDCs.hasOwnProperty(CDCID)) {
-            CDC = CDCs[CDCID];
+planning.refreshEnCoursMachine = function () {
+    var CDCID, CDC;
+    var machine, machineID;
+    for (CDCID in planning.CDCs) {
+        if (planning.CDCs.hasOwnProperty(CDCID)) {
+            CDC = planning.CDCs[CDCID];
             for (machineID in CDC) {
                 if (CDC.hasOwnProperty(machineID)) {
                     machine = CDC[machineID];
@@ -398,10 +330,10 @@ function refreshEnCoursMachine() {
             }
         }
     }
-}
+};
 
-function loadData() {
-    var rawData = {};
+function loadData(){
+    var rawData ={};
     loadJSON("data.json", function (response) {
         rawData = JSON.parse(response);
 
@@ -431,14 +363,14 @@ function loadData() {
                 nameWrap.appendChild(nameDiv);
                 col_names.appendChild(nameWrap);
                 name = document.createElement("span");
-                if (machine.emplacement_max > 4) {
+                if(machine.emplacement_max > 4){
                     nameDiv.setAttribute("class", "machine");
                     nameWrap.setAttribute("class", "nameWrap-large");
-                } else {
+                }else{
                     nameDiv.setAttribute("class", "machine");
                     nameWrap.setAttribute("class", "nameWrap");
                 }
-                name.setAttribute("class", "name");
+                name.setAttribute("class","name");
                 name.innerHTML = machine.id;
                 nameDiv.appendChild(name);
                 closeMachineToggle = document.createElement("input");
@@ -458,9 +390,9 @@ function loadData() {
                 slots_machine = document.createElement("div");
                 slots_machine.setAttribute("id", "slots_machine" + machineID);
                 col_slots.appendChild(slots_machine);
-                if (machine.emplacement_max > 4) {
+                if(machine.emplacement_max > 4){
                     slots_machine.setAttribute("class", "col-md-12 slots_machine machine-large");
-                } else {
+                }else{
                     slots_machine.setAttribute("class", "col-md-12 slots_machine");
                 }
                 for (iSlot = 0; iSlot < machine.emplacement_max; iSlot++) {
@@ -478,9 +410,9 @@ function loadData() {
 
                 prep = document.createElement("div");
                 col_prep.appendChild(prep);
-                if (machine.emplacement_max > 4) {
+                if(machine.emplacement_max > 4){
                     prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
-                } else {
+                }else{
                     prep.setAttribute("class", "col-md-12 slots_prepa");
                 }
                 for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
@@ -506,7 +438,7 @@ function loadData() {
                     if (machine.OF_en_cours === OF[0] && typeof rawData.OF[OF[0]] !== 'undefined') {
                         var article = rawData.OF[OF[0]].article;
                         var tempsTotal = rawData.Article[article].temps;
-                        var percentage = (machine.temps_passe * 100 / tempsTotal).toFixed(2);
+                        var percentage =  (machine.temps_passe *100 / tempsTotal).toFixed(2);
                         var tempsRestant = pretifyTempsRestant(tempsTotal, machine.temps_passe);
                         OFDiv.innerHTML += "<br>" + tempsRestant;
                         OFDiv.classList.add('current');
@@ -540,24 +472,26 @@ function loadData() {
     });
 }
 
-function refreshData(callback) {
-    loadJSON("data/data.php", function (response) {
-        rawEnCoursMachine = JSON.parse(response);
-        loadJSON("data/data2.php", function (response2) {
-            rawEnCoursPrepa = JSON.parse(response2);
+planning.refreshData = function (callback) {
+    loadJSON("dataEnCoursMachine.php", function (response) {
+        planning.rawEnCoursMachine = JSON.parse(response);
+        loadJSON("dataEnCoursPrepa.php", function (response2) {
+            planning.rawEnCoursPrepa = JSON.parse(response2);
             callback();
         });
     });
-}
+};
 
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
-loadMachines();
+planning.loadMachines();
 
-setInterval(function () {
-    refreshData(function () {
-        refreshEnCoursMachine();
-        refreshEnCoursPrepa();
+planning.refresh = function () {
+    planning.refreshData(function () {
+        console.log(JSON.stringify(planning, null, 2));
+        planning.refreshEnCoursMachine();
+        planning.refreshEnCoursPrepa();
     });
-}, refreshDelayMinutes * 60 * 1000);
-loadDataPhp();
+};
+
+window.setInterval(planning.refresh(), planning.refreshDelayMinutes * 60 * 1000);
