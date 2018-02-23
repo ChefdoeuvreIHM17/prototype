@@ -122,28 +122,23 @@ planning.refreshEnCoursPrepa = function () {
 
             switch (row["LIBELLE"]) {
                 case "CU HORIZONTAL":
-                    console.log("CU HORIZONTAL");
                     creation_slot_phase(row, index_CU_H);
                     index_CU_H++;
                     break;
                 case "CU HORIZONTAL TM":
-                    console.log("CU HORIZONTAL TM");
                     creation_slot_phase(row, index_CU_H_TM);
                     index_CU_H_TM++;
                     break;
                 case "CU HORIZONTAL GC":
-                    console.log("CU HORIZONTAL GC");
                     creation_slot_phase(row, index_CU_H_GC);
                     index_CU_H_GC++;
                     break;
                 case "CU HORIZONTAL GC TM":
-                    console.log("CU HORIZONTAL GC TM");
                     creation_slot_phase(row, index_CU_H_GC_TM);
                     index_CU_H_GC_TM++;
 
                     break;
                 case "CU 5 AXES":
-                    console.log("CU 5 AXES");
                     creation_slot_phase(row, index_5AXES);
                     index_5AXES++;
                     break;
@@ -178,13 +173,13 @@ planning.loadMachines = function () {
     var prep, iPrepSlot, slotPrep;
 
     loadJSON("machines.json", function (response) {
-        CDCs = JSON.parse(response);
+        planning.CDCs = JSON.parse(response);
 
-        for (CDCID in CDCs) {
-            if (CDCs.hasOwnProperty(CDCID)) {
+        for (CDCID in planning.CDCs) {
+            if (planning.CDCs.hasOwnProperty(CDCID)) {
 
                 //////////////// Centre de charge //////////////////
-                CDC = CDCs[CDCID];
+                CDC = planning.CDCs[CDCID];
 
                 CDCHeaderDiv = document.createElement("div");
                 CDCHeaderDiv.classList.add("col-md-2");
@@ -222,11 +217,9 @@ planning.loadMachines = function () {
                                 slot = document.createElement("div");
                                 slot.setAttribute("class", "slot col-md-3");
                                 if (CDCID.endsWith("TM")) {
-                                    slot.innerHTML = "🌙️";
                                     slotID = machineID + "_" + iSlot + "_TM";
                                     slot.classList.add("slot_TM");
                                 } else {
-                                    slot.innerHTML = "☀️️";
                                     slotID = machineID + "_" + iSlot;
                                     slot.classList.add("slot_standard");
                                 }
@@ -276,11 +269,9 @@ planning.loadMachines = function () {
                                 slot = document.createElement("div");
                                 slot.setAttribute("class", "slot col-md-3");
                                 if (CDCID.endsWith("TM")) {
-                                    slot.innerHTML = "🌙️";
                                     slotID = machineID + "_" + iSlot + "_TM";
                                     slot.classList.add("slot_TM");
                                 } else {
-                                    slot.innerHTML = "☀️️";
                                     slotID = machineID + "_" + iSlot;
                                     slot.classList.add("slot_standard");
                                 }
@@ -316,7 +307,7 @@ planning.loadMachines = function () {
     })
 };
 
-planning.refreshEnCoursMachine = function () {
+planning.resetJetons = function () {
     var CDCID, CDC;
     var machine, machineID;
     for (CDCID in planning.CDCs) {
@@ -325,11 +316,97 @@ planning.refreshEnCoursMachine = function () {
             for (machineID in CDC) {
                 if (CDC.hasOwnProperty(machineID)) {
                     machine = CDC[machineID];
-                    //todo en gros refaire ce qu'il fait en vba
+
+                    machine["en-cours"] = 0;
+                    machine["a servir cdc"] = 0;
+                    machine["a servir global"] = 0;
+                    machine["reste a servir"] = 0;
+
                 }
             }
         }
     }
+};
+
+planning.refreshEnCoursMachine = function () {
+    planning.resetJetons();
+
+    var today = new Date();
+
+    var CDCID, CDC;
+    var machine, machineID;
+    var rowID, row;
+    var slotID, slotDiv;
+    var phaseDiv;
+    var of, article, phase, datePhase, diff_ms, age, cdc, outillage, cpt_courant;
+
+    for (CDCID in planning.CDCs) {
+        if (planning.CDCs.hasOwnProperty(CDCID)) {
+            CDC = planning.CDCs[CDCID];
+            for (machineID in CDC) {
+                if (CDC.hasOwnProperty(machineID)) {
+                    machine = CDC[machineID];
+
+                    //récupération de l'en-cours total sur la machine
+                    for (rowID in planning.rawEnCoursMachine) {
+                        if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
+                            row = planning.rawEnCoursMachine[rowID];
+                            if (row["8"] === machineID && row["9"] === CDCID) { //todo remplacer par LIBELLE et LIBELLE2 quand on aura fix la requête, correspond au nom de la machine et au nom du CDC
+                                machine["en-cours"]++;
+                            }
+                        }
+                    }
+
+                    if (machine["jetons"] - machine["en-cours"] < 0) {
+                        machine["a servir cdc"] = 0;
+                    } else {
+                        machine["a servir cdc"] = machine["jetons"] - machine["en-cours"];
+                    }
+                    machine["reste a servir"] = machine["a servir cdc"];
+
+                    cpt_courant = 0
+
+                    //affichage de l'en-cours sur la machine
+                    for (rowID = 0; rowID < planning.rawEnCoursMachine.length && cpt_courant < machine["a servir cdc"]; rowID++) {
+                        if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
+                            row = planning.rawEnCoursMachine[rowID];
+                            if (row["8"] === machineID) { //&& row["9"] === CDCID
+                                of = row["ID_OFS"];
+                                article = row["ID_ARTICLE"]
+                                phase = row["ID_PHASE"]
+                                datePhase = Date.parse(row["MIN(HEURE_1.DATE_POINT)"]);
+                                diff_ms = today.getTime() - datePhase;
+                                age = diff_ms / 86400000; //milisecondes en un jour
+                                age = age.toFixed(0);
+                                cdc = row["9"];
+                                outillage = row["REF_OUTILLAGE"];
+                                if (outillage.startsWith("STD")) {
+                                    outillage.replace("STD", "");
+                                } else {
+                                    outilllage = "";
+                                }
+
+                                slotID = machineID + "_" + cpt_courant;
+                                if (CDCID.endsWith("TM")) {
+                                    slotID += "_TM";
+                                }
+                                slotDiv = document.getElementById(slotID);
+                                phaseDiv = document.createElement('div');
+                                phaseDiv.classList.add("OF");
+                                phaseDiv.innerHTML = cdc + " " + of + " " + article + " " + phase + " " + age + " jour(s) " + outillage;
+                                slotDiv.appendChild(phaseDiv);
+                                cpt_courant++;
+                            }
+                        }
+                    }
+
+                    //s'il reste de la place, appeller du travail
+                }
+            }
+        }
+    }
+
+    console.log(JSON.stringify(planning.CDCs, null, 2));
 };
 
 function loadData(){
@@ -488,7 +565,6 @@ planning.loadMachines();
 
 planning.refresh = function () {
     planning.refreshData(function () {
-        console.log(JSON.stringify(planning, null, 2));
         planning.refreshEnCoursMachine();
         planning.refreshEnCoursPrepa();
     });

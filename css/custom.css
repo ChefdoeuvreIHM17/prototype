@@ -34,6 +34,14 @@
     text-align: center;
 }
 
+.slot_TM {
+    background-color: darkblue;
+}
+
+.slot_standard {
+    background-color: darkgreen;
+}
+
 .nameWrap {
     display: flex;
     justify-content: center;
