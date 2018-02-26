@@ -118,12 +118,7 @@ planning.refreshEnCoursPrepa = function () {
     for (rowID = 0; rowID < planning.rawEnCoursPrepa.length; rowID++) {
         row = planning.rawEnCoursPrepa[rowID];
         // console.log(rowID, rowID-1);
-
-
-
-        if(rowID>0){
-
-
+        if (rowID > 0) {
             var cellPrece = planning.rawEnCoursPrepa[rowID]["ID_OFS"];
             var cellCourante = planning.rawEnCoursPrepa[rowID - 1]["ID_OFS"];
             var etatTachePrecedente = planning.rawEnCoursPrepa[rowID - 1]["STATUT"];
@@ -141,7 +136,6 @@ planning.refreshEnCoursPrepa = function () {
                         case "CU HORIZONTAL":
                             creation_slot_phase(row, index_CU_H);
                             index_CU_H++;
-
                             break;
                         case "CU HORIZONTAL TM":
                             //console.log("CU HORIZONTAL TM");
@@ -157,7 +151,6 @@ planning.refreshEnCoursPrepa = function () {
                             //console.log("CU HORIZONTAL GC TM");
                             creation_slot_phase(row, index_CU_H_GC_TM);
                             index_CU_H_GC_TM++;
-
                             break;
                         case "CU 5 AXES":
                             // console.log("CU 5 AXES");
@@ -166,19 +159,11 @@ planning.refreshEnCoursPrepa = function () {
                             break;
                         default:
                             break;
-
                     }
                 }
             }
-
-
-
         }
-
-
     }
-
-
 }
 ;
 
@@ -192,21 +177,20 @@ function creation_slot_phase(nom, ite) {
         slot_creation.innerHTML = nom["ID_OFS"] + ' - ' + nom["ID_ARTICLE"];
 
 
-
         switch (nom["TYPE_OF"]) {
 
             case "BERY":
-                slot_creation.setAttribute("priority","0");
+                slot_creation.setAttribute("priority", "0");
                 break;
             case "AOG":
-                slot_creation.setAttribute("priority","1");
+                slot_creation.setAttribute("priority", "1");
 
                 break;
             case "FAI":
-                slot_creation.setAttribute("priority","2");
+                slot_creation.setAttribute("priority", "2");
                 break;
             default:
-                slot_creation.setAttribute("priority","3");
+                slot_creation.setAttribute("priority", "3");
                 break;
 
         }
@@ -259,7 +243,6 @@ planning.loadMachines = function () {
 
                 reserveDiv.firstElementChild.appendChild(CDCHeaderDiv);
                 reserveDiv.lastElementChild.appendChild(CDCDiv);
-
 
                 //////////////// Machines //////////////////
                 for (machineID in CDC) {
@@ -442,7 +425,7 @@ planning.refreshEnCoursMachine = function () {
                                 if (outillage.startsWith("STD")) {
                                     outillage.replace("STD", "");
                                 } else {
-                                    outilllage = "";
+                                    outillage = "";
                                 }
 
                                 slotID = machineID + "_" + cpt_courant;
@@ -453,6 +436,8 @@ planning.refreshEnCoursMachine = function () {
                                 phaseDiv = document.createElement('div');
                                 phaseDiv.classList.add("OF");
                                 phaseDiv.innerHTML = cdc + "<br>" + of + " " + article + " " + phase + " " + age + " jour(s) " + outillage;
+
+
                                 slotDiv.appendChild(phaseDiv);
                                 cpt_courant++;
                             }
