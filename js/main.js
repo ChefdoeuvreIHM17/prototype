@@ -243,15 +243,14 @@ planning.loadMachines = function () {
                             // compléter machine si on l'a déjà créée
                             for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
                                 slot = document.createElement("div");
-                                slot.setAttribute("class", "slot col-md-3");
+                                slot.classList.add("slot");
+                                slot.classList.add("col-md-3");
                                 if (CDCID.endsWith("TM")) {
-                                    slot.innerHTML = "🌙️";
                                     slotID = machineID + "_" + iSlot + "_TM";
                                     slot.classList.add("slot_TM");
                                 } else {
-                                    slot.innerHTML = "☀️️";
                                     slotID = machineID + "_" + iSlot;
-                                    slot.classList.add("slot_standard");
+                                    slot.classList.add("slot_day");
                                 }
                                 slot.id = slotID;
                                 slots_machine.appendChild(slot);
@@ -280,7 +279,7 @@ planning.loadMachines = function () {
                             closeMachineToggle.setAttribute("type", "checkbox");
                             closeMachineToggle.setAttribute("data-on", "Activée");
                             closeMachineToggle.setAttribute("data-off", "Désactivée");
-                            closeMachineToggle.setAttribute("data-onstyle", "success");
+                            closeMachineToggle.setAttribute("data-onstyle", "default");
                             closeMachineToggle.onchange = function () {
                                 toggleMachine(this.id);
                             };
@@ -297,15 +296,14 @@ planning.loadMachines = function () {
                             }
                             for (iSlot = 0; iSlot < machine.jetons; iSlot++) {
                                 slot = document.createElement("div");
-                                slot.setAttribute("class", "slot col-md-3");
+                                slot.classList.add("slot");
+                                slot.classList.add("col-md-3");
                                 if (CDCID.endsWith("TM")) {
-                                    slot.innerHTML = "🌙️";
                                     slotID = machineID + "_" + iSlot + "_TM";
                                     slot.classList.add("slot_TM");
                                 } else {
-                                    slot.innerHTML = "☀️️";
                                     slotID = machineID + "_" + iSlot;
-                                    slot.classList.add("slot_standard");
+                                    slot.classList.add("slot_day");
                                 }
                                 slot.id = slotID;
                                 slots_machine.appendChild(slot);
@@ -317,18 +315,19 @@ planning.loadMachines = function () {
                             closed_machine.innerHTML = "<h1>Fermée</h1>";
                             slots_machine.appendChild(closed_machine);
 
-                            prep = document.createElement("div");
-                            col_prep.appendChild(prep);
+                            prepDiv = document.createElement("div");
+                            prepDiv.id = machineID + "_prep";
+                            col_prep.appendChild(prepDiv);
                             if (machine.jetons > 4) {
-                                prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
+                                prepDiv.setAttribute("class", "col-md-12 slots_prepa cell-large");
                             } else {
-                                prep.setAttribute("class", "col-md-12 slots_prepa");
+                                prepDiv.setAttribute("class", "col-md-12 slots_prepa");
                             }
                             for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
                                 slotPrep = document.createElement("div");
                                 slotPrep.setAttribute("class", "slot col-md-6");
                                 slotPrep.setAttribute("id", machineID + "_prep_" + iPrepSlot);
-                                prep.appendChild(slotPrep);
+                                prepDiv.appendChild(slotPrep);
                             }
                         }
                     }
@@ -410,7 +409,7 @@ planning.refreshEnCoursMachine = function () {
                                 diff_ms = today.getTime() - datePhase;
                                 age = diff_ms / 86400000; //milisecondes en un jour
                                 age = age.toFixed(0);
-                                cdc = row["9"];
+                                cdc = row["9"].replace("ORIZONTAL", "");
                                 outillage = row["REF_OUTILLAGE"];
                                 if (outillage.startsWith("STD")) {
                                     outillage.replace("STD", "");
@@ -425,7 +424,7 @@ planning.refreshEnCoursMachine = function () {
                                 slotDiv = document.getElementById(slotID);
                                 phaseDiv = document.createElement('div');
                                 phaseDiv.classList.add("OF");
-                                phaseDiv.innerHTML = cdc + " " + of + " " + article + " " + phase + " " + age + " jour(s) " + outillage;
+                                phaseDiv.innerHTML = cdc + "<br>" + of + " " + article + " " + phase + " " + age + " jour(s) " + outillage;
                                 slotDiv.appendChild(phaseDiv);
                                 cpt_courant++;
                             }

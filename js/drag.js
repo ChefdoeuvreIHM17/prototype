@@ -7,11 +7,13 @@ function Test() {
         $('.slots_prepa>.slot').droppable({
             accept: ".phase, .OF",
             drop: function (event, ui) {
+                var clone, machineID;
                 if ($(ui.draggable).parent() !== $(this)) {
-                    var clone = $(ui.draggable).clone();
+                    clone = $(ui.draggable).clone();
                     clone.appendTo($(this));
 
-                    var machineID = $(this).parent().attr('id');
+                    console.log($(this).parent());
+                    machineID = $(this).parent().attr('id');
                     machineID.replace("_prep", "");
                     console.log(machineID);
                     $(ui.draggable).attr('prep-machine', machineID);
