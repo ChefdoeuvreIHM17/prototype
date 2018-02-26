@@ -1,24 +1,30 @@
 window.addEventListener("load", function (e) {
-    Test();
+    refreshDraggable();
 });
 
-function Test() {
+function refreshDraggable() {
     $(function () {
         $('.slots_prepa>.slot').droppable({
             accept: ".phase, .OF",
             drop: function (event, ui) {
                 var clone, machineID;
                 if ($(ui.draggable).parent() !== $(this)) {
-                    clone = $(ui.draggable).clone();
-                    clone.appendTo($(this));
+                    console.log($(ui.draggable).parent().parent().parent().attr('id'));
+                    if ($(ui.draggable).hasClass("inPrep")) {
+                        $(ui.draggable).appendTo($(this));
+                    } else {
+                        clone = $(ui.draggable).clone();
+                        clone.appendTo($(this));
+                        clone.addClass("inPrep");
+                        machineID = $(this).parent().attr('id');
+                        machineID.replace("_prep", "");
+                        $(ui.draggable).attr('prep-machine', machineID);
+                        $(ui.draggable).addClass("alreadyInPrep");
+                        $(ui.draggable).removeClass("ui-draggable");
+                        $(ui.draggable).removeClass("ui-draggable-handle");
+                    }
 
-                    console.log($(this).parent());
-                    machineID = $(this).parent().attr('id');
-                    machineID.replace("_prep", "");
-                    console.log(machineID);
-                    $(ui.draggable).attr('prep-machine', machineID);
-                    $(ui.draggable).addClass("inPrep");
-                    $(ui.draggable).removeClass("draggable");
+                    refreshDraggable();
                 }
                 /*var drop_p = $(this).offset();
                  var drag_p = ui.draggable.offset();
@@ -30,7 +36,7 @@ function Test() {
                  });*/
             }
         });
-        $('.OF').draggable({
+        $('#reserve').find('.OF').draggable({
             snap: '.slots_prepa .slot',
             revert: 'invalid',
             //snapMode: 'inner',
@@ -42,20 +48,11 @@ function Test() {
                 $("#SH500A_prep").addClass("prochaine");
                 $("#SH500C_prep").addClass("prochaine");
                 $("#HM800_prep").addClass("prochaine");
-
-
                 $("#NH5000A_prep").addClass("prochaineRouge");
-
                 $("#NH5000B_prep").addClass("prochaineRouge");
-
                 $("#SH503_prep").addClass("prochaineRouge");
-
-
                 $("#Clock1_prep").addClass("prochaineRouge");
-
                 $("#Clock2_prep").addClass("prochaineRouge");
-
-
             },
 
             stop: function () {
@@ -63,22 +60,42 @@ function Test() {
                 $("#SH500A_prep").removeClass("prochaine");
                 $("#SH500C_prep").removeClass("prochaine");
                 $("#HM800_prep").removeClass("prochaine");
-
-
                 $("#NH5000A_prep").removeClass("prochaineRouge");
-
                 $("#NH5000B_prep").removeClass("prochaineRouge");
-
                 $("#SH503_prep").removeClass("prochaineRouge");
-
-
                 $("#Clock1_prep").removeClass("prochaineRouge");
-
                 $("#Clock2_prep").removeClass("prochaineRouge");
-
-
             }
+        });
+        $('.OF.inPrep').draggable({
+            snap: '.slots_prepa .slot',
+            revert: 'invalid',
+            //snapMode: 'inner',
+            opacity: 0.7,
+            stack: ".inPrep",
+            drag: function () {
+                $("#SH50_prep").addClass("prochaine");
+                $("#SH500A_prep").addClass("prochaine");
+                $("#SH500C_prep").addClass("prochaine");
+                $("#HM800_prep").addClass("prochaine");
+                $("#NH5000A_prep").addClass("prochaineRouge");
+                $("#NH5000B_prep").addClass("prochaineRouge");
+                $("#SH503_prep").addClass("prochaineRouge");
+                $("#Clock1_prep").addClass("prochaineRouge");
+                $("#Clock2_prep").addClass("prochaineRouge");
+            },
 
+            stop: function () {
+                $("#SH50_prep").removeClass("prochaine");
+                $("#SH500A_prep").removeClass("prochaine");
+                $("#SH500C_prep").removeClass("prochaine");
+                $("#HM800_prep").removeClass("prochaine");
+                $("#NH5000A_prep").removeClass("prochaineRouge");
+                $("#NH5000B_prep").removeClass("prochaineRouge");
+                $("#SH503_prep").removeClass("prochaineRouge");
+                $("#Clock1_prep").removeClass("prochaineRouge");
+                $("#Clock2_prep").removeClass("prochaineRouge");
+            }
         });
 
 

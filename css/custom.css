@@ -33,7 +33,7 @@ body {
     height: 100%;
     position: absolute;
     width: 100%;
-    z-index: 999;
+    z-index: 15;
 }
 
 .slot{
@@ -195,11 +195,11 @@ div[priority="0"]:not(.current) {
     width: 100%;
 }
 
-.inPrep {
+.alreadyInPrep {
     opacity: 0.5;
 }
 
-.inPrep::after {
+.alreadyInPrep::after {
     content: "EN PRÉPA";
     /*SUR " attr(prep-machine,'');*/
     display: block;
