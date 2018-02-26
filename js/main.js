@@ -1,9 +1,12 @@
 // const COLOR_SLOT = "rgb(255,255,255)";
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
-const COLOR_PHASE_BACKGROUND = "#e6ee9c";
-const COLOR_PHASE_ACTIVE = "#c0ca33";
+// const COLOR_PHASE_BACKGROUND = "#e6ee9c";
+// const COLOR_PHASE_ACTIVE = "#c0ca33";
+const COLOR_PHASE_BACKGROUND = "lightpink";
+const COLOR_PHASE_ACTIVE = "deeppink";
 const CONST_CDC_SLOTS = 10;
 
+var heatmap;
 
 var planning = {
     "refreshDelayMinutes": 5,
@@ -51,7 +54,6 @@ function getCssValuePrefix() {
     return returnVal;
 }
 
-
 function percentageChange(id, percentage) {
     document.getElementById(id).style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
 }
@@ -62,7 +64,7 @@ function loadJSON(file, callback) {
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'data/' + file, true);
     xobj.onreadystatechange = function () {
-        if (xobj.readyState === 4 && xobj.status === "200") {
+        if (xobj.readyState === 4 && xobj.status === 200) {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
@@ -454,7 +456,7 @@ function loadData() {
         var nameWrap, nameDiv, name;
         var closeMachineToggle, closed_machine;
         var slots_machine, iSlot, slot;
-        var prep, iPrepSlot, slotPrep;
+        var prepDiv, iPrepSlot, slotPrep;
         var iOF, OF, realOF, OFDiv, mySlot;
         var phases, phaseID, phase, phaseDiv, slotDiv;
         var i;
@@ -477,7 +479,7 @@ function loadData() {
                     nameDiv.setAttribute("class", "machine");
                     nameWrap.setAttribute("class", "nameWrap");
                 }
-                name.setAttribute("class", "name");
+                name.setAttribute("class", "name, h3");
                 name.innerHTML = machine.id;
                 nameDiv.appendChild(name);
                 closeMachineToggle = document.createElement("input");
@@ -487,7 +489,7 @@ function loadData() {
                 closeMachineToggle.setAttribute("type", "checkbox");
                 closeMachineToggle.setAttribute("data-on", "Activée");
                 closeMachineToggle.setAttribute("data-off", "Désactivée");
-                closeMachineToggle.setAttribute("data-onstyle", "success");
+                closeMachineToggle.setAttribute("data-onstyle", "default");
                 closeMachineToggle.onchange = function () {
                     toggleMachine(this.id);
                 };
@@ -504,7 +506,11 @@ function loadData() {
                 }
                 for (iSlot = 0; iSlot < machine.emplacement_max; iSlot++) {
                     slot = document.createElement("div");
-                    slot.setAttribute("class", "slot col-md-3");
+                    if (iSlot < 2 || machineID === "Clock1" || machineID === "Clock2") {
+                        slot.setAttribute("class", "slot slot_day col-md-3");
+                    } else {
+                        slot.setAttribute("class", "slot slot_TM col-md-3");
+                    }
                     slot.setAttribute("id", machine.id + "_" + iSlot);
                     slots_machine.appendChild(slot);
                 }
@@ -515,18 +521,19 @@ function loadData() {
                 closed_machine.innerHTML = "<h1>Fermée</h1>";
                 slots_machine.appendChild(closed_machine);
 
-                prep = document.createElement("div");
-                col_prep.appendChild(prep);
+                prepDiv = document.createElement("div");
+                col_prep.appendChild(prepDiv);
+                prepDiv.id = machineID + "_prep";
                 if (machine.emplacement_max > 4) {
-                    prep.setAttribute("class", "col-md-12 slots_prepa cell-large");
+                    prepDiv.setAttribute("class", "col-md-12 slots_prepa cell-large");
                 } else {
-                    prep.setAttribute("class", "col-md-12 slots_prepa");
+                    prepDiv.setAttribute("class", "col-md-12 slots_prepa");
                 }
                 for (iPrepSlot = 0; iPrepSlot < 2; iPrepSlot++) {
                     slotPrep = document.createElement("div");
                     slotPrep.setAttribute("class", "slot col-md-6");
                     slotPrep.setAttribute("id", machine.id + "_prep_" + iPrepSlot);
-                    prep.appendChild(slotPrep);
+                    prepDiv.appendChild(slotPrep);
                 }
 
                 //OFs
@@ -589,8 +596,111 @@ planning.refreshData = function (callback) {
     });
 };
 
+function trackClick(x, y) {
+    console.log("click !!")
+    var clicks, currentValue;
+    if (getTrackingData("clicks")) {
+        clicks = getTrackingData("clicks");
+        if (clicks[x]) {
+            if (clicks[x][y]) {
+                currentValue = clicks[x][y];
+                clicks[x][y] = currentValue + 1;
+            } else {
+                clicks[x][y] = 1;
+            }
+        } else {
+            clicks[x] = {};
+            clicks[x][y] = 1;
+        }
+    } else {
+        clicks = {};
+        clicks[x] = {};
+        clicks[x][y] = 1;
+    }
+    trackGeneric("clicks", clicks);
+}
+
+function removeHeatmap() {
+    //find corresponding canvas element
+    var canvas = heatmap._renderer.canvas;
+    //remove the canvas from DOM
+    $(canvas).remove();
+    //then unset the variable
+    heatmap = undefined;
+}
+
+function refreshHeatmap() {
+    if (!heatmap) {
+        heatmap = h337.create({
+            container: document.body
+        });
+        heatmap.setDataMin(0);
+    }
+
+    var clicks, x, y, dataPoint;
+    if (getTrackingData("clicks")) {
+        clicks = getTrackingData("clicks");
+        console.log("clicks : " + JSON.stringify(clicks));
+        for (x in clicks) {
+            if (clicks.hasOwnProperty(x)) {
+                for (y in clicks[x]) {
+                    if (clicks[x].hasOwnProperty(y)) {
+                        dataPoint = {
+                            x: x, // x coordinate of the datapoint, a number
+                            y: y, // y coordinate of the datapoint, a number
+                            value: clicks[x][y] // the value at datapoint(x, y)
+                        };
+                        heatmap.addData(dataPoint);
+                    }
+                }
+            }
+        }
+    }
+    heatmap.repaint();
+}
+
+function convertDate(date) {
+    return date.getFullYear() + "/" + Number(date.getMonth() + 1) + "/" + date.getDate();
+}
+
+function trackGeneric(key, value) {
+    var retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined") {
+        if (!localStorage[dKey]) {
+            retrievedObject = {};
+        } else {
+            retrievedObject = JSON.parse(localStorage[dKey]);
+        }
+        retrievedObject[key] = value;
+        localStorage.setItem(dKey, JSON.stringify(retrievedObject));
+    } else {
+        // Sorry! No Web Storage support..
+    }
+}
+
+function getTrackingData(key) {
+    var returnValue, retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined" && localStorage[dKey]) {
+        retrievedObject = JSON.parse(localStorage[dKey]);
+        if (retrievedObject[key]) {
+            returnValue = retrievedObject[key];
+        }
+    }
+    return returnValue;
+}
+
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
+
+function clickEvent(e) {
+    trackClick(e.pageX, e.pageY);
+}
+
+document.addEventListener('click', clickEvent, true);
 planning.loadMachines();
 
 planning.refresh = function () {

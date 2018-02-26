@@ -1,5 +1,16 @@
-.body {
-    background: #cdcdcd;
+body {
+    --background-color: #dddddd;
+    --closed-machine-background-color: #bbbbbb;
+    --slot-default-background-color: #daedf2;
+    --slot-night-background-color: #daf2da;
+    --slot-default-border-color: #b4e4f0;
+    --slot-night-border-color: #b4f0b4;
+    --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
+    --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
+}
+
+body {
+    background: var(--background-color) !important;
 }
 
 .cell{
@@ -18,7 +29,7 @@
 
 .closed_machine {
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: var(--closed-machine-background-color);
     height: 100%;
     position: absolute;
     width: 100%;
@@ -27,7 +38,8 @@
 
 .slot{
     height: 77px;
-    border: 1px solid lightblue;
+    border: 1px solid transparent;
+    background-color: transparent;
     border-radius: 5px;
     margin: 0;
     padding: 0;
@@ -40,6 +52,16 @@
 
 .slot_standard {
     background-color: darkgreen;
+}
+
+.slot_day {
+    border: 1px solid var(--slot-default-border-color);
+    background-color: var(--slot-default-background-color);
+}
+
+.slot_TM {
+    border: 1px solid var(--slot-night-border-color);
+    background-color: var(--slot-night-background-color);
 }
 
 .nameWrap {
@@ -92,11 +114,13 @@
 }
 
 .prochaine {
-    border: 5px solid green;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px green inset; /* emulate the border */
 }
 
 .prochaineRouge {
-    border: 5px solid red;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 5px red inset; /* emulate the border */
 }
 
 .OF {
@@ -154,5 +178,18 @@ div[priority="0"]:not(.current) {
 
 .toggle {
     width: 100%;
+}
+
+.inPrep {
+    opacity: 0.5;
+}
+
+.inPrep::after {
+    content: "EN PRÉPA";
+    /*SUR " attr(prep-machine,'');*/
+    display: block;
+    opacity: 1;
+    color: black;
+    font-weight: bold;
 }
 
