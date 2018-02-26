@@ -114,72 +114,69 @@ planning.refreshEnCoursPrepa = function () {
     var index_5AXES = 0;
 
     //console.log(planning.rawEnCoursPrepa.length);
-    for (rowID=0; rowID<planning.rawEnCoursPrepa.length; rowID++) {
+    for (rowID = 0; rowID < planning.rawEnCoursPrepa.length; rowID++) {
         row = planning.rawEnCoursPrepa[rowID];
-       // console.log(rowID, rowID-1);
+        // console.log(rowID, rowID-1);
+
+
+        if (rowID > 0) {
+
+
+            var cellPrece = planning.rawEnCoursPrepa[rowID]["ID_OFS"];
+            var cellCourante = planning.rawEnCoursPrepa[rowID - 1]["ID_OFS"];
+            var etatTachePrecedente = planning.rawEnCoursPrepa[rowID - 1]["STATUT"];
+            var etatTacheCourante = planning.rawEnCoursPrepa[rowID]["STATUT"];
 
 
 
-        if(rowID>0){
-       // console.log(planning.rawEnCoursPrepa[rowID]["ID_OFS"]);
-      // console.log(planning.rawEnCoursPrepa[rowID-1]["ID_OFS"]);
+            if (row["TYPE_OF"] !== "") {
 
-          var cellPrece =  planning.rawEnCoursPrepa[rowID]["ID_OFS"];
-          var cellCourante =  planning.rawEnCoursPrepa[rowID-1]["ID_OFS"];
-          var etatTachePrecedente = planning.rawEnCoursPrepa[rowID-1]["ETAT_OF"];
-          var etatTacheCourante = planning.rawEnCoursPrepa[rowID]["STATUT"];
+                if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
 
-          //console.log("Tache precedente :"+tachePrecedente);
-           // console.log("Tache courante "+tacheCourante);
+                    switch (row["LIBELLE"]) {
+                        case "CU HORIZONTAL":
+                            creation_slot_phase(row, index_CU_H);
+                            index_CU_H++;
 
+                            break;
+                        case "CU HORIZONTAL TM":
+                            //console.log("CU HORIZONTAL TM");
+                            creation_slot_phase(row, index_CU_H_TM);
+                            index_CU_H_TM++;
+                            break;
+                        case "CU HORIZONTAL GC":
+                            //console.log("CU HORIZONTAL GC");
+                            creation_slot_phase(row, index_CU_H_GC);
+                            index_CU_H_GC++;
+                            break;
+                        case "CU HORIZONTAL GC TM":
+                            //console.log("CU HORIZONTAL GC TM");
+                            creation_slot_phase(row, index_CU_H_GC_TM);
+                            index_CU_H_GC_TM++;
 
+                            break;
+                        case "CU 5 AXES":
+                            // console.log("CU 5 AXES");
+                            creation_slot_phase(row, index_5AXES);
+                            index_5AXES++;
+                            break;
+                        default:
+                            break;
 
-
-            if(etatTacheCourante.trim()==="NC" && etatTachePrecedente.trim()==="T" && cellPrece === cellCourante){
-                console.log(row["LIBELLE"]);
+                    }
+                }
             }
 
-          if (cellPrece === cellCourante ){
 
 
-              switch (row["LIBELLE"]) {
-                  case "CU HORIZONTAL":
-                      //console.log("CU HORIZONTAL");
-                      if (row["TYPE_OF"] !== "") {
-                          creation_slot_phase(row, index_CU_H);
-                          index_CU_H++;
-                      }
-                      break;
-                  case "CU HORIZONTAL TM":
-                      //console.log("CU HORIZONTAL TM");
-                      creation_slot_phase(row, index_CU_H_TM);
-                      index_CU_H_TM++;
-                      break;
-                  case "CU HORIZONTAL GC":
-                      //console.log("CU HORIZONTAL GC");
-                      creation_slot_phase(row, index_CU_H_GC);
-                      index_CU_H_GC++;
-                      break;
-                  case "CU HORIZONTAL GC TM":
-                      //console.log("CU HORIZONTAL GC TM");
-                      creation_slot_phase(row, index_CU_H_GC_TM);
-                      index_CU_H_GC_TM++;
-
-                      break;
-                  case "CU 5 AXES":
-                      // console.log("CU 5 AXES");
-                      creation_slot_phase(row, index_5AXES);
-                      index_5AXES++;
-                      break;
-              }}
-          }
-
+        }
 
 
     }
 
 
-};
+}
+;
 
 function creation_slot_phase(nom, ite) {
     if (ite < 10) {
@@ -188,7 +185,28 @@ function creation_slot_phase(nom, ite) {
         slot_creation.classList.add("OF");
         slot_creation.classList.add("ui-draggable");
         slot_creation.classList.add("ui-draggable-handle");
-        slot_creation.innerHTML = nom["ID_ARTICLE"] + ' ' + nom["ID_OFS"];
+        slot_creation.innerHTML = nom["ID_OFS"] + ' - ' + nom["ID_ARTICLE"];
+
+
+
+        switch (nom["TYPE_OF"]) {
+
+            case "BERY":
+                slot_creation.setAttribute("priority","0");
+                break;
+            case "AOG":
+                slot_creation.setAttribute("priority","1");
+
+                break;
+            case "FAI":
+                slot_creation.setAttribute("priority","2");
+                break;
+            default:
+                slot_creation.setAttribute("priority","3");
+                break;
+
+        }
+
         zone_phase.appendChild(slot_creation);
     }
 }
