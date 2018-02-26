@@ -7,8 +7,18 @@ function Test() {
         $('.slots_prepa>.slot').droppable({
             accept: ".phase, .OF",
             drop: function (event, ui) {
+                var clone, machineID;
                 if ($(ui.draggable).parent() !== $(this)) {
-                    $(ui.draggable).appendTo($(this));
+                    clone = $(ui.draggable).clone();
+                    clone.appendTo($(this));
+
+                    console.log($(this).parent());
+                    machineID = $(this).parent().attr('id');
+                    machineID.replace("_prep", "");
+                    console.log(machineID);
+                    $(ui.draggable).attr('prep-machine', machineID);
+                    $(ui.draggable).addClass("inPrep");
+                    $(ui.draggable).removeClass("draggable");
                 }
                 /*var drop_p = $(this).offset();
                  var drag_p = ui.draggable.offset();

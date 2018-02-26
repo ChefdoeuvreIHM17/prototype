@@ -93,7 +93,7 @@
   },
   "85028":{
 	  "id": "85028",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":12023,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -109,7 +109,7 @@
   },
   "85030":{
 	  "id": "85030",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":15570,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -133,7 +133,7 @@
   },
   "85033":{
 	  "id": "85033",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":12157,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -149,7 +149,7 @@
   },
   "85035":{
 	  "id": "85035",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":14365,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -173,7 +173,7 @@
   },
   "85036":{
 	  "id": "85036",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":12020,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -197,7 +197,7 @@
   },
   "85039":{
 	  "id": "85039",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":9449,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -205,7 +205,7 @@
   },
   "85040":{
 	  "id": "85040",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":8706,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -221,14 +221,14 @@
   },
   "85042":{
 	  "id": "85042",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":6147,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
 	  "sur_machine":1
   },"85043":{
 	  "id": "85043",
-	  "priorite":0,
+		  "priorite": 3,
 	  "article":15570,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -236,7 +236,7 @@
   },
   "85044":{
 	  "id": "85044",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":14507,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -244,7 +244,7 @@
   },
   "85045":{
 	  "id": "85045",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":15223,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -252,7 +252,7 @@
   },
   "85046":{
 	  "id": "85046",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":14153,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -260,7 +260,7 @@
   },
   "85047":{
 	  "id": "85047",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":3348,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -268,7 +268,7 @@
   },
   "85048":{
 	  "id": "85048",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":3292,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -276,14 +276,14 @@
   },
   "85049":{
 	  "id": "85049",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":14252,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
 	  "sur_machine":1
   },"85050":{
 	  "id": "85050",
-	  "priorite":0,
+		  "priorite": 3,
 	  "article":12137,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -315,7 +315,7 @@
   },
   "85054":{
 	  "id": "85054",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":15509,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -323,7 +323,7 @@
   },
   "85055":{
 	  "id": "85055",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":12211,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,
@@ -338,7 +338,7 @@
 	  "sur_machine":1
   },"85057":{
 	  "id": "85057",
-	  "priorite":0,
+		  "priorite": 3,
 	  "article":15509,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -354,7 +354,7 @@
   },
   "85059":{
 	  "id": "85059",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":15224,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -362,7 +362,7 @@
   },
   "85060":{
 	  "id": "85060",
-	  "priorite":0,
+	  "priorite": 2,
 	  "article":14368,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -370,7 +370,7 @@
   },
   "85061":{
 	  "id": "85061",
-	  "priorite":0,
+	  "priorite": 3,
 	  "article":13809,
 	  "jours_attente": 0,
 	  "phase_en_cours": 20,
@@ -378,7 +378,7 @@
   },
   "85062":{
 	  "id": "85062",
-	  "priorite":0,
+	  "priorite": 1,
 	  "article":13809,
 	  "jours_attente": 0,
 	  "phase_en_cours": 10,

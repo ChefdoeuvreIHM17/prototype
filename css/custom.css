@@ -1,5 +1,16 @@
-.body {
-    background: #cdcdcd;
+body {
+    --background-color: #dddddd;
+    --closed-machine-background-color: #bbbbbb;
+    --slot-default-background-color: #daedf2;
+    --slot-night-background-color: #daf2da;
+    --slot-default-border-color: #b4e4f0;
+    --slot-night-border-color: #b4f0b4;
+    --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
+    --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
+}
+
+body {
+    background: var(--background-color) !important;
 }
 
 .cell{
@@ -18,7 +29,7 @@
 
 .closed_machine {
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: var(--closed-machine-background-color);
     height: 100%;
     position: absolute;
     width: 100%;
@@ -27,22 +38,62 @@
 
 .slot{
     height: 77px;
-    border: 1px solid lightblue;
+    border: 1px solid transparent;
+    background-color: transparent;
     border-radius: 5px;
     margin: 0;
     padding: 0;
+    text-align: center;
+}
+
+.slot_day {
+    border: 1px solid var(--slot-default-border-color);
+    background-color: var(--slot-default-background-color);
+    position: relative;
+}
+
+.slot_day:before {
+    content: "\1F31E";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 75px;
+    font-size: large;
+}
+
+.slot_TM {
+    border: 1px solid var(--slot-night-border-color);
+    background-color: var(--slot-night-background-color);
+    position: relative;
+}
+
+.slot_TM:before {
+    content: "\1F312";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 75px;
+    font-size: large;
 }
 
 .nameWrap {
     display: flex;
     justify-content: center;
-    height: 75px;
+    height: 79px;
 }
 
 .nameWrap-large {
     display: flex;
     justify-content: center;
-    height: 150px;
+    height: 156px;
 }
 
 .machine {
@@ -51,8 +102,9 @@
     /*line-height:75px;*/
 }
 
-.header div{
-    line-height:75px;
+.header {
+    /*line-height:75px;*/
+    height: 75px;
 }
 
 .name{
@@ -65,14 +117,19 @@
 }
 
 .OF {
+    position: absolute;
     height: 75px;
+    width: 100%;
     background-color: rgb(158, 200, 216);
     border-radius: 5px;
     border-width: thick;
     line-height: initial;
     text-align: center;
     z-index: 4;
+}
 
+#reserve .OF {
+    width: calc(100% - 2px);
 }
 
 .slots_prepa {
@@ -89,16 +146,6 @@
 .prochaineRouge {
     border-color: transparent; /* remove the border's colour */
     box-shadow: 0 0 0 5px red inset; /* emulate the border */
-}
-
-.OF {
-    height: 75px;
-    background-color: rgb(158, 200, 216);
-    border-radius: 5px;
-    line-height: initial;
-    text-align: center;
-    z-index: 4;
-
 }
 
 div[priority="3"]:not(.current) {
@@ -146,5 +193,18 @@ div[priority="0"]:not(.current) {
 
 .toggle {
     width: 100%;
+}
+
+.inPrep {
+    opacity: 0.5;
+}
+
+.inPrep::after {
+    content: "EN PRÉPA";
+    /*SUR " attr(prep-machine,'');*/
+    display: block;
+    opacity: 1;
+    color: black;
+    font-weight: bold;
 }
 
