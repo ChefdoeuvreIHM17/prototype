@@ -174,7 +174,7 @@ function loadData(){
                     nameDiv.setAttribute("class", "machine");
                     nameWrap.setAttribute("class", "nameWrap");
                 }
-                name.setAttribute("class","name");
+                name.setAttribute("class", "name, h3");
                 name.innerHTML = machine.id;
                 nameDiv.appendChild(name);
                 closeMachineToggle = document.createElement("input");
@@ -184,7 +184,7 @@ function loadData(){
                 closeMachineToggle.setAttribute("type", "checkbox");
                 closeMachineToggle.setAttribute("data-on", "Activée");
                 closeMachineToggle.setAttribute("data-off", "Désactivée");
-                closeMachineToggle.setAttribute("data-onstyle", "success");
+                closeMachineToggle.setAttribute("data-onstyle", "default");
                 closeMachineToggle.onchange = function () {
                     toggleMachine(this.id);
                 };
@@ -201,7 +201,11 @@ function loadData(){
                 }
                 for (iSlot = 0; iSlot < machine.emplacement_max; iSlot++) {
                     slot = document.createElement("div");
-                    slot.setAttribute("class", "slot col-md-3");
+                    if (iSlot < 2 || machineID === "Clock1" || machineID === "Clock2") {
+                        slot.setAttribute("class", "slot slot_day col-md-3");
+                    } else {
+                        slot.setAttribute("class", "slot slot_TM col-md-3");
+                    }
                     slot.setAttribute("id", machine.id + "_" + iSlot);
                     slots_machine.appendChild(slot);
                 }

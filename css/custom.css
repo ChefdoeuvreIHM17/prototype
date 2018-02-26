@@ -1,7 +1,10 @@
 body {
     --background-color: #dddddd;
+    --closed-machine-background-color: #bbbbbb;
     --slot-default-background-color: #daedf2;
     --slot-night-background-color: #daf2da;
+    --slot-default-border-color: #b4e4f0;
+    --slot-night-border-color: #b4f0b4;
     --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
     --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
 }
@@ -26,7 +29,7 @@ body {
 
 .closed_machine {
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: var(--closed-machine-background-color);
     height: 100%;
     position: absolute;
     width: 100%;
@@ -35,23 +38,33 @@ body {
 
 .slot{
     height: 77px;
-    border: 1px solid lightblue;
-    background-color: var(--slot-default-background-color);
+    border: 1px solid transparent;
+    background-color: transparent;
     border-radius: 5px;
     margin: 0;
     padding: 0;
 }
 
+.slot_day {
+    border: 1px solid var(--slot-default-border-color);
+    background-color: var(--slot-default-background-color);
+}
+
+.slot_TM {
+    border: 1px solid var(--slot-night-border-color);
+    background-color: var(--slot-night-background-color);
+}
+
 .nameWrap {
     display: flex;
     justify-content: center;
-    height: 75px;
+    height: 79px;
 }
 
 .nameWrap-large {
     display: flex;
     justify-content: center;
-    height: 150px;
+    height: 156px;
 }
 
 .machine {
