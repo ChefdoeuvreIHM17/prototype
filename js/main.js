@@ -29,7 +29,7 @@ function dragMoveListener(event) {
 }
 
 function getCssValuePrefix() {
-    var rtrnVal = '';//default to standard syntax
+    var returnVal = '';//default to standard syntax
     var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
 
     // Create a temporary DOM object for testing
@@ -41,20 +41,19 @@ function getCssValuePrefix() {
 
         // Detect if the style was successfully set
         if (dom.style.background) {
-            rtrnVal = prefixes[i];
+            returnVal = prefixes[i];
         }
     }
 
     dom = null;
     delete dom;
 
-    return rtrnVal;
+    return returnVal;
 }
 
 
 function percentageChange(id, percentage) {
-    var gradientString = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
-    document.getElementById(id).style.background = gradientString;
+    document.getElementById(id).style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
 }
 
 function loadJSON(file, callback) {
@@ -63,7 +62,7 @@ function loadJSON(file, callback) {
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'data/' + file, true);
     xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
+        if (xobj.readyState === 4 && xobj.status === "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
@@ -114,70 +113,65 @@ planning.refreshEnCoursPrepa = function () {
     var index_5AXES = 0;
 
     //console.log(planning.rawEnCoursPrepa.length);
-    for (rowID=0; rowID<planning.rawEnCoursPrepa.length; rowID++) {
+    for (rowID = 0; rowID < planning.rawEnCoursPrepa.length; rowID++) {
         row = planning.rawEnCoursPrepa[rowID];
-       // console.log(rowID, rowID-1);
+        // console.log(rowID, rowID-1);
 
 
+        if (rowID > 0) {
+            // console.log(planning.rawEnCoursPrepa[rowID]["ID_OFS"]);
+            // console.log(planning.rawEnCoursPrepa[rowID-1]["ID_OFS"]);
 
-        if(rowID>0){
-       // console.log(planning.rawEnCoursPrepa[rowID]["ID_OFS"]);
-      // console.log(planning.rawEnCoursPrepa[rowID-1]["ID_OFS"]);
+            var cellPrece = planning.rawEnCoursPrepa[rowID]["ID_OFS"];
+            var cellCourante = planning.rawEnCoursPrepa[rowID - 1]["ID_OFS"];
+            var etatTachePrecedente = planning.rawEnCoursPrepa[rowID - 1]["ETAT_OF"];
+            var etatTacheCourante = planning.rawEnCoursPrepa[rowID]["STATUT"];
 
-          var cellPrece =  planning.rawEnCoursPrepa[rowID]["ID_OFS"];
-          var cellCourante =  planning.rawEnCoursPrepa[rowID-1]["ID_OFS"];
-          var etatTachePrecedente = planning.rawEnCoursPrepa[rowID-1]["ETAT_OF"];
-          var etatTacheCourante = planning.rawEnCoursPrepa[rowID]["STATUT"];
-
-          //console.log("Tache precedente :"+tachePrecedente);
-           // console.log("Tache courante "+tacheCourante);
-
+            //console.log("Tache precedente :"+tachePrecedente);
+            // console.log("Tache courante "+tacheCourante);
 
 
-
-            if(etatTacheCourante.trim()==="NC" && etatTachePrecedente.trim()==="T" && cellPrece === cellCourante){
+            if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
                 console.log(row["LIBELLE"]);
             }
 
-          if (cellPrece === cellCourante ){
+            if (cellPrece === cellCourante) {
 
 
-              switch (row["LIBELLE"]) {
-                  case "CU HORIZONTAL":
-                      //console.log("CU HORIZONTAL");
-                      if (row["TYPE_OF"] !== "") {
-                          creation_slot_phase(row, index_CU_H);
-                          index_CU_H++;
-                      }
-                      break;
-                  case "CU HORIZONTAL TM":
-                      //console.log("CU HORIZONTAL TM");
-                      creation_slot_phase(row, index_CU_H_TM);
-                      index_CU_H_TM++;
-                      break;
-                  case "CU HORIZONTAL GC":
-                      //console.log("CU HORIZONTAL GC");
-                      creation_slot_phase(row, index_CU_H_GC);
-                      index_CU_H_GC++;
-                      break;
-                  case "CU HORIZONTAL GC TM":
-                      //console.log("CU HORIZONTAL GC TM");
-                      creation_slot_phase(row, index_CU_H_GC_TM);
-                      index_CU_H_GC_TM++;
+                switch (row["LIBELLE"]) {
+                    case "CU HORIZONTAL":
+                        //console.log("CU HORIZONTAL");
+                        if (row["TYPE_OF"] !== "") {
+                            creation_slot_phase(row, index_CU_H);
+                            index_CU_H++;
+                        }
+                        break;
+                    case "CU HORIZONTAL TM":
+                        //console.log("CU HORIZONTAL TM");
+                        creation_slot_phase(row, index_CU_H_TM);
+                        index_CU_H_TM++;
+                        break;
+                    case "CU HORIZONTAL GC":
+                        //console.log("CU HORIZONTAL GC");
+                        creation_slot_phase(row, index_CU_H_GC);
+                        index_CU_H_GC++;
+                        break;
+                    case "CU HORIZONTAL GC TM":
+                        //console.log("CU HORIZONTAL GC TM");
+                        creation_slot_phase(row, index_CU_H_GC_TM);
+                        index_CU_H_GC_TM++;
 
-                      break;
-                  case "CU 5 AXES":
-                      // console.log("CU 5 AXES");
-                      creation_slot_phase(row, index_5AXES);
-                      index_5AXES++;
-                      break;
-              }}
-          }
-
-
-
+                        break;
+                    case "CU 5 AXES":
+                        // console.log("CU 5 AXES");
+                        creation_slot_phase(row, index_5AXES);
+                        index_5AXES++;
+                        break;
+                }
+            }
+        }
     }
-}
+};
 
 function creation_slot_phase(nom, ite) {
     if (ite < 10) {
@@ -400,7 +394,7 @@ planning.refreshEnCoursMachine = function () {
                     }
                     machine["reste a servir"] = machine["a servir cdc"];
 
-                    cpt_courant = 0
+                    cpt_courant = 0;
 
                     //affichage de l'en-cours sur la machine
                     for (rowID = 0; rowID < planning.rawEnCoursMachine.length && cpt_courant < machine["a servir cdc"]; rowID++) {
@@ -408,8 +402,8 @@ planning.refreshEnCoursMachine = function () {
                             row = planning.rawEnCoursMachine[rowID];
                             if (row["8"] === machineID) { //&& row["9"] === CDCID
                                 of = row["ID_OFS"];
-                                article = row["ID_ARTICLE"]
-                                phase = row["ID_PHASE"]
+                                article = row["ID_ARTICLE"];
+                                phase = row["ID_PHASE"];
                                 datePhase = Date.parse(row["MIN(HEURE_1.DATE_POINT)"]);
                                 diff_ms = today.getTime() - datePhase;
                                 age = diff_ms / 86400000; //milisecondes en un jour
