@@ -642,9 +642,9 @@ function loadData() {
 }
 
 planning.refreshData = function (callback) {
-    loadJSON("dataEnCoursMachineOld.php", function (response) {
+    loadJSON("dataEnCoursMachine.php", function (response) {
         planning.rawEnCoursMachine = JSON.parse(response);
-        loadJSON("dataEnCoursPrepaOld.php", function (response2) {
+        loadJSON("dataEnCoursPrepa.php", function (response2) {
             planning.rawEnCoursPrepa = JSON.parse(response2);
             callback();
         });
