@@ -138,12 +138,12 @@ body {
     padding: 0;
 }
 
-.prochaine {
+.prochaine[data-preferable=true] {
     border-color: transparent; /* remove the border's colour */
     box-shadow: 0 0 0 5px green inset; /* emulate the border */
 }
 
-.prochaineRouge {
+.prochaine[data-preferable=false] {
     border-color: transparent; /* remove the border's colour */
     box-shadow: 0 0 0 5px red inset; /* emulate the border */
 }

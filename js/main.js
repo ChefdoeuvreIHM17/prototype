@@ -134,27 +134,27 @@ planning.refreshEnCoursPrepa = function () {
 
                     switch (row["LIBELLE"]) {
                         case "CU HORIZONTAL":
-                            creation_slot_phase(row, index_CU_H);
+                            creation_slot_phase(row, index_CU_H, row["LIBELLE"]);
                             index_CU_H++;
                             break;
                         case "CU HORIZONTAL TM":
                             //console.log("CU HORIZONTAL TM");
-                            creation_slot_phase(row, index_CU_H_TM);
+                            creation_slot_phase(row, index_CU_H_TM, row["LIBELLE"]);
                             index_CU_H_TM++;
                             break;
                         case "CU HORIZONTAL GC":
                             //console.log("CU HORIZONTAL GC");
-                            creation_slot_phase(row, index_CU_H_GC);
+                            creation_slot_phase(row, index_CU_H_GC, row["LIBELLE"]);
                             index_CU_H_GC++;
                             break;
                         case "CU HORIZONTAL GC TM":
                             //console.log("CU HORIZONTAL GC TM");
-                            creation_slot_phase(row, index_CU_H_GC_TM);
+                            creation_slot_phase(row, index_CU_H_GC_TM, row["LIBELLE"]);
                             index_CU_H_GC_TM++;
                             break;
                         case "CU 5 AXES":
                             // console.log("CU 5 AXES");
-                            creation_slot_phase(row, index_5AXES);
+                            creation_slot_phase(row, index_5AXES, row["LIBELLE"]);
                             index_5AXES++;
                             break;
                         default:
@@ -167,13 +167,14 @@ planning.refreshEnCoursPrepa = function () {
 }
 ;
 
-function creation_slot_phase(nom, ite) {
+function creation_slot_phase(nom, ite, cdc) {
     if (ite < 10) {
         var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
         var slot_creation = document.createElement('div');
         slot_creation.classList.add("OF");
         slot_creation.classList.add("ui-draggable");
         slot_creation.classList.add("ui-draggable-handle");
+        slot_creation.setAttribute("data-cdc", cdc);
         slot_creation.innerHTML = nom["ID_OFS"] + ' - ' + nom["ID_ARTICLE"];
 
 
