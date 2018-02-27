@@ -106,7 +106,8 @@ function toggleMachine(toggleID) {
 
 planning.refreshEnCoursPrepa = function () {
     var rowID, row;
-    var rowID2, row2;
+
+    var today = new Date();
 
     var index_CU_H = 0;
     var index_CU_H_TM = 0;
@@ -130,31 +131,48 @@ planning.refreshEnCoursPrepa = function () {
 
             if (row["TYPE_OF"] !== "") {
 
+
+                var difference_Date;
+
                 if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
+
+                    var dateDateTache_precedente = planning.rawEnCoursPrepa[rowID - 1][9];
+
+                    if (dateDateTache_precedente.trim() === "") {
+
+                        difference_Date = "";
+
+                    } else {
+
+                        var date_prec = new Date(dateDateTache_precedente);
+
+                        difference_Date = ((today - date_prec) / 86400000).toFixed(0);
+                    }
+
 
                     switch (row["LIBELLE"]) {
                         case "CU HORIZONTAL":
-                            creation_slot_phase(row, index_CU_H, row["LIBELLE"]);
+                            creation_slot_phase(row, index_CU_H, row["LIBELLE"],difference_Date);
                             index_CU_H++;
                             break;
                         case "CU HORIZONTAL TM":
                             //console.log("CU HORIZONTAL TM");
-                            creation_slot_phase(row, index_CU_H_TM, row["LIBELLE"]);
+                            creation_slot_phase(row, index_CU_H_TM, row["LIBELLE"],difference_Date);
                             index_CU_H_TM++;
                             break;
                         case "CU HORIZONTAL GC":
                             //console.log("CU HORIZONTAL GC");
-                            creation_slot_phase(row, index_CU_H_GC, row["LIBELLE"]);
+                            creation_slot_phase(row, index_CU_H_GC, row["LIBELLE"],difference_Date);
                             index_CU_H_GC++;
                             break;
                         case "CU HORIZONTAL GC TM":
                             //console.log("CU HORIZONTAL GC TM");
-                            creation_slot_phase(row, index_CU_H_GC_TM, row["LIBELLE"]);
+                            creation_slot_phase(row, index_CU_H_GC_TM, row["LIBELLE"],difference_Date);
                             index_CU_H_GC_TM++;
                             break;
                         case "CU 5 AXES":
                             // console.log("CU 5 AXES");
-                            creation_slot_phase(row, index_5AXES, row["LIBELLE"]);
+                            creation_slot_phase(row, index_5AXES, row["LIBELLE"],difference_Date);
                             index_5AXES++;
                             break;
                         default:
@@ -167,7 +185,7 @@ planning.refreshEnCoursPrepa = function () {
 }
 ;
 
-function creation_slot_phase(nom, ite, cdc) {
+function creation_slot_phase(nom, ite, cdc,jours) {
     if (ite < 10) {
         var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
         var slot_creation = document.createElement('div');
@@ -176,6 +194,10 @@ function creation_slot_phase(nom, ite, cdc) {
         slot_creation.classList.add("ui-draggable-handle");
         slot_creation.setAttribute("data-cdc", cdc);
         slot_creation.innerHTML = nom["ID_OFS"] + ' - ' + nom["ID_ARTICLE"];
+        if (jours !== "") {
+            slot_creation.innerHTML += '<br>'+jours;
+            slot_creation.innerHTML +=" jour(s)";
+        }
 
 
         switch (nom["TYPE_OF"]) {
