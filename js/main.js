@@ -222,6 +222,26 @@ function creation_slot_phase(nom, ite, cdc,jours) {
     }
 }
 
+planning.Affiche_centre_Charge = function () {
+
+
+    var CDCID, CDC;
+    var machine, machineID;
+    for (CDCID in planning.CDCs) {
+        if (planning.CDCs.hasOwnProperty(CDCID)) {
+            CDC = planning.CDCs[CDCID];
+
+            document.getElementById(CDC+"_prep_"+1).addEventListener();
+
+
+            for (machineID in CDC) {
+               console.log("Steck "+machineID);
+            }
+        }
+    }
+}
+
+
 planning.loadMachines = function () {
     var reserveDiv = document.getElementById("reserve");
     var col_names = document.getElementById("col_names");
@@ -743,6 +763,7 @@ planning.refresh = function () {
         //console.log(JSON.stringify(planning, null, 2));
         planning.refreshEnCoursMachine();
         planning.refreshEnCoursPrepa();
+        planning.Affiche_centre_Charge();
     });
 };
 
