@@ -1,12 +1,12 @@
 body {
     --background-color: #dddddd;
     --closed-machine-background-color: #bbbbbb;
-    --slot-default-background-color: #daedf2;
-    --slot-night-background-color: #daf2da;
-    --slot-default-border-color: #b4e4f0;
-    --slot-night-border-color: #b4f0b4;
-    --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
-    --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
+    --slot-night-background-color: #daedf2;
+    --slot-night-border-color: #b4e4f0;
+    --slot-default-background-color: #daf2da;
+    --slot-default-border-color: #b4f0b4;
+    --background-current-OF: #ddb3ff; /* caution, I mostly need to be changed in main.js */
+    --progress-bar-current-OF: #af4dff; /* caution, I mostly need to be changed in main.js */
 }
 
 body {

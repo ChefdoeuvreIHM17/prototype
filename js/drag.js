@@ -1,7 +1,4 @@
-window.addEventListener("load", function (e) {
-    refreshDraggable();
-    console.log("drag prêt");
-});
+
 
 function showProchaine(cdc) {
     $('#col_prep > div').each(function () {
