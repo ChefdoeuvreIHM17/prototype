@@ -48,7 +48,7 @@ function refreshDraggable() {
             var clone, machineID;
             if ($(ui.draggable).parent() !== $(this)) {
                 console.log($(ui.draggable).parent().parent().parent().attr('id'));
-                if ($(ui.draggable).hasClass("inPrep")) {
+                if ($(ui.draggable).hasClass("inPrep")) { //si l'on bouge un of qui est en prépa
                     $(ui.draggable).appendTo($(this));
                     var drop_p = $(this).offset();
                     var drag_p = ui.draggable.offset();
@@ -58,15 +58,25 @@ function refreshDraggable() {
                         top: '+=' + top_end,
                         left: '+=' + left_end
                     });
-                } else {
+                } else { //si l'on bouge un of qui est en attente
                     clone = $(ui.draggable).clone();
                     clone.appendTo($(this));
                     clone.addClass("inPrep");
+                    clone.removeAttr('data-toggle');
+                    clone.removeAttr('data-target');
                     machineID = $(this).parent().attr('id');
                     machineID.replace("_prep", "");
                     $(ui.draggable).attr('prep-machine', machineID);
                     $(ui.draggable).addClass("alreadyInPrep");
                     $(ui.draggable).draggable("disable");
+
+                    //mécanisme d'annulation
+                    clone.on("click", function () {
+                        $(ui.draggable).attr('prep-machine', 'dunno');
+                        $(ui.draggable).removeClass("alreadyInPrep");
+                        $(ui.draggable).draggable("enable");
+                        clone.remove();
+                    });
                 }
                 refreshDraggable();
             }

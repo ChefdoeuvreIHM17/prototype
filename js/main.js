@@ -411,13 +411,17 @@ planning.creerPhaseDiv = function (priorityString, priority, cdc, data_cdc, idAr
         idPhaseFinal = "";
     }
 
+    phaseDiv.setAttribute('data-toggle', "modal");
+    phaseDiv.setAttribute('data-target', "#infosOF");
+    phaseDiv.setAttribute('data-OFID', idOF);
+
     phaseDiv.innerHTML = cdcFinal + "<br>" + idOF + ' - ' + idArticle + " " + idPhaseFinal + " " + age + " jour(s) " + outillageFinal;
 
     return phaseDiv;
 };
 
 function creation_slot_phase(nom, ite, cdc, jours) {
-    if (ite < 10) {
+    if (ite < CONST_CDC_SLOTS) {
         var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
         var slot_creation = planning.creerPhaseDiv(nom["TYPE_OF"], null, null, cdc, nom["ID_ARTICLE"], nom["ID_OFS"], null, jours, null);
         zone_phase.appendChild(slot_creation);
@@ -646,17 +650,33 @@ function pretifyTempsRestant(tempsTotal, temps_passe) {
 }
 
 function toggleMachine(toggleID) {
+    var ofs, cloneDiv;
     var toggle = document.getElementById(toggleID);
     var machineID = toggleID.replace("toggle_", "");
+
     if (toggle !== null) {
-        console.log("toggle" + machineID, toggle.checked);
-        console.log("#" + machineID + ".closed_machine");
+        ofs = $("#slots_machine_" + machineID + " .OF");
         if (toggle.checked === true) {
-            console.log("JE CACHE");
             document.getElementById("closed_" + machineID).style.visibility = "hidden";
+
+            //enlever les clones de la zone de prépa
+            ofs.each(function (index) {
+                cloneDiv = $('#' + machineID + "_prep_" + index % 2 + " .clone");
+                cloneDiv.each(function () {
+                    $(this).remove();
+                });
+                $('#' + machineID + "_prep").removeClass("glow");
+            });
         } else {
-            console.log("JE MONTRE");
             document.getElementById("closed_" + machineID).style.visibility = "visible";
+
+            //afficher des clones dans la zone de prépa
+            ofs.each(function (index) {
+                cloneDiv = $(this).clone();
+                cloneDiv.appendTo($('#' + machineID + "_prep_" + index % 2));
+                cloneDiv.addClass('clone');
+                $('#' + machineID + "_prep").addClass("glow");
+            });
         }
     }
 }
@@ -768,6 +788,13 @@ function refreshHeatmap() {
 window.addEventListener("load", function (e) {
     planning.loadMachines();
     window.dragMoveListener = dragMoveListener;
+
+    $('#infosOF').on('show.bs.modal', function (event) {
+        var ofDiv = $(event.relatedTarget);
+        console.log(ofDiv.data('ofid'));
+        $('#infosOFID').text(ofDiv.data('ofid'));
+    });
+
     window.setInterval(planning.refresh(), planning.refreshDelayMinutes * 60 * 1000);
     document.addEventListener('click', clickEvent, true);
     refreshDraggable();
