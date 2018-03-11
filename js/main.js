@@ -49,7 +49,7 @@ planning.refreshEnCoursPrepa = function () {
 
                 if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
 
-                    var dateDateTache_precedente = planning.rawEnCoursPrepa[rowID - 1][9];
+                    var dateDateTache_precedente = planning.rawEnCoursPrepa[rowID - 1]["MAX(HEURE.DATE_POINT)"];
 
                     switch (row["LIBELLE"]) {
                         case "CU HORIZONTAL":
@@ -279,7 +279,7 @@ planning.refreshEnCoursMachine = function () {
                     for (rowID in planning.rawEnCoursMachine) {
                         if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
                             row = planning.rawEnCoursMachine[rowID];
-                            if (row["8"] === machineID && row["9"] === CDCID) { //todo remplacer par LIBELLE et LIBELLE2 quand on aura fix la requête, correspond au nom de la machine et au nom du CDC
+                            if (row["LIBELLE"] === machineID && row["LIBELLE2"] === CDCID) {
                                 machine["en-cours"]++;
                             }
                         }
@@ -298,12 +298,12 @@ planning.refreshEnCoursMachine = function () {
                     for (rowID = 0; rowID < planning.rawEnCoursMachine.length && cpt_courant < machine["a servir cdc"]; rowID++) {
                         if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
                             row = planning.rawEnCoursMachine[rowID];
-                            if (row["8"] === machineID) { //&& row["9"] === CDCID
+                            if (row["LIBELLE"] === machineID) { //&& row["LIBELLE2"] === CDCID fixme il manque des phases, quand même.
                                 of = row["ID_OFS"];
                                 article = row["ID_ARTICLE"];
                                 phase = row["ID_PHASE"];
                                 datePhase = Date.parse(row["MIN(HEURE_1.DATE_POINT)"]);
-                                cdc = row["9"];
+                                cdc = row["LIBELLE2"];
                                 outillage = row["REF_OUTILLAGE"];
 
                                 slotID = machineID + "_" + cpt_courant;
@@ -312,7 +312,7 @@ planning.refreshEnCoursMachine = function () {
                                 }
                                 slotDiv = document.getElementById(slotID);
 
-                                phaseDiv = planning.creerPhaseDiv(null, row['PRIORITE_HACK'], cdc, row["9"], article, of, phase, datePhase, outillage);
+                                phaseDiv = planning.creerPhaseDiv(null, row['PRIORITY_HACK'], cdc, row["LIBELLE2"], article, of, phase, datePhase, outillage);
 
                                 if (Math.random() > 0.5) {
                                     var min = 0;
@@ -358,6 +358,7 @@ planning.refresh = function () {
         //console.log(JSON.stringify(planning, null, 2));
         planning.refreshEnCoursMachine();
         planning.refreshEnCoursPrepa();
+        refreshDraggable();
     });
 };
 
