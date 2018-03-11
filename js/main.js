@@ -169,8 +169,8 @@ planning.loadMachines = function () {
                             nameSpan.setAttribute("class", "name");
                             nameSpan.innerHTML = machineID;
                             nameDiv.appendChild(nameSpan);
-                            closeMachineToggle = document.createElement("input");
                             nameDiv.innerHTML += "<br>";
+                            closeMachineToggle = document.createElement("input");
                             closeMachineToggle.setAttribute("checked", "");
                             closeMachineToggle.setAttribute("data-toggle", "toggle");
                             closeMachineToggle.setAttribute("type", "checkbox");
