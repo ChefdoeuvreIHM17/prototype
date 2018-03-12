@@ -96,7 +96,7 @@ planning.loadMachines = function () {
     var nameWrapDiv, nameDiv, nameSpan;
     var closeMachineToggle, closed_machine;
     var slots_machine, iSlot, slot, slotID;
-    var prep, iPrepSlot, slotPrep;
+    var iPrepSlot, slotPrep;
 
     loadJSON("machines.json", function (response) {
         planning.CDCs = JSON.parse(response);
@@ -170,17 +170,27 @@ planning.loadMachines = function () {
                             nameSpan.innerHTML = machineID;
                             nameDiv.appendChild(nameSpan);
                             nameDiv.innerHTML += "<br>";
-                            closeMachineToggle = document.createElement("input");
-                            closeMachineToggle.setAttribute("checked", "");
-                            closeMachineToggle.setAttribute("data-toggle", "toggle");
-                            closeMachineToggle.setAttribute("type", "checkbox");
-                            closeMachineToggle.setAttribute("data-on", "Activée");
-                            closeMachineToggle.setAttribute("data-off", "Désactivée");
-                            closeMachineToggle.setAttribute("data-onstyle", "default");
-                            closeMachineToggle.onchange = function () {
+                            // closeMachineToggle = document.createElement("input");
+                            // closeMachineToggle.setAttribute('id','toggle_'+machineID);
+                            // closeMachineToggle.setAttribute("checked", "");
+                            // closeMachineToggle.setAttribute("type", "checkbox");
+                            // closeMachineToggle.setAttribute("data-toggle", "toggle");
+                            // closeMachineToggle.setAttribute("data-on", "Activée");
+                            // closeMachineToggle.setAttribute("data-off", "Désactivée");
+                            // closeMachineToggle.setAttribute("data-onstyle", "default");
+
+                            closeMachineToggle = document.createElement('label');
+                            closeMachineToggle.classList.add("switch");
+                            closeMachineToggle.innerHTML =
+                                "  <input type=\"checkbox\" id=\"toggle_" + machineID + "\" checked >\n" +
+                                "  <span class=\"slider round\"></span>\n";
+
+
+                            var checkbox = closeMachineToggle.firstElementChild; //document.getElementById('toggle_'+machineID);
+                            checkbox.onchange = function () {
                                 toggleMachine(this.id);
                             };
-                            closeMachineToggle.setAttribute("id", "toggle_" + machineID);
+
                             nameDiv.appendChild(closeMachineToggle);
 
                             slots_machine = document.createElement("div");
@@ -634,17 +644,17 @@ function loadJSON(file, callback) {
 
 function pretifyTempsRestant(tempsTotal, temps_passe) {
     var tempsRestant = tempsTotal - temps_passe;
-    var text = " minute restante";
-    if (Math.abs(tempsRestant) > 120) {
+    var text = "m restante";
+    if (Math.abs(tempsRestant) > 90) {
         tempsRestant = (tempsRestant / 24).toFixed(1);
         if (tempsRestant > 1) {
-            text = " heures restantes";
+            text = "h restantes";
         } else {
-            text = " heure restante";
+            text = "h restante";
         }
     } else if (Math.abs(tempsRestant) > 1) {
         tempsRestant = tempsRestant.toFixed(1);
-        text = " minutes restantes";
+        text = "m restantes";
     }
     return tempsRestant + text;
 }
@@ -683,6 +693,18 @@ function toggleMachine(toggleID) {
 
 function convertDate(date) {
     return date.getFullYear() + "/" + Number(date.getMonth() + 1) + "/" + date.getDate();
+}
+
+function demoAppel(activate) {
+    $('div[id="CU HORIZONTAL"],div[id="CU HORIZONTAL TM"]').each(function (index, element) {
+        if (activate) {
+            element.classList.add("prochaine");
+            element.setAttribute('data-preferable', 'true');
+        } else {
+            element.classList.remove("prochaine");
+            element.setAttribute('data-preferable', 'true');
+        }
+    });
 }
 
 //region Probes
@@ -781,6 +803,8 @@ function refreshHeatmap() {
         }
     }
     heatmap.repaint();
+    document.querySelector('canvas').addEventListener('click', removeHeatmap);
+    document.querySelector('canvas').style.zIndex = 999;
 }
 
 //endregion

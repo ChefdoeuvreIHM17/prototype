@@ -47,7 +47,8 @@ function refreshDraggable() {
         drop: function (event, ui) {
             var clone, machineID;
             if ($(ui.draggable).parent() !== $(this)) {
-                console.log($(ui.draggable).parent().parent().parent().attr('id'));
+                ui.helper.data('dropped', true);
+
                 if ($(ui.draggable).hasClass("inPrep")) { //si l'on bouge un of qui est en prépa
                     $(ui.draggable).appendTo($(this));
                     var drop_p = $(this).offset();
@@ -62,32 +63,14 @@ function refreshDraggable() {
                     clone = $(ui.draggable).clone();
                     clone.appendTo($(this));
                     clone.addClass("inPrep");
-                    clone.removeAttr('data-toggle');
-                    clone.removeAttr('data-target');
                     machineID = $(this).parent().attr('id');
                     machineID.replace("_prep", "");
                     $(ui.draggable).attr('prep-machine', machineID);
                     $(ui.draggable).addClass("alreadyInPrep");
                     $(ui.draggable).draggable("disable");
-
-                    //mécanisme d'annulation
-                    clone.on("click", function () {
-                        $(ui.draggable).attr('prep-machine', 'dunno');
-                        $(ui.draggable).removeClass("alreadyInPrep");
-                        $(ui.draggable).draggable("enable");
-                        clone.remove();
-                    });
                 }
                 refreshDraggable();
             }
-            /*var drop_p = $(this).offset();
-             var drag_p = ui.draggable.offset();
-             var left_end = drop_p.left - drag_p.left + 1;
-             var top_end = drop_p.top - drag_p.top + 1;
-             ui.draggable.animate({
-             top: '+=' + top_end,
-             left: '+=' + left_end
-             });*/
         }
     });
     $('#reserve').find('.OF:not(.alreadyInPrep)').draggable({
@@ -97,24 +80,38 @@ function refreshDraggable() {
         opacity: 0.7,
         helper: "clone",
         stack: ".OF",
-        drag: function (event) {
+        drag: function (event, ui) {
             showProchaine($(this).attr('data-cdc'))
         },
-        stop: function (event) {
-            hideProchaine()
+        start: function (event, ui) {
+            ui.helper.data('dropped', false);
+        },
+        stop: function (event, ui) {
+            hideProchaine();
         }
     });
     $('.OF.inPrep').draggable({
         snap: '.slots_prepa .slot',
-        revert: 'invalid',
+        //revert: 'invalid',
         snapMode: 'inner',
         opacity: 0.7,
         stack: ".OF",
-        drag: function (event) {
+        drag: function (event, ui) {
             showProchaine($(this).attr('data-cdc'));
         },
-        stop: function (event) {
-            hideProchaine()
+        start: function (event, ui) {
+            ui.helper.data('dropped', false);
+        },
+        stop: function (event, ui) {
+            if (ui.helper.data('dropped') !== true) { //cancel mecanism
+                realOF = $('.OF[data-ofid=\"' + $(this).attr('data-ofid') + '\"]:not(.inPrep)');
+                realOF.attr('prep-machine', 'dunno');
+                realOF.removeClass("alreadyInPrep");
+                realOF.draggable("enable");
+                $(this).remove();
+                refreshDraggable();
+            }
+            hideProchaine();
         }
     });
 }

@@ -11,6 +11,7 @@ body {
 
 body {
     background: var(--background-color) !important;
+    position: relative;
 }
 
 .cell{
@@ -206,5 +207,17 @@ div[priority="0"]:not(.current) {
     opacity: 1;
     color: black;
     font-weight: bold;
+}
+
+#fixedbutton {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    opacity: 0.2;
+    transition: opacity 0.5s;
+}
+
+#fixedbutton:hover {
+    opacity: 1;
 }
 
