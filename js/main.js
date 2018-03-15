@@ -2,8 +2,8 @@
 //const COLOR_PHASE_BACKGROUND = "rgb(158,200,216)";
 // const COLOR_PHASE_BACKGROUND = "#e6ee9c";
 // const COLOR_PHASE_ACTIVE = "#c0ca33";
-const COLOR_PHASE_BACKGROUND = "lightpink";
-const COLOR_PHASE_ACTIVE = "deeppink";
+const COLOR_PHASE_BACKGROUND = "#ddb3ff";
+const COLOR_PHASE_ACTIVE = "#af4dff";
 const CONST_CDC_SLOTS = 10;
 
 var heatmap;
@@ -15,98 +15,12 @@ var planning = {
     "CDCs": {}
 };
 
-function dragMoveListener(event) {
-    var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-    // translate the element
-    target.style.webkitTransform =
-        target.style.transform =
-            'translate(' + x + 'px, ' + y + 'px)';
-
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-}
-
-function getCssValuePrefix() {
-    var returnVal = '';//default to standard syntax
-    var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
-
-    // Create a temporary DOM object for testing
-    var dom = document.createElement('div');
-
-    for (var i = 0; i < prefixes.length; i++) {
-        // Attempt to set the style
-        dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
-
-        // Detect if the style was successfully set
-        if (dom.style.background) {
-            returnVal = prefixes[i];
-        }
-    }
-
-    dom = null;
-    delete dom;
-
-    return returnVal;
-}
-
-function percentageChange(id, percentage) {
-    document.getElementById(id).style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
-}
-
-function loadJSON(file, callback) {
-
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'data/' + file, true);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState === 4 && xobj.status === 200) {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
-}
-
-function pretifyTempsRestant(tempsTotal, temps_passe) {
-    var tempsRestant = tempsTotal - temps_passe;
-    var text = " minute restante";
-    if (tempsRestant > 120) {
-        tempsRestant = (tempsRestant / 24).toFixed(1);
-        if (tempsRestant > 1) {
-            text = " heures restantes";
-        } else {
-            text = " heure restante";
-        }
-    } else if (tempsRestant > 1) {
-        text = " minutes restantes";
-    }
-    return tempsRestant + text;
-}
-
-function toggleMachine(toggleID) {
-    var toggle = document.getElementById(toggleID);
-    var machineID = toggleID.replace("toggle_", "");
-    if (toggle !== null) {
-        console.log("toggle" + machineID, toggle.checked);
-        console.log("#" + machineID + ".closed_machine");
-        if (toggle.checked === true) {
-            console.log("JE CACHE");
-            document.getElementById("closed_" + machineID).style.visibility = "hidden";
-        } else {
-            console.log("JE MONTRE");
-            document.getElementById("closed_" + machineID).style.visibility = "visible";
-        }
-    }
-}
+//region Planning
 
 planning.refreshEnCoursPrepa = function () {
     var rowID, row;
-    var rowID2, row2;
+
+    var today = new Date();
 
     var index_CU_H = 0;
     var index_CU_H_TM = 0;
@@ -118,74 +32,58 @@ planning.refreshEnCoursPrepa = function () {
     for (rowID = 0; rowID < planning.rawEnCoursPrepa.length; rowID++) {
         row = planning.rawEnCoursPrepa[rowID];
         // console.log(rowID, rowID-1);
-
-
         if (rowID > 0) {
-            // console.log(planning.rawEnCoursPrepa[rowID]["ID_OFS"]);
-            // console.log(planning.rawEnCoursPrepa[rowID-1]["ID_OFS"]);
-
             var cellPrece = planning.rawEnCoursPrepa[rowID]["ID_OFS"];
             var cellCourante = planning.rawEnCoursPrepa[rowID - 1]["ID_OFS"];
-            var etatTachePrecedente = planning.rawEnCoursPrepa[rowID - 1]["ETAT_OF"];
+            var etatTachePrecedente = planning.rawEnCoursPrepa[rowID - 1]["STATUT"];
             var etatTacheCourante = planning.rawEnCoursPrepa[rowID]["STATUT"];
 
             //console.log("Tache precedente :"+tachePrecedente);
             // console.log("Tache courante "+tacheCourante);
 
 
-            if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
-                console.log(row["LIBELLE"]);
-            }
-
-            if (cellPrece === cellCourante) {
+            if (row["TYPE_OF"] !== "") {
 
 
-                switch (row["LIBELLE"]) {
-                    case "CU HORIZONTAL":
-                        //console.log("CU HORIZONTAL");
-                        if (row["TYPE_OF"] !== "") {
-                            creation_slot_phase(row, index_CU_H);
+                var difference_Date;
+
+                if (etatTacheCourante.trim() === "NC" && etatTachePrecedente.trim() === "T" && cellPrece === cellCourante) {
+
+                    var dateDateTache_precedente = planning.rawEnCoursPrepa[rowID - 1]["MAX(HEURE.DATE_POINT)"];
+
+                    switch (row["LIBELLE"]) {
+                        case "CU HORIZONTAL":
+                            creation_slot_phase(row, index_CU_H, row["LIBELLE"], dateDateTache_precedente);
                             index_CU_H++;
-                        }
-                        break;
-                    case "CU HORIZONTAL TM":
-                        //console.log("CU HORIZONTAL TM");
-                        creation_slot_phase(row, index_CU_H_TM);
-                        index_CU_H_TM++;
-                        break;
-                    case "CU HORIZONTAL GC":
-                        //console.log("CU HORIZONTAL GC");
-                        creation_slot_phase(row, index_CU_H_GC);
-                        index_CU_H_GC++;
-                        break;
-                    case "CU HORIZONTAL GC TM":
-                        //console.log("CU HORIZONTAL GC TM");
-                        creation_slot_phase(row, index_CU_H_GC_TM);
-                        index_CU_H_GC_TM++;
-
-                        break;
-                    case "CU 5 AXES":
-                        // console.log("CU 5 AXES");
-                        creation_slot_phase(row, index_5AXES);
-                        index_5AXES++;
-                        break;
+                            break;
+                        case "CU HORIZONTAL TM":
+                            //console.log("CU HORIZONTAL TM");
+                            creation_slot_phase(row, index_CU_H_TM, row["LIBELLE"], dateDateTache_precedente);
+                            index_CU_H_TM++;
+                            break;
+                        case "CU HORIZONTAL GC":
+                            //console.log("CU HORIZONTAL GC");
+                            creation_slot_phase(row, index_CU_H_GC, row["LIBELLE"], dateDateTache_precedente);
+                            index_CU_H_GC++;
+                            break;
+                        case "CU HORIZONTAL GC TM":
+                            //console.log("CU HORIZONTAL GC TM");
+                            creation_slot_phase(row, index_CU_H_GC_TM, row["LIBELLE"], dateDateTache_precedente);
+                            index_CU_H_GC_TM++;
+                            break;
+                        case "CU 5 AXES":
+                            // console.log("CU 5 AXES");
+                            creation_slot_phase(row, index_5AXES, row["LIBELLE"], dateDateTache_precedente);
+                            index_5AXES++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
 };
-
-function creation_slot_phase(nom, ite) {
-    if (ite < 10) {
-        var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
-        var slot_creation = document.createElement('div');
-        slot_creation.classList.add("OF");
-        slot_creation.classList.add("ui-draggable");
-        slot_creation.classList.add("ui-draggable-handle");
-        slot_creation.innerHTML = nom["ID_ARTICLE"] + ' ' + nom["ID_OFS"];
-        zone_phase.appendChild(slot_creation);
-    }
-}
 
 planning.loadMachines = function () {
     var reserveDiv = document.getElementById("reserve");
@@ -198,7 +96,7 @@ planning.loadMachines = function () {
     var nameWrapDiv, nameDiv, nameSpan;
     var closeMachineToggle, closed_machine;
     var slots_machine, iSlot, slot, slotID;
-    var prep, iPrepSlot, slotPrep;
+    var iPrepSlot, slotPrep;
 
     loadJSON("machines.json", function (response) {
         planning.CDCs = JSON.parse(response);
@@ -231,7 +129,6 @@ planning.loadMachines = function () {
 
                 reserveDiv.firstElementChild.appendChild(CDCHeaderDiv);
                 reserveDiv.lastElementChild.appendChild(CDCDiv);
-
 
                 //////////////// Machines //////////////////
                 for (machineID in CDC) {
@@ -272,18 +169,28 @@ planning.loadMachines = function () {
                             nameSpan.setAttribute("class", "name");
                             nameSpan.innerHTML = machineID;
                             nameDiv.appendChild(nameSpan);
-                            closeMachineToggle = document.createElement("input");
                             nameDiv.innerHTML += "<br>";
-                            closeMachineToggle.setAttribute("checked", "");
-                            closeMachineToggle.setAttribute("data-toggle", "toggle");
-                            closeMachineToggle.setAttribute("type", "checkbox");
-                            closeMachineToggle.setAttribute("data-on", "Activée");
-                            closeMachineToggle.setAttribute("data-off", "Désactivée");
-                            closeMachineToggle.setAttribute("data-onstyle", "default");
-                            closeMachineToggle.onchange = function () {
+                            // closeMachineToggle = document.createElement("input");
+                            // closeMachineToggle.setAttribute('id','toggle_'+machineID);
+                            // closeMachineToggle.setAttribute("checked", "");
+                            // closeMachineToggle.setAttribute("type", "checkbox");
+                            // closeMachineToggle.setAttribute("data-toggle", "toggle");
+                            // closeMachineToggle.setAttribute("data-on", "Activée");
+                            // closeMachineToggle.setAttribute("data-off", "Désactivée");
+                            // closeMachineToggle.setAttribute("data-onstyle", "default");
+
+                            closeMachineToggle = document.createElement('label');
+                            closeMachineToggle.classList.add("switch");
+                            closeMachineToggle.innerHTML =
+                                "  <input type=\"checkbox\" id=\"toggle_" + machineID + "\" checked >\n" +
+                                "  <span class=\"slider round\"></span>\n";
+
+
+                            var checkbox = closeMachineToggle.firstElementChild; //document.getElementById('toggle_'+machineID);
+                            checkbox.onchange = function () {
                                 toggleMachine(this.id);
                             };
-                            closeMachineToggle.setAttribute("id", "toggle_" + machineID);
+
                             nameDiv.appendChild(closeMachineToggle);
 
                             slots_machine = document.createElement("div");
@@ -382,7 +289,7 @@ planning.refreshEnCoursMachine = function () {
                     for (rowID in planning.rawEnCoursMachine) {
                         if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
                             row = planning.rawEnCoursMachine[rowID];
-                            if (row["8"] === machineID && row["9"] === CDCID) { //todo remplacer par LIBELLE et LIBELLE2 quand on aura fix la requête, correspond au nom de la machine et au nom du CDC
+                            if (row["LIBELLE"] === machineID && row["LIBELLE2"] === CDCID) {
                                 machine["en-cours"]++;
                             }
                         }
@@ -401,30 +308,36 @@ planning.refreshEnCoursMachine = function () {
                     for (rowID = 0; rowID < planning.rawEnCoursMachine.length && cpt_courant < machine["a servir cdc"]; rowID++) {
                         if (planning.rawEnCoursMachine.hasOwnProperty(rowID)) {
                             row = planning.rawEnCoursMachine[rowID];
-                            if (row["8"] === machineID) { //&& row["9"] === CDCID
+                            if (row["LIBELLE"] === machineID) { //&& row["LIBELLE2"] === CDCID fixme il manque des phases, quand même.
                                 of = row["ID_OFS"];
                                 article = row["ID_ARTICLE"];
                                 phase = row["ID_PHASE"];
                                 datePhase = Date.parse(row["MIN(HEURE_1.DATE_POINT)"]);
-                                diff_ms = today.getTime() - datePhase;
-                                age = diff_ms / 86400000; //milisecondes en un jour
-                                age = age.toFixed(0);
-                                cdc = row["9"].replace("ORIZONTAL", "");
+                                cdc = row["LIBELLE2"];
                                 outillage = row["REF_OUTILLAGE"];
-                                if (outillage.startsWith("STD")) {
-                                    outillage.replace("STD", "");
-                                } else {
-                                    outilllage = "";
-                                }
 
                                 slotID = machineID + "_" + cpt_courant;
                                 if (CDCID.endsWith("TM")) {
                                     slotID += "_TM";
                                 }
                                 slotDiv = document.getElementById(slotID);
-                                phaseDiv = document.createElement('div');
-                                phaseDiv.classList.add("OF");
-                                phaseDiv.innerHTML = cdc + "<br>" + of + " " + article + " " + phase + " " + age + " jour(s) " + outillage;
+
+                                phaseDiv = planning.creerPhaseDiv(null, row['PRIORITY_HACK'], cdc, row["LIBELLE2"], article, of, phase, datePhase, outillage);
+
+                                if (Math.random() > 0.5) {
+                                    var min = 0;
+                                    var max = 300;
+                                    var tempsTotal = Math.floor(Math.random() * (max - min + 1)) + min;
+                                    var tempsFait = Math.floor(Math.random() * (max * 0.7 - min + 1)) + min;
+                                    var percentage = (tempsFait * 100 / tempsTotal).toFixed(2);
+                                    if (percentage > 0) {
+                                        var tempsRestant = pretifyTempsRestant(tempsTotal, tempsFait);
+                                        phaseDiv.innerHTML += "<br>" + tempsRestant;
+                                        phaseDiv.classList.add('current');
+                                        phaseDiv.style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
+                                    }
+                                }
+
                                 slotDiv.appendChild(phaseDiv);
                                 cpt_courant++;
                             }
@@ -439,6 +352,93 @@ planning.refreshEnCoursMachine = function () {
 
     console.log(JSON.stringify(planning.CDCs, null, 2));
 };
+
+planning.refreshData = function (callback) {
+    loadJSON("dataEnCoursMachineOld.php", function (response) {
+        planning.rawEnCoursMachine = JSON.parse(response);
+        loadJSON("dataEnCoursPrepaOld.php", function (response2) {
+            planning.rawEnCoursPrepa = JSON.parse(response2);
+            callback();
+        });
+    });
+};
+
+planning.refresh = function () {
+    planning.refreshData(function () {
+        //console.log(JSON.stringify(planning, null, 2));
+        planning.refreshEnCoursMachine();
+        planning.refreshEnCoursPrepa();
+        refreshDraggable();
+    });
+};
+
+planning.creerPhaseDiv = function (priorityString, priority, cdc, data_cdc, idArticle, idOF, idPhase, datePhase, outillage) {
+    var diff_ms, age, outillageFinal, cdcFinal, idPhaseFinal;
+    var today = new Date();
+
+    var phaseDiv = document.createElement('div');
+    var finalPriority = priority;
+    phaseDiv.classList.add("OF");
+    phaseDiv.setAttribute("data-cdc", data_cdc);
+
+    if (priorityString !== null) {
+        switch (priorityString) {
+            case "BERY":
+                finalPriority = 0;
+                break;
+            case "AOG":
+                finalPriority = 1;
+                break;
+            case "FAI":
+                finalPriority = 2;
+                break;
+            default:
+                finalPriority = 3;
+                break;
+        }
+    }
+
+    console.log(finalPriority);
+    phaseDiv.setAttribute("priority", finalPriority);
+
+    diff_ms = today.getTime() - new Date(datePhase);
+    age = diff_ms / 86400000; //milisecondes en un jour
+    age = age.toFixed(0);
+    if (cdc !== null) {
+        cdcFinal = cdc.replace("ORIZONTAL", "");
+    } else {
+        cdcFinal = "";
+    }
+    if (outillage !== null && outillage.startsWith("STD")) {
+        outillageFinal = outillage.replace("STD", "");
+    } else {
+        outillageFinal = "";
+    }
+
+    if (idPhase !== null) {
+        idPhaseFinal = idPhase;
+    } else {
+        idPhaseFinal = "";
+    }
+
+    phaseDiv.setAttribute('data-toggle', "modal");
+    phaseDiv.setAttribute('data-target', "#infosOF");
+    phaseDiv.setAttribute('data-OFID', idOF);
+
+    phaseDiv.innerHTML = cdcFinal + "<br>" + idOF + ' - ' + idArticle + " " + idPhaseFinal + " " + age + " jour(s) " + outillageFinal;
+
+    return phaseDiv;
+};
+
+function creation_slot_phase(nom, ite, cdc, jours) {
+    if (ite < CONST_CDC_SLOTS) {
+        var zone_phase = document.getElementById(nom["LIBELLE"] + "_" + ite);
+        var slot_creation = planning.creerPhaseDiv(nom["TYPE_OF"], null, null, cdc, nom["ID_ARTICLE"], nom["ID_OFS"], null, jours, null);
+        zone_phase.appendChild(slot_creation);
+    }
+}
+
+//endregion
 
 function loadData() {
     var rawData = {};
@@ -585,18 +585,161 @@ function loadData() {
     });
 }
 
-planning.refreshData = function (callback) {
-    loadJSON("dataEnCoursMachineOld.php", function (response) {
-        planning.rawEnCoursMachine = JSON.parse(response);
-        loadJSON("dataEnCoursPrepaOld.php", function (response2) {
-            planning.rawEnCoursPrepa = JSON.parse(response2);
-            callback();
-        });
+function dragMoveListener(event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+        target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+}
+
+function getCssValuePrefix() {
+    var returnVal = '';//default to standard syntax
+    var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
+
+    // Create a temporary DOM object for testing
+    var dom = document.createElement('div');
+
+    for (var i = 0; i < prefixes.length; i++) {
+        // Attempt to set the style
+        dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
+
+        // Detect if the style was successfully set
+        if (dom.style.background) {
+            returnVal = prefixes[i];
+        }
+    }
+
+    dom = null;
+    delete dom;
+
+    return returnVal;
+}
+
+function percentageChange(id, percentage) {
+    document.getElementById(id).style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
+}
+
+function loadJSON(file, callback) {
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'data/' + file, true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState === 4 && xobj.status === 200) {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+function pretifyTempsRestant(tempsTotal, temps_passe) {
+    var tempsRestant = tempsTotal - temps_passe;
+    var text = "m restante";
+    if (Math.abs(tempsRestant) > 90) {
+        tempsRestant = (tempsRestant / 24).toFixed(1);
+        if (tempsRestant > 1) {
+            text = "h restantes";
+        } else {
+            text = "h restante";
+        }
+    } else if (Math.abs(tempsRestant) > 1) {
+        tempsRestant = tempsRestant.toFixed(1);
+        text = "m restantes";
+    }
+    return tempsRestant + text;
+}
+
+function toggleMachine(toggleID) {
+    var ofs, cloneDiv;
+    var toggle = document.getElementById(toggleID);
+    var machineID = toggleID.replace("toggle_", "");
+
+    if (toggle !== null) {
+        ofs = $("#slots_machine_" + machineID + " .OF");
+        if (toggle.checked === true) {
+            document.getElementById("closed_" + machineID).style.visibility = "hidden";
+
+            //enlever les clones de la zone de prépa
+            ofs.each(function (index) {
+                cloneDiv = $('#' + machineID + "_prep_" + index % 2 + " .clone");
+                cloneDiv.each(function () {
+                    $(this).remove();
+                });
+                $('#' + machineID + "_prep").removeClass("glow");
+            });
+        } else {
+            document.getElementById("closed_" + machineID).style.visibility = "visible";
+
+            //afficher des clones dans la zone de prépa
+            ofs.each(function (index) {
+                cloneDiv = $(this).clone();
+                cloneDiv.appendTo($('#' + machineID + "_prep_" + index % 2));
+                cloneDiv.addClass('clone');
+                $('#' + machineID + "_prep").addClass("glow");
+            });
+        }
+    }
+}
+
+function convertDate(date) {
+    return date.getFullYear() + "/" + Number(date.getMonth() + 1) + "/" + date.getDate();
+}
+
+function demoAppel(activate) {
+    $('div[id="CU HORIZONTAL"],div[id="CU HORIZONTAL TM"]').each(function (index, element) {
+        if (activate) {
+            element.classList.add("prochaine");
+            element.setAttribute('data-preferable', 'true');
+        } else {
+            element.classList.remove("prochaine");
+            element.setAttribute('data-preferable', 'true');
+        }
     });
-};
+}
+
+//region Probes
+function trackGeneric(key, value) {
+    var retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined") {
+        if (!localStorage[dKey]) {
+            retrievedObject = {};
+        } else {
+            retrievedObject = JSON.parse(localStorage[dKey]);
+        }
+        retrievedObject[key] = value;
+        localStorage.setItem(dKey, JSON.stringify(retrievedObject));
+    } else {
+        // Sorry! No Web Storage support..
+    }
+}
+
+function getTrackingData(key) {
+    var returnValue, retrievedObject;
+    var d = new Date();
+    var dKey = convertDate(d);
+    if (typeof(Storage) !== "undefined" && localStorage[dKey]) {
+        retrievedObject = JSON.parse(localStorage[dKey]);
+        if (retrievedObject[key]) {
+            returnValue = retrievedObject[key];
+        }
+    }
+    return returnValue;
+}
 
 function trackClick(x, y) {
-    console.log("click !!")
+    console.log("click !!");
     var clicks, currentValue;
     if (getTrackingData("clicks")) {
         clicks = getTrackingData("clicks");
@@ -617,6 +760,10 @@ function trackClick(x, y) {
         clicks[x][y] = 1;
     }
     trackGeneric("clicks", clicks);
+}
+
+function clickEvent(e) {
+    trackClick(e.pageX, e.pageY);
 }
 
 function removeHeatmap() {
@@ -656,58 +803,26 @@ function refreshHeatmap() {
         }
     }
     heatmap.repaint();
+    document.querySelector('canvas').addEventListener('click', removeHeatmap);
+    document.querySelector('canvas').style.zIndex = 999;
 }
 
-function convertDate(date) {
-    return date.getFullYear() + "/" + Number(date.getMonth() + 1) + "/" + date.getDate();
-}
+//endregion
 
-function trackGeneric(key, value) {
-    var retrievedObject;
-    var d = new Date();
-    var dKey = convertDate(d);
-    if (typeof(Storage) !== "undefined") {
-        if (!localStorage[dKey]) {
-            retrievedObject = {};
-        } else {
-            retrievedObject = JSON.parse(localStorage[dKey]);
-        }
-        retrievedObject[key] = value;
-        localStorage.setItem(dKey, JSON.stringify(retrievedObject));
-    } else {
-        // Sorry! No Web Storage support..
-    }
-}
+window.addEventListener("load", function (e) {
+    planning.loadMachines();
+    window.dragMoveListener = dragMoveListener;
 
-function getTrackingData(key) {
-    var returnValue, retrievedObject;
-    var d = new Date();
-    var dKey = convertDate(d);
-    if (typeof(Storage) !== "undefined" && localStorage[dKey]) {
-        retrievedObject = JSON.parse(localStorage[dKey]);
-        if (retrievedObject[key]) {
-            returnValue = retrievedObject[key];
-        }
-    }
-    return returnValue;
-}
-
-// this is used later in the resizing and gesture demos
-window.dragMoveListener = dragMoveListener;
-
-function clickEvent(e) {
-    trackClick(e.pageX, e.pageY);
-}
-
-document.addEventListener('click', clickEvent, true);
-planning.loadMachines();
-
-planning.refresh = function () {
-    planning.refreshData(function () {
-        //console.log(JSON.stringify(planning, null, 2));
-        planning.refreshEnCoursMachine();
-        planning.refreshEnCoursPrepa();
+    $('#infosOF').on('show.bs.modal', function (event) {
+        var ofDiv = $(event.relatedTarget);
+        console.log(ofDiv.data('ofid'));
+        $('#infosOFID').text(ofDiv.data('ofid'));
     });
-};
 
-window.setInterval(planning.refresh(), planning.refreshDelayMinutes * 60 * 1000);
+    window.setInterval(planning.refresh(), planning.refreshDelayMinutes * 60 * 1000);
+    document.addEventListener('click', clickEvent, true);
+    refreshDraggable();
+    console.log("drag prêt");
+});
+
+refreshDraggable();

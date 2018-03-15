@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Démonstration d'un OF</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap toggles -->
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/phaseDemo.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h2>Démonstration étiquette de phase</h2>
+    </div>
+    <div class="row equal">
+        <div class="col-xs-8" id="demo">
+            <div id="demoOF" class="demoOF">
+                <span id="CDC"></span> <span id="TM">TM</span>
+                <br>
+                <span id="OF">00000</span> - <span id="Article">00000</span>
+                <br>
+                <span id="Phase"></span>
+                <span id="attente"></span> jour(s)
+                <br>
+                <span id="tempsRestant"></span>
+            </div>
+        </div>
+        <div class="col-xs-4" id="menu">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Propriétés</h3>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Type d'OF</label>
+                            <select class="form-control" id="inputPriority" onchange="updatePriority(this.value)">
+                                <option>Sélectionner ...</option>
+                                <option value="0">Berylium</option>
+                                <option value="1">AOG</option>
+                                <option value="2">FAI</option>
+                                <option value="3">Normal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Centre de charge</label>
+                            <select class="form-control" id="inputCDC" onchange="updateCDC(this.value)">
+                                <option value="">Sélectionner ...</option>
+                                <option value="CU H">CU HORIZONTAL</option>
+                                <option value="CU H GC">CU HORIZONTAL Grande Capacité</option>
+                                <option value="CU 5 AXES">CU 5 AXES</option>
+                            </select>
+                            <input type="checkbox" id="checkboxTM" disabled onchange="updateTM(true)">
+                            <label for="checkboxTM">Travail de nuit</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro d'OF</label>
+                            <input type="number" class="form-control" id="inputOF" value="00000" min="0" max="99999"
+                                   onchange="updateOF(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro d'article</label>
+                            <input type="number" class="form-control" id="inputArticle" value="00000" min="0"
+                                   max="99999" onchange="updateArticle(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de phase</label>
+                            <input type="number" class="form-control" id="inputPhase" value="0" min="0" max="9"
+                                   onchange="updatePhase(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Date d'arrivée</label>
+                            <input type="date" class="form-control" id="inputAttente"
+                                   onchange="updateAttente(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Temps d'usinage nécessaire</label>
+                            <input type="number" id="inputTU" min="0" class="form-control" onchange="updateTU()">
+                        </div>
+                        <div class="form-group">
+                            <label>Temps d'usinage effectué</label>
+                            <input type="number" id="inputTUFait" min="0" class="form-control" onchange="updateTU()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+
+<script type="text/javascript">
+    function updatePriority(priority) {
+        document.getElementById('demoOF').setAttribute('priority', priority);
+    }
+
+    function updateCDC(cdc) {
+        document.getElementById('CDC').innerHTML = cdc;
+
+        var checkbox = document.getElementById('checkboxTM');
+        if (cdc === "CU H" || cdc === "CU H GC") {
+            checkbox.removeAttribute('disabled');
+            updateTM(true);
+        } else {
+            checkbox.setAttribute('disabled', "");
+            updateTM(false);
+        }
+    }
+
+    function updateTM(override) {
+        var checkbox = document.getElementById('checkboxTM');
+        var TM = document.getElementById('TM');
+
+        if (checkbox.checked === true && override) {
+            TM.style.display = "inline";
+        } else {
+            TM.style.display = "none";
+        }
+    }
+
+    function updateOF(OF) {
+        var OFSpan = document.getElementById('OF');
+        OFSpan.innerHTML = ("0000" + OF).slice(-5);
+    }
+
+    function updateArticle(Article) {
+        var ArticleSpan = document.getElementById('Article');
+        ArticleSpan.innerHTML = ("0000" + Article).slice(-5);
+    }
+
+    function updatePhase(phase) {
+        var PhaseSpan = document.getElementById('Phase');
+        if (phase === "0") {
+            PhaseSpan.style.display = "none";
+        } else {
+            PhaseSpan.style.display = "inline";
+            PhaseSpan.innerHTML = phase + "0.0";
+        }
+    }
+
+    function updateAttente(arrivee) {
+        var today = new Date();
+        var diff_ms = today.getTime() - new Date(arrivee);
+        var age = diff_ms / 86400000; //milisecondes en un jour
+        age = age.toFixed(0);
+        document.getElementById('attente').innerHTML = age;
+    }
+
+    function updateTU() {
+        var phaseDiv = document.getElementById('demoOF');
+        var tempsTotal = document.getElementById('inputTU').value;
+        var tempsFait = document.getElementById('inputTUFait').value;
+        if (tempsTotal > 0 && tempsFait > 0) {
+            var percentage = (tempsFait * 100 / tempsTotal).toFixed(2);
+            if (percentage > 0) {
+                var tempsRestant = pretifyTempsRestant(tempsTotal, tempsFait);
+                document.getElementById('tempsRestant').innerHTML = tempsRestant;
+                phaseDiv.classList.add('current');
+                phaseDiv.style.background = "linear-gradient(90deg, " + COLOR_PHASE_ACTIVE + "  " + percentage + "%, " + COLOR_PHASE_BACKGROUND + " 0%)";
+            }
+        } else {
+            phaseDiv.classList.remove('current');
+            document.getElementById('tempsRestant').innerHTML = '';
+            phaseDiv.style = '';
+        }
+
+    }
+
+    function init() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("inputAttente").setAttribute("max", today);
+
+        var inputPriority = document.getElementById('inputPriority');
+        var priority = inputPriority.options[inputPriority.selectedIndex];
+        updatePriority(priority.value);
+        var inputCDC = document.getElementById('inputCDC');
+        var CDC = inputCDC.options[inputCDC.selectedIndex];
+        updateCDC(CDC.value);
+        updateTM(false);
+        updateOF(document.getElementById('inputOF').value);
+        updateArticle(document.getElementById('inputArticle').value);
+        updatePhase(document.getElementById('inputPhase').value);
+        updateAttente(document.getElementById('inputAttente').value);
+        updateTU();
+    }
+
+    window.addEventListener('load', init());
+</script>
+
+</body>
+</html>

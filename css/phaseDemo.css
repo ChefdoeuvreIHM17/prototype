@@ -1,0 +1,21 @@
+.row.equal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demoOF {
+    margin: auto;
+    height: 75px;
+    width: 125px;
+    background-color: rgb(158, 200, 216);
+    border-radius: 5px;
+    border-width: thick;
+    line-height: initial;
+    text-align: center;
+}

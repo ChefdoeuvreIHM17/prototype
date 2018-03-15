@@ -1,16 +1,17 @@
 body {
     --background-color: #dddddd;
     --closed-machine-background-color: #bbbbbb;
-    --slot-default-background-color: #daedf2;
-    --slot-night-background-color: #daf2da;
-    --slot-default-border-color: #b4e4f0;
-    --slot-night-border-color: #b4f0b4;
-    --background-current-OF: #ffccd5; /* caution, I mostly need to be changed in main.js */
-    --progress-bar-current-OF: #ff80c6; /* caution, I mostly need to be changed in main.js */
+    --slot-night-background-color: #daedf2;
+    --slot-night-border-color: #b4e4f0;
+    --slot-default-background-color: #daf2da;
+    --slot-default-border-color: #b4f0b4;
+    --background-current-OF: #ddb3ff; /* caution, I mostly need to be changed in main.js */
+    --progress-bar-current-OF: #af4dff; /* caution, I mostly need to be changed in main.js */
 }
 
 body {
     background: var(--background-color) !important;
+    position: relative;
 }
 
 .cell{
@@ -33,7 +34,7 @@ body {
     height: 100%;
     position: absolute;
     width: 100%;
-    z-index: 999;
+    z-index: 100;
 }
 
 .slot{
@@ -138,12 +139,12 @@ body {
     padding: 0;
 }
 
-.prochaine {
+.prochaine[data-preferable=true] {
     border-color: transparent; /* remove the border's colour */
     box-shadow: 0 0 0 5px green inset; /* emulate the border */
 }
 
-.prochaineRouge {
+.prochaine[data-preferable=false] {
     border-color: transparent; /* remove the border's colour */
     box-shadow: 0 0 0 5px red inset; /* emulate the border */
 }
@@ -195,16 +196,28 @@ div[priority="0"]:not(.current) {
     width: 100%;
 }
 
-.inPrep {
+.alreadyInPrep {
     opacity: 0.5;
 }
 
-.inPrep::after {
+.alreadyInPrep::after {
     content: "EN PRÉPA";
     /*SUR " attr(prep-machine,'');*/
     display: block;
     opacity: 1;
     color: black;
     font-weight: bold;
+}
+
+#fixedbutton {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    opacity: 0.2;
+    transition: opacity 0.5s;
+}
+
+#fixedbutton:hover {
+    opacity: 1;
 }
 
